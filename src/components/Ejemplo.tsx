@@ -1,18 +1,20 @@
-import { Button, Card, CardActions, CardContent,  Typography } from '@mui/material'
-import React from 'react'
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@mui/material";
+import React from "react";
 
 interface EjemploProps {
-    title: string,
-    description: string
+  title: string;
+  description: string;
 }
 
-
-
-
-export const Ejemplo: React.FC<EjemploProps> = ({title, description}) => {
+export const Ejemplo: React.FC<EjemploProps> = ({ title, description }) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}
@@ -26,5 +28,5 @@ export const Ejemplo: React.FC<EjemploProps> = ({title, description}) => {
         <Button size="small">Learn More</Button>
       </CardActions>
     </Card>
-  )
-}
+  );
+};
