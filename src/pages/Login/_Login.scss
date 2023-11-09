@@ -1,0 +1,13 @@
+.div {
+    margin: 20px;
+    
+    &__hola {
+        color: red;
+        &-span {
+            color: black;
+        }
+    }
+    &__adios {
+        color: blue;
+    }
+}
