@@ -1,0 +1,33 @@
+.recipeCard__container{
+    padding: 0 0 1rem;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+    align-items: center;
+    &-imageContainer{
+        width: 8rem;
+        height:8rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+    
+        img{
+            max-width: 8rem;
+            max-height:7.5rem;
+        }
+    }
+    &-info{
+        text-align: center;
+    }
+    &-footer{
+        display: flex;
+        justify-content: space-around;
+        p{
+            display: flex;
+            span {
+                margin: .18rem .4rem 0 0;
+            }
+
+        }
+    } 
+}
