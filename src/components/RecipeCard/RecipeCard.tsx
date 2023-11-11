@@ -19,7 +19,7 @@ export const RecipeCard = ({
   average_rating,
   images,
 }: RecipeCardProps) => {
-  const imageURL = images[Math.floor(Math.random() * images.length)];
+  const imageURL = images[0];
 
   return (
     <Grid container spacing={2} className="recipeCard__container">
