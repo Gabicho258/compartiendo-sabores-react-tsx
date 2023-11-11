@@ -4,8 +4,11 @@ import { RecipeCard } from "../../components/RecipeCard/RecipeCard";
 import { NavBar } from "../../components/NavBar/NavBar";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { recetas } from "../../static_test/recipes";
+import { useSearch } from "../../hooks/useSearch";
 
 export const Categories = () => {
+  const { text, result, onChangeInput } = useSearch({ data: recetas });
+  console.log(result);
   return (
     <>
       <NavBar />
@@ -18,7 +21,7 @@ export const Categories = () => {
           <b>Categoría</b>
         </Typography>
         <div className="category__container-searchBar">
-          <SearchBar />
+          <SearchBar text={text} onChangeInput={onChangeInput} />
         </div>
         <Paper
           sx={{
@@ -31,7 +34,7 @@ export const Categories = () => {
           }}
           className="category__container-paper"
         >
-          {recetas.map(({ average_rating, title, images, views }, index) => (
+          {result.map(({ average_rating, title, images, views }, index) => (
             <RecipeCard
               average_rating={average_rating}
               title={title}
