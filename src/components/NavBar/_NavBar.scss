@@ -1,0 +1,45 @@
+.navBarContainer {
+  background-color: #d12942;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 3rem;
+  &__icon {
+    width: 4rem;
+  }
+  &__profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    &-name {
+      color: #fff;
+      font-size: 1.3rem;
+      margin-right: 1.5rem;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    &-image {
+      height: 3rem;
+      width: 3rem;
+      margin-right: 1rem;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    &-btn {
+      background-color: #d12942;
+      box-shadow: none;
+      margin: 0 1.5rem;
+      font-size: 1.2rem;
+      &:hover {
+        background-color: #ba273d;
+      }
+    }
+  }
+}
