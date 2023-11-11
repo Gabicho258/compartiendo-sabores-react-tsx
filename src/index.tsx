@@ -4,6 +4,7 @@ import "./index.css";
 import { Login } from "./pages/Login/Login";
 import { HomePage } from "./pages/HomePage/HomePage";
 import { StyledEngineProvider } from "@mui/material";
+import { Categories } from "./pages/Categories/Categories";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -13,7 +14,11 @@ root.render(
     <StyledEngineProvider injectFirst>
       {/* <App /> */}
       {/* <Login /> */}
-      <HomePage />
+
+      <Categories />
+
+      {/*<HomePage />*/}
+
     </StyledEngineProvider>
   </React.StrictMode>
 );
