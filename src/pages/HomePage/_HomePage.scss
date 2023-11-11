@@ -1,0 +1,33 @@
+.homePage {
+  box-sizing: border-box;
+  background-color: #281b23;
+  height: 90vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__title {
+    font-size: 3rem;
+    color: #fff;
+  }
+  &__mainBox {
+    width: 60%;
+    border-radius: 1rem;
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+    background-color: #d9c9a5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &-searchBar {
+      width: 80%;
+    }
+    &-categoryCarousel {
+      width: 80%;
+      color: white;
+      margin: 5rem 0;
+      height: 15rem;
+      background-color: #000;
+    }
+  }
+}
