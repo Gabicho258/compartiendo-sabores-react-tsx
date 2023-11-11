@@ -17,8 +17,7 @@ root.render(
 
       <Categories />
 
-      {/*<HomePage />*/}
-
+      {/* <HomePage /> */}
     </StyledEngineProvider>
   </React.StrictMode>
 );
