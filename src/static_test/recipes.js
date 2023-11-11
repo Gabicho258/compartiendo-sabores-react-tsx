@@ -1,8 +1,8 @@
 export const recetas = [
   {
-    _id: { $oid: "654ab24f6ca1ada564b7822a" },
+    _id: "654ab24f6ca1ada564b7822a",
     user_id: "1231iowhnriowenrwern",
-    title: "Receta 1",
+    title: "Pastel de papa",
     ingredients: ["1 Taza de azúcar", "2 Tazas de sal"],
     procedure: ["Paso 1", "Paso 2", "Paso 3"],
     images: [
@@ -20,9 +20,9 @@ export const recetas = [
     __v: 0,
   },
   {
-    _id: { $oid: "654ab24f6ca1ada564b7822a" },
+    _id: "654ab24f6ca1ada564b7822a",
     user_id: "1231iowhnriowenrwern",
-    title: "Receta 1",
+    title: "Pastel de zanahoria",
     ingredients: ["1 Taza de azúcar", "2 Tazas de sal"],
     procedure: ["Paso 1", "Paso 2", "Paso 3"],
     images: [
@@ -40,9 +40,9 @@ export const recetas = [
     __v: 0,
   },
   {
-    _id: { $oid: "654ab24f6ca1ada564b7822a" },
+    _id: "654ab24f6ca1ada564b7822a",
     user_id: "1231iowhnriowenrwern",
-    title: "Receta 1",
+    title: "Mazamorra",
     ingredients: ["1 Taza de azúcar", "2 Tazas de sal"],
     procedure: ["Paso 1", "Paso 2", "Paso 3"],
     images: [
@@ -60,9 +60,9 @@ export const recetas = [
     __v: 0,
   },
   {
-    _id: { $oid: "654ab24f6ca1ada564b7822a" },
+    _id: "654ab24f6ca1ada564b7822a",
     user_id: "1231iowhnriowenrwern",
-    title: "Receta 1",
+    title: "Arroz con leche",
     ingredients: ["1 Taza de azúcar", "2 Tazas de sal"],
     procedure: ["Paso 1", "Paso 2", "Paso 3"],
     images: [
@@ -80,9 +80,9 @@ export const recetas = [
     __v: 0,
   },
   {
-    _id: { $oid: "654ab24f6ca1ada564b7822a" },
+    _id: "654ab24f6ca1ada564b7822a",
     user_id: "1231iowhnriowenrwern",
-    title: "Receta 1",
+    title: "Arroz con pollo",
     ingredients: ["1 Taza de azúcar", "2 Tazas de sal"],
     procedure: ["Paso 1", "Paso 2", "Paso 3"],
     images: [
