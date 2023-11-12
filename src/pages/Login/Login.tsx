@@ -37,7 +37,7 @@ export const Login = () => {
         <div className="loginForm__email">
           <div className="loginForm__email-label">
             <label >
-            Correo Electronico:
+            Correo Electrónico:
             </label>
           </div>
           <TextField

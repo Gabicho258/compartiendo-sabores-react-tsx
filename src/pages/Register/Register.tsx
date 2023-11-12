@@ -79,7 +79,7 @@ export const Register = () =>{
             <div className="registerForm__email">
               <div className="registerForm__email-label">
                 <label >
-                Correo Electronico:
+                Correo Electrónico:
                 </label>
               </div>
               <TextField
@@ -142,6 +142,7 @@ export const Register = () =>{
                     value="Personal"
                     control={<Radio />}
                     label="Personal"
+                    className="registerForm__userType-formControl-radioGroup-p"
                     onClick={({}) => {
                         inputChange("Personal", "rol");
                     }}

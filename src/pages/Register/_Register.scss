@@ -1,0 +1,101 @@
+.registerTitle {
+    display: grid;
+    font-family: 'Cookie';
+    font-size: 28px;
+    height: 100px;
+    place-items: center;
+    &__t{
+        margin-top: 15px;
+        text-align: center;
+    }
+}
+
+.registerForm {
+    display: grid;
+    place-items: center;
+    &__name {
+        &-label {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        &-input {
+            width: 30em;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+    }
+    &__lastName {
+        &-label {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        &-input {
+            width: 30em;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+    }
+
+    &__email {
+        &-label {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        &-input {
+            width: 30em;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+    }
+
+    &__password {
+        &-label {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        &-input {
+            width: 30em;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+    }
+    &__verifyPassword {
+        &-label {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        &-input {
+            width: 30em;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+    }
+    &__userType{
+        width: 30em;
+        margin-bottom: 20px;
+        &-formControl{
+            display: grid;
+            place-items: center;
+            &-radioGroup{
+                &-p{
+                    margin-right: 80px;
+                }
+            }
+        }
+    }
+
+    &__btn-create{
+        margin-bottom: 40px;
+        &-b{
+            color: black;
+            background-color: #8DAA94;
+            height: 50px;
+            width: 480px;
+            border-radius: 10px;
+        }
+        &-b:hover{
+            background-color: #F47E68;
+        }
+    }
+    
+}

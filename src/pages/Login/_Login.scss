@@ -1,7 +1,9 @@
 .loginTitle {
     display: grid;
     place-items: center;
-    margin-top: 90px;
+    font-family: 'Cookie';
+    font-size: 28px;
+    margin-top: 40px;
     &__t{
         max-width: 400px;
         text-align: center;
@@ -11,54 +13,54 @@
 .loginForm {
     display: grid;
     place-items: center;
-    padding: 2rem;
-        &__email {
-            &-label {
-                text-align: left;
-                margin-bottom: 20px;
-            }
-            &-input {
-                width: 30em;
-                margin-bottom: 20px;
-                border-radius: 10px;
-            }
+    padding: 1rem;
+    &__email {
+        &-label {
+            text-align: left;
+            margin-bottom: 20px;
         }
-    
-        &__password {
-            &-label {
-                text-align: left;
-                margin-bottom: 20px;
-            }
-            &-input {
-                width: 30em;
-                margin-bottom: 40px;
-                border-radius: 10px;
-            }
+        &-input {
+            width: 30em;
+            margin-bottom: 20px;
+            border-radius: 10px;
         }
-        &__btn-login{
-            margin-bottom: 40px;
-            &-b{
-                color: black;
-                background-color: #D9C9A5;
-                height: 50px;
-                width: 480px;
-                border-radius: 10px;
-            }
-            &-b:hover{
-                background-color: #F47E68;
-            }
-        }
-        &__btn-register{
-            &-b{
-                color: black;
-                background-color: #D9C9A5;
-                height: 50px;
-                width: 480px;
-                border-radius: 10px;
-            }
-            &-b:hover{
-                background-color: #F47E68;
-            }
-        }
-    
     }
+
+    &__password {
+        &-label {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        &-input {
+            width: 30em;
+            margin-bottom: 40px;
+            border-radius: 10px;
+        }
+    }
+    &__btn-login{
+        margin-bottom: 40px;
+        &-b{
+            color: black;
+            background-color: #D9C9A5;
+            height: 50px;
+            width: 480px;
+            border-radius: 10px;
+        }
+        &-b:hover{
+            background-color: #F47E68;
+        }
+    }
+    &__btn-register{
+        &-b{
+            color: black;
+            background-color: #D9C9A5;
+            height: 50px;
+            width: 480px;
+            border-radius: 10px;
+        }
+        &-b:hover{
+            background-color: #F47E68;
+        }
+    }
+    
+}
