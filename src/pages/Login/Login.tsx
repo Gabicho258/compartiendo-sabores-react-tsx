@@ -10,10 +10,10 @@ interface credentials  {
 
 export const Login = () => {
 
-    const [form, setForm] = useState<credentials>({
-      email: '',
-      password: '',
-    });
+  const [form, setForm] = useState<credentials>({
+    email: '',
+    password: '',
+  });
 
   const inputChange = (value: string, field: string) => {
     setForm({
