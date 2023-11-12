@@ -25,7 +25,7 @@ export const Login = () => {
 
   return (
     <>
-    <div className="container">
+    <div className="loginContainer">
       <div className="loginTitle">
         <h1 className="loginTitle__t">
         ¡Bienvenid@ a Compartiendo
@@ -52,7 +52,7 @@ export const Login = () => {
           />
         </div>
         <div className="loginForm__password">
-          <div className="loginForm__email-label">
+          <div className="loginForm__password-label">
             <label>
               Contraseña:
             </label>
