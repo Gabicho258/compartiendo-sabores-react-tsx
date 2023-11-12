@@ -25,17 +25,26 @@ export const Login = () => {
 
   return (
     <>
-      <h1>¡Bienvenid@ a Compartiendo Sabores!</h1>
+    <div className="container">
+      <div className="loginTitle">
+        <h1 className="loginTitle__t">
+        ¡Bienvenid@ a Compartiendo
+        <br />
+        Sabores!
+        </h1>
+      </div>
       <form className="loginForm">
-        <div className="loginForm__mail">
-          <label>
+        <div className="loginForm__email">
+          <div className="loginForm__email-label">
+            <label >
             Correo Electronico:
-          </label>
+            </label>
+          </div>
           <TextField
             required
             id="email"
             type="email"
-            className="loginForm__mail-input"
+            className="loginForm__email-input"
             value={form.email}
             onChange={({ target }) => {
               inputChange(target.value, "email");
@@ -43,9 +52,11 @@ export const Login = () => {
           />
         </div>
         <div className="loginForm__password">
-          <label>
-            Contraseña:
-          </label>
+          <div className="loginForm__email-label">
+            <label>
+              Contraseña:
+            </label>
+          </div>
           <TextField
             required
             value={form.password}
@@ -57,20 +68,24 @@ export const Login = () => {
             }}
           />
         </div>
-        <Button
-          variant="contained"
-          className="loginForm__btn-login"
+        <div className="loginForm__btn-login">
+          <Button
+            variant="contained"
+            className="loginForm__btn-login-b"
           >
             Iniciar Sesión
-        </Button>
-        <Button
-          variant="contained"
-          className="loginForm__btn-register">
-            Registrase 
-        </Button> 
+          </Button>
+        </div>
+        <div className="loginForm__btn-register">
+          <Button
+            variant="contained"
+            className="loginForm__btn-register-b"
+          >
+            Registrase
+          </Button>
+        </div>
       </form>
-
-      {/* BEM */}
+    </div>
     </>
   );
 };
