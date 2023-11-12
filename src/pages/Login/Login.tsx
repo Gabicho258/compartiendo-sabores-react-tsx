@@ -1,55 +1,74 @@
-// import { useEffect, useState } from 'react';
 import { useEffect, useState } from "react";
-import { Ejemplo } from "../../components/Ejemplo";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import "./_Login.scss";
 
+interface credentials  {
+    email: string;
+    password: string,
+};
+
 export const Login = () => {
-  const recetas = [1, 2, 3];
 
-  const obj = {
-    nombre: "juan",
-    apellido: "perez",
-  };
-  const { apellido, nombre } = obj;
-  console.log(nombre);
-  console.log(apellido);
-  const arr = ["1", "2", "3", "4", "5", "6"];
+    const [form, setForm] = useState<credentials>({
+      email: '',
+      password: '',
+    });
 
-  const [segundo, primero] = arr;
-
-  const [formulario, setFormulario] = useState({
-    email: "",
-    password: "",
-  });
-
-  const cambiando = (valor: string, campo: string) => {
-    setFormulario({
-      ...formulario,
-      [campo]: valor,
+  const inputChange = (value: string, field: string) => {
+    setForm({
+      ...form,
+      [field]: value,
     });
   };
-  console.log(formulario);
+  console.log(form);
 
   return (
     <>
-      <h1>Login</h1>
-      <div className="">
-        <p className="div__hola">
-          Hola
-          <span className="div__hola-span"> este es un span</span>
-        </p>
-        <p className="div__adios">Adios</p>
-      </div>
-      <input
-        type="text"
-        value={formulario.email}
-        onChange={({ target }) => cambiando(target.value, "email")}
-      />
-      <input
-        type="text"
-        value={formulario.password}
-        onChange={({ target }) => cambiando(target.value, "password")}
-      />
+      <h1>¡Bienvenid@ a Compartiendo Sabores!</h1>
+      <form className="loginForm">
+        <div className="loginForm__mail">
+          <label>
+            Correo Electronico:
+          </label>
+          <TextField
+            required
+            id="email"
+            type="email"
+            className="loginForm__mail-input"
+            value={form.email}
+            onChange={({ target }) => {
+              inputChange(target.value, "email");
+            }}
+          />
+        </div>
+        <div className="loginForm__password">
+          <label>
+            Contraseña:
+          </label>
+          <TextField
+            required
+            value={form.password}
+            id="password"
+            type="password"
+            className="loginForm__password-input"
+            onChange={({ target }) => {
+              inputChange(target.value, "password");
+            }}
+          />
+        </div>
+        <Button
+          variant="contained"
+          className="loginForm__btn-login"
+          >
+            Iniciar Sesión
+        </Button>
+        <Button
+          variant="contained"
+          className="loginForm__btn-register">
+            Registrase 
+        </Button> 
+      </form>
 
       {/* BEM */}
     </>

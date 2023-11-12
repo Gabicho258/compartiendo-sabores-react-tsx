@@ -13,9 +13,9 @@ root.render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
       {/* <App /> */}
-      {/* <Login /> */}
+      <Login />
 
-      <Categories />
+      {/*<Categories />*/}
 
       {/*<HomePage />*/}
 
