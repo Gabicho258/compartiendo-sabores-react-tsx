@@ -6,6 +6,7 @@ import { HomePage } from "./pages/HomePage/HomePage";
 import { StyledEngineProvider } from "@mui/material";
 import { Categories } from "./pages/Categories/Categories";
 import { Register } from "./pages/Register/Register";
+import { CreateRecipe } from "./pages/CreateRecipe/CreateRecipe";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,7 +17,7 @@ root.render(
       {/* <App /> */}
       {/*<Login />*/}
 
-      <Register />
+      <CreateRecipe />
 
       {/*<Categories />*/}
 
