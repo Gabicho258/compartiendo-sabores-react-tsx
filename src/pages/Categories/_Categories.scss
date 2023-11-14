@@ -1,5 +1,22 @@
 .category__container {
+  background-color: #281b23;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
     &-title{
         text-align: center;
+        color: #fff;
+        font-size: 3rem;
+    }
+    &-paper {
+        width: 40rem;
+        background-color: #D9C9A5;
+        padding: 3rem 4rem;
+    }
+    &-searchBar{
+        width: 55%;
+        margin: 3rem 0 2.5rem;
     }
 }

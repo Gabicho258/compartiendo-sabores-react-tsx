@@ -6,6 +6,8 @@ import { HomePage } from "./pages/HomePage/HomePage";
 import { UserProfile } from "./pages/UserProfile/UserProfile";
 import { StyledEngineProvider } from "@mui/material";
 import { Categories } from "./pages/Categories/Categories";
+import { Register } from "./pages/Register/Register";
+import App from "./App";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -13,13 +15,17 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
-      {/* <App /> */}
-      {/* <Login /> */}
+      <App />
+      {/*<Login />*/}
 
       {/* <Categories /> */}
 
       {/* <HomePage /> */}
+      
+      {/* <Register /> */}
+      
       <UserProfile />
+      
     </StyledEngineProvider>
   </React.StrictMode>
 );
