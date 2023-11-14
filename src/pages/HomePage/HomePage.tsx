@@ -11,7 +11,7 @@ export const HomePage = () => {
         <h1 className="homePage__title">Compartiendo Sabores!</h1>
         <div className="homePage__mainBox">
           <div className="homePage__mainBox-searchBar">
-            <SearchBar />
+            {/* <SearchBar /> */}
           </div>
           <div className="homePage__mainBox-categoryCarousel">
             Carrusel de categorías
