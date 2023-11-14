@@ -1,57 +1,91 @@
-// import { useEffect, useState } from 'react';
 import { useEffect, useState } from "react";
-import { Ejemplo } from "../../components/Ejemplo";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import "./_Login.scss";
 
+interface credentials  {
+    email: string;
+    password: string,
+};
+
 export const Login = () => {
-  const recetas = [1, 2, 3];
 
-  const obj = {
-    nombre: "juan",
-    apellido: "perez",
-  };
-  const { apellido, nombre } = obj;
-  console.log(nombre);
-  console.log(apellido);
-  const arr = ["1", "2", "3", "4", "5", "6"];
-
-  const [segundo, primero] = arr;
-
-  const [formulario, setFormulario] = useState({
-    email: "",
-    password: "",
+  const [form, setForm] = useState<credentials>({
+    email: '',
+    password: '',
   });
 
-  const cambiando = (valor: string, campo: string) => {
-    setFormulario({
-      ...formulario,
-      [campo]: valor,
+  const inputChange = (value: string, field: string) => {
+    setForm({
+      ...form,
+      [field]: value,
     });
   };
-  console.log(formulario);
+  console.log(form);
 
   return (
     <>
-      <h1>Login</h1>
-      <div className="">
-        <p className="div__hola">
-          Hola
-          <span className="div__hola-span"> este es un span</span>
-        </p>
-        <p className="div__adios">Adios</p>
+    <div className="loginContainer">
+      <div className="loginTitle">
+        <h1 className="loginTitle__t">
+        ¡Bienvenid@ a Compartiendo
+        <br />
+        Sabores!
+        </h1>
       </div>
-      <input
-        type="text"
-        value={formulario.email}
-        onChange={({ target }) => cambiando(target.value, "email")}
-      />
-      <input
-        type="text"
-        value={formulario.password}
-        onChange={({ target }) => cambiando(target.value, "password")}
-      />
-
-      {/* BEM */}
+      <form className="loginForm">
+        <div className="loginForm__email">
+          <div className="loginForm__email-label">
+            <label >
+            Correo Electrónico:
+            </label>
+          </div>
+          <TextField
+            required
+            id="email"
+            type="email"
+            className="loginForm__email-input"
+            value={form.email}
+            onChange={({ target }) => {
+              inputChange(target.value, "email");
+            }}
+          />
+        </div>
+        <div className="loginForm__password">
+          <div className="loginForm__password-label">
+            <label>
+              Contraseña:
+            </label>
+          </div>
+          <TextField
+            required
+            value={form.password}
+            id="password"
+            type="password"
+            className="loginForm__password-input"
+            onChange={({ target }) => {
+              inputChange(target.value, "password");
+            }}
+          />
+        </div>
+        <div className="loginForm__btn-login">
+          <Button
+            variant="contained"
+            className="loginForm__btn-login-b"
+          >
+            Iniciar Sesión
+          </Button>
+        </div>
+        <div className="loginForm__btn-register">
+          <Button
+            variant="contained"
+            className="loginForm__btn-register-b"
+          >
+            Registrase
+          </Button>
+        </div>
+      </form>
+    </div>
     </>
   );
 };
