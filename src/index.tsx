@@ -24,7 +24,7 @@ root.render(
       
       {/* <Register /> */}
       
-      <UserProfile />
+      {/* <UserProfile /> */}
       
     </StyledEngineProvider>
   </React.StrictMode>
