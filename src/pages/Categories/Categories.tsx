@@ -5,10 +5,13 @@ import { NavBar } from "../../components/NavBar/NavBar";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { recetas } from "../../static_test/recipes";
 import { useSearch } from "../../hooks/useSearch";
+import { useParams } from "react-router";
 
 export const Categories = () => {
   const { text, result, onChangeInput } = useSearch({ data: recetas });
-  console.log(result);
+  const { category } = useParams();
+  console.log(category);
+  // console.log(result);
   return (
     <>
       <NavBar />
@@ -18,7 +21,7 @@ export const Categories = () => {
           component="h1"
           className="category__container-title"
         >
-          <b>Categoría</b>
+          <b>{category}</b>
         </Typography>
         <div className="category__container-searchBar">
           <SearchBar text={text} onChangeInput={onChangeInput} />

@@ -2,15 +2,18 @@ import React from "react";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import "./_NavBar.scss";
+import { useNavigate } from "react-router-dom";
 
-const isUserAuthenticated = true;
+const isUserAuthenticated = false;
 
 export const NavBar = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="navBarContainer">
         <img
           className="navBarContainer__icon"
+          alt="image_profile"
           src="https://cdn-icons-png.flaticon.com/512/526/526190.png"
         ></img>
         {isUserAuthenticated ? (
@@ -30,12 +33,18 @@ export const NavBar = () => {
               <Button
                 className="navBarContainer__buttons-btn"
                 variant="contained"
+                onClick={() => {
+                  navigate("/register");
+                }}
               >
                 Regístrate
               </Button>
               <Button
                 className="navBarContainer__buttons-btn"
                 variant="contained"
+                onClick={() => {
+                  navigate("/login");
+                }}
               >
                 Ingresar
               </Button>
