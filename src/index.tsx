@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { Login } from "./pages/Login/Login";
 import { HomePage } from "./pages/HomePage/HomePage";
+import { UserProfile } from "./pages/UserProfile/UserProfile";
 import { StyledEngineProvider } from "@mui/material";
 import { Categories } from "./pages/Categories/Categories";
 
@@ -15,10 +16,10 @@ root.render(
       {/* <App /> */}
       {/* <Login /> */}
 
-      <Categories />
+      {/* <Categories /> */}
 
-      {/*<HomePage />*/}
-
+      {/* <HomePage /> */}
+      <UserProfile />
     </StyledEngineProvider>
   </React.StrictMode>
 );
