@@ -1,11 +1,24 @@
 .registerTitle {
-    display: grid;
+    display: flex;
+    position: relative;
     font-family: 'Cookie';
     font-size: 28px;
     height: 100px;
     place-items: center;
+    &__i{
+        width: 4rem; 
+        position: absolute;
+        left: 8%;
+    }
+    &__i:hover{
+        width: 5rem;
+    }
     &__t{
-        margin-top: 15px;
+        position: absolute;
+        left: 43%;
+        right: 43%;
+        align-items: center;
+        position: absolute;
         text-align: center;
     }
 }

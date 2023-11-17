@@ -4,6 +4,7 @@ import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
 import { Categories } from "./pages/Categories/Categories";
 import { UserProfile } from "./pages/UserProfile/UserProfile";
+import { Chat } from "./pages/Chat/Chat";
 function App() {
   return (
     <BrowserRouter>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/chat" element={<Chat />} />
         <Route path="/category/:category" element={<Categories />} />
       </Routes>
     </BrowserRouter>

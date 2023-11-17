@@ -1,0 +1,44 @@
+html, body{
+    background-color: #281B23 ;
+}
+h2{
+    color: white;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium';
+    font-size: 33px;
+}
+img{
+    margin-right: 20px;
+}
+.chat__container{
+    display: flex;
+    height: 43em;
+}
+.chat__friends{
+    display: flex;
+    flex-direction: column;
+    width: 22%;
+    border: 3px solid white;
+    height: 100%;
+    &-names{
+        overflow-y: auto;
+        width: 100%;
+        display: grid;
+        place-items: center;
+        &-n{
+            display: flex;
+            margin: 5px;
+            border: 2px  solid white;
+            border-radius: 10px;
+            width: 90%;
+            height: 50px;
+            text-align: center;
+            padding: 5px;
+            color: white;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+        
+    }
+}

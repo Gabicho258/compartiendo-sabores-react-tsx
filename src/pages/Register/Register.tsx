@@ -5,6 +5,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
+import { useNavigate } from "react-router-dom";
 import "./_Register.scss";
 
 interface dataUser  {
@@ -17,6 +18,7 @@ interface dataUser  {
 };
 
 export const Register = () =>{
+    const navigate = useNavigate();
     const [form, setForm] = useState< dataUser >({
         name: '',
         lastName: '',
@@ -38,6 +40,13 @@ export const Register = () =>{
       <>
         <div className="registerContainer">
           <div className="registerTitle">
+            <img
+              className="registerTitle__i"
+              alt="image_profile"
+              src="https://cdn-icons-png.flaticon.com/512/21/21159.png"
+              onClick={() => {
+                navigate("/");
+              }}></img>
             <h1 className="registerTitle__t">
                 Registrarse
             <br />
