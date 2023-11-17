@@ -6,74 +6,11 @@ import Avatar from "@mui/material/Avatar";
 import CallIcon from "@mui/icons-material/Call";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import { CustomTabPanel } from "../../components/CustomTabPanel/CustomTabPanel";
+import { recetas } from "../../static_test/recipes";
 import "./_UserProfile.scss";
-
-const userRecipes = [
-  {
-    img: "https://www.upmenu.com/wp-content/uploads/2022/08/comida-rapida-a-domicilo-1200x900.jpg",
-    title: "Sandwich",
-  },
-  {
-    img: "https://www.clara.es/medio/2021/12/16/que-comer-hoy-ideas_21beeb02_1200x630.jpg",
-    title: "Espirales",
-  },
-  {
-    img: "https://www.cocinacaserayfacil.net/wp-content/uploads/2020/03/Platos-de-comida-que-pides-a-domicilio-y-puedes-hacer-en-casa.jpg",
-    title: "Pizza",
-  },
-  {
-    img: "https://www.upmenu.com/wp-content/uploads/2022/08/comida-rapida-a-domicilo-1200x900.jpg",
-    title: "Sandwich",
-  },
-  {
-    img: "https://www.clara.es/medio/2021/12/16/que-comer-hoy-ideas_21beeb02_1200x630.jpg",
-    title: "Espirales",
-  },
-  {
-    img: "https://www.cocinacaserayfacil.net/wp-content/uploads/2020/03/Platos-de-comida-que-pides-a-domicilio-y-puedes-hacer-en-casa.jpg",
-    title: "Pizza",
-  },
-  {
-    img: "https://www.upmenu.com/wp-content/uploads/2022/08/comida-rapida-a-domicilo-1200x900.jpg",
-    title: "Sandwich",
-  },
-  {
-    img: "https://www.clara.es/medio/2021/12/16/que-comer-hoy-ideas_21beeb02_1200x630.jpg",
-    title: "Espirales",
-  },
-  {
-    img: "https://www.cocinacaserayfacil.net/wp-content/uploads/2020/03/Platos-de-comida-que-pides-a-domicilio-y-puedes-hacer-en-casa.jpg",
-    title: "Pizza",
-  },
-  {
-    img: "https://www.upmenu.com/wp-content/uploads/2022/08/comida-rapida-a-domicilo-1200x900.jpg",
-    title: "Sandwich",
-  },
-  {
-    img: "https://www.clara.es/medio/2021/12/16/que-comer-hoy-ideas_21beeb02_1200x630.jpg",
-    title: "Espirales",
-  },
-  {
-    img: "https://www.cocinacaserayfacil.net/wp-content/uploads/2020/03/Platos-de-comida-que-pides-a-domicilio-y-puedes-hacer-en-casa.jpg",
-    title: "Pizza",
-  },
-  {
-    img: "https://www.upmenu.com/wp-content/uploads/2022/08/comida-rapida-a-domicilo-1200x900.jpg",
-    title: "Sandwich",
-  },
-  {
-    img: "https://www.clara.es/medio/2021/12/16/que-comer-hoy-ideas_21beeb02_1200x630.jpg",
-    title: "Espirales",
-  },
-  {
-    img: "https://www.cocinacaserayfacil.net/wp-content/uploads/2020/03/Platos-de-comida-que-pides-a-domicilio-y-puedes-hacer-en-casa.jpg",
-    title: "Pizza",
-  },
-];
 
 const userFavRecipes = [
   {
@@ -85,40 +22,6 @@ const userFavRecipes = [
     title: "Pizza",
   },
 ];
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-      className="userProfile__recipesTab-panel"
-    >
-      {value === index && (
-        <Box>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 export const UserProfile = () => {
   const [value, setValue] = useState(0);
@@ -152,7 +55,7 @@ export const UserProfile = () => {
                 Recetas Compartidas
               </h2>
               <h2 className="userProfile__container-grid-right-counter">
-                {userRecipes.length}
+                {recetas.length}
               </h2>
             </div>
           </div>
@@ -177,24 +80,21 @@ export const UserProfile = () => {
               <Tab
                 className="userProfile__recipesTab-tabs-recipes"
                 label="Publicaciones"
-                {...a11yProps(0)}
               />
               <Tab
                 className="userProfile__recipesTab-tabs-favorites"
                 label="Favoritos"
-                {...a11yProps(1)}
               />
             </Tabs>
           </div>
           <CustomTabPanel value={value} index={0}>
             <div className="userProfile__recipesTab-recipes">
               <ImageList gap={15} cols={5}>
-                {userRecipes.map((item) => (
-                  <ImageListItem key={item.img}>
-                    ,{" "}
+                {recetas.map((item) => (
+                  <ImageListItem key={item.images[0]}>
                     <img
                       className="userProfile__recipesTab-recipes-img"
-                      src={item.img}
+                      src={item.images[0]}
                       alt={item.title}
                     />
                   </ImageListItem>
