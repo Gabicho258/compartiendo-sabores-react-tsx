@@ -66,6 +66,20 @@
         }
       }
     }
+    &-sendMessage {
+      margin: 0.3rem 2.5rem;
+      &-btn {
+        height: 2.5rem;
+        display: flex;
+        flex-direction: row;
+        gap: 0.3rem;
+        background-color: #8daa94;
+        &:hover {
+          background-color: #fff;
+          color: #8daa94;
+        }
+      }
+    }
     &-userDescription {
       font-size: 1.2rem;
       margin: 0.5rem 2.5rem;

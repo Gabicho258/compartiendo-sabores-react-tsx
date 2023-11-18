@@ -8,6 +8,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
 import { CustomTabPanel } from "../../components/CustomTabPanel/CustomTabPanel";
 import { recetas } from "../../static_test/recipes";
 import "./_UserProfile.scss";
@@ -24,7 +26,7 @@ const userFavRecipes = [
 ];
 
 const isCompanyAccount = true;
-const isOwnProfile = true;
+const isOwnProfile = false;
 
 export const UserProfile = () => {
   const [value, setValue] = useState(0);
@@ -78,6 +80,22 @@ export const UserProfile = () => {
               </h2>
             </div>
           </div>
+          {!isOwnProfile ? (
+            <div className="userProfile__container-sendMessage">
+              <Button
+                variant="contained"
+                className="userProfile__container-sendMessage-btn"
+              >
+                <p className="userProfile__container-sendMessage-btn-label">
+                  Enviar mensaje
+                </p>
+                <SendIcon className="userProfile__container-sendMessage-btn-icon" />
+              </Button>
+            </div>
+          ) : (
+            <></>
+          )}
+
           <p className="userProfile__container-userDescription">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Id nibh
