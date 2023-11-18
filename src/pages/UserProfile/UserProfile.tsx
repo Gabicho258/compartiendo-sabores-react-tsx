@@ -23,6 +23,9 @@ const userFavRecipes = [
   },
 ];
 
+const isCompanyAccount = true;
+const isOwnProfile = true;
+
 export const UserProfile = () => {
   const [value, setValue] = useState(0);
 
@@ -35,9 +38,16 @@ export const UserProfile = () => {
         <div className="userProfile__backBtn">
           <ArrowBackIcon className="userProfile__backBtn-icon" />
         </div>
-        <div className="userProfile__editBtn">
-          <EditIcon className="userProfile__editBtn-icon" />
-        </div>
+        {isOwnProfile ? (
+          <>
+            <div className="userProfile__editBtn">
+              <EditIcon className="userProfile__editBtn-icon" />
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+
         <div className="userProfile__container">
           <div className="userProfile__container-grid">
             <div className="userProfile__container-grid-left">
@@ -48,6 +58,15 @@ export const UserProfile = () => {
               />
               <h3 className="userProfile__container-grid-left-name">
                 Juan Perez
+                {isCompanyAccount ? (
+                  <>
+                    <span className="userProfile__container-grid-left-name-companyLabel">
+                      Empresa/Negocio
+                    </span>
+                  </>
+                ) : (
+                  <></>
+                )}
               </h3>
             </div>
             <div className="userProfile__container-grid-right">
@@ -65,10 +84,18 @@ export const UserProfile = () => {
             tortor id aliquet. Accumsan sit amet nulla facilisi morbi tempus.
             Velit scelerisque in dictum non consectetur a erat.
           </p>
-          <div className="userProfile__container-contact">
-            <CallIcon className="userProfile__container-contact-icon" />
-            <p className="userProfile__container-contact-phone">999 999 999</p>
-          </div>
+          {isCompanyAccount ? (
+            <>
+              <div className="userProfile__container-contact">
+                <CallIcon className="userProfile__container-contact-icon" />
+                <p className="userProfile__container-contact-phone">
+                  999 999 999
+                </p>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="userProfile__recipesTab">
           <div className="userProfile__recipesTab-tabs">
@@ -81,10 +108,14 @@ export const UserProfile = () => {
                 className="userProfile__recipesTab-tabs-recipes"
                 label="Publicaciones"
               />
-              <Tab
-                className="userProfile__recipesTab-tabs-favorites"
-                label="Favoritos"
-              />
+              {isOwnProfile ? (
+                <Tab
+                  className="userProfile__recipesTab-tabs-favorites"
+                  label="Favoritos"
+                />
+              ) : (
+                <></>
+              )}
             </Tabs>
           </div>
           <CustomTabPanel value={value} index={0}>
@@ -102,21 +133,25 @@ export const UserProfile = () => {
               </ImageList>
             </div>
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
-            <div className="userProfile__recipesTab-favorites">
-              <ImageList gap={15} cols={5}>
-                {userFavRecipes.map((item) => (
-                  <ImageListItem key={item.img}>
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      className="userProfile__recipesTab-favorites-img"
-                    />
-                  </ImageListItem>
-                ))}
-              </ImageList>
-            </div>
-          </CustomTabPanel>
+          {isOwnProfile ? (
+            <CustomTabPanel value={value} index={1}>
+              <div className="userProfile__recipesTab-favorites">
+                <ImageList gap={15} cols={5}>
+                  {userFavRecipes.map((item) => (
+                    <ImageListItem key={item.img}>
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        className="userProfile__recipesTab-favorites-img"
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              </div>
+            </CustomTabPanel>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </>

@@ -29,6 +29,7 @@
     &-grid {
       display: grid;
       grid-template-columns: 1fr 4fr;
+      margin: 0 2.5rem;
       &-left {
         display: flex;
         flex-direction: column;
@@ -42,6 +43,12 @@
         &-name {
           margin: 0.3rem 0;
           font-size: 1.7rem;
+          &-companyLabel {
+            color: #b0b0b0;
+            font-size: 1rem;
+            margin: 0 0.4rem;
+            font-weight: 500;
+          }
         }
       }
       &-right {
