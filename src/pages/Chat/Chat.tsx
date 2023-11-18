@@ -7,13 +7,66 @@ import { useNavigate } from "react-router-dom";
 import { users } from "../../static_test/users";
 import { messages } from "../../static_test/message";
 
+interface Friend{
+  name:string;
+  image:string;
+}
+interface Mensaje {
+  isFriend: boolean;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 
 export const Chat = () => {
-  const [friend, setFriend] = useState("");
+  const [friend, setFriend] = useState<Friend>({
+    name:'',
+    image:'',
+  });
 
-  const openChat = (friend: string)=> {
-    setFriend(friend);
+  const openChat = (n: string, img: string)=> {
+    setFriend({
+      name:n,
+      image:img,
+    });
   }
+
+  const [mensajesOrdenados, setMensajesOrdenados] = useState<Mensaje[]>([]);
+
+  useEffect(() => {
+    const mensajesOrdenados = [...messages].sort((a, b) => {
+      const fechaA = new Date(a.createdAt).getTime();
+      const fechaB = new Date(b.createdAt).getTime();
+      return fechaA - fechaB;
+    });
+
+    setMensajesOrdenados(mensajesOrdenados);
+  }, []);
+
+  console.log(mensajesOrdenados)
+
+  const newDate = (data: string) =>{
+    const dateMongoDB = new Date(data);
+    const year = dateMongoDB.getFullYear();
+    const month = dateMongoDB.getMonth() + 1; // Meses en JavaScript son 0-indexados
+    const day = dateMongoDB.getDate();
+    const hour = dateMongoDB.getHours();
+    const minute = dateMongoDB.getMinutes();
+    const second = dateMongoDB.getSeconds();
+    console.log(`${year}-${month}-${day} ${hour}:${minute}:${second}`);
+    return {
+      year,
+      month,
+      day,
+      hour,
+      minute,
+      second
+    };
+  }
+
+  
 
   return (
     <>
@@ -24,15 +77,42 @@ export const Chat = () => {
             <div className="chat__friends-names">
               {users.map((user) => 
               <div className="chat__friends-names-n" 
-                onClick={()=>{openChat(`${user.first_name} ${user.last_name}`)}}
-                ><img src={user.photo_url}></img> {user.first_name} {user.last_name}
+                onClick={()=>{openChat(`${user.first_name} ${user.last_name}`,`${user.photo_url}` )}}
+                ><img className="chat__friends-names-n-i" src={user.photo_url}></img> {user.first_name} {user.last_name}
                 </div>)}
             </div>
           </div>
           <div className="chat__message">
-            {messages.map(message => <p>{message.text} {message.createdAt}</p>)}
+            <div className="chat__message-friend">
+              <img  className="chat__message-friend-i" src={friend.image}></img><h2>{friend.name}</h2> 
+            </div>
+            <div className="chat__message-chat" >
+                <div className="chat__message-chat-c" >
+                  {mensajesOrdenados.map((mensaje, index) => (
+                    <div key={index}>
+                      {mensaje.isFriend ? (
+                      <div className="chat__message-chat-c-m1" >
+                        <div className="chat__message-chat-c-m1-p">
+                          <p>{mensaje.text} {newDate(mensaje.createdAt).hour}:{newDate(mensaje.createdAt).minute}</p>
+                        </div>
+                      </div>
+                      ) : (
+                      <div className="chat__message-chat-c-m2" >
+                        <div className="chat__message-chat-c-m2-p">
+                          <p>{mensaje.text} {newDate(mensaje.createdAt).hour}:{newDate(mensaje.createdAt).minute}</p>
+                        </div>
+                      </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <div className="chat__message-chat-b">
+                  <input className="chat__message-chat-b-in" ></input> 
+                  <img className="chat__message-chat-b-i" src="https://cdn.pixabay.com/photo/2016/07/12/21/00/paper-planes-1513032_1280.png" ></img>
+                </div>
+            </div>
           </div>
-            <p>Chat con {friend}</p>
+            
         </div>
         
     </>

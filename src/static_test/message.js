@@ -8,7 +8,7 @@ export const messages= [
     },
     {
         isFriend: true,
-        text: "Hola amigo",
+        text: "Hola amigooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",
         createdAt: "2023-11-17T19:30:55.609Z",
         updatedAt: "2023-11-17T19:30:55.609Z",
         __v: 0

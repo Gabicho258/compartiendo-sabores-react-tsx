@@ -8,7 +8,7 @@ export const users = [
         password: "$2b$15$KEzeBuNN7tLWI0UMQOd8H.WTUEliq.vhH88amFiWmup6HrWQcW3qK",
         phone_number: "99999999992",
         description: "Es una descripción",
-        photo_url: "www.google.com",
+        photo_url: "https://media.gq.com.mx/photos/609c0fdeee4372271f0b9056/1:1/w_2000,h_2000,c_limit/salir%20guapo%20en%20fotos-605380757.jpg",
         createdAt: "2023-11-14T20:50:34.586Z",
         updatedAt: "2023-11-14T20:50:34.586Z",
         __v: 0
@@ -22,7 +22,7 @@ export const users = [
         password: "$2b$15$6PJUNCuGxVV63XNRhJbMdeIcC/39SF3htc2agEJJFr4kmdOY4TPmu",
         phone_number: "99999999992",
         description: "Es una descripción",
-        photo_url: "www.google.com",
+        photo_url: "https://wallpapercave.com/wp/wp10469207.jpg",
         createdAt: "2023-11-14T20:51:03.965Z",
         updatedAt: "2023-11-14T20:51:03.965Z",
         __v: 0

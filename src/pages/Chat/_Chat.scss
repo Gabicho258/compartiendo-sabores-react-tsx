@@ -7,9 +7,7 @@ h2{
     font-family: 'Franklin Gothic Medium';
     font-size: 33px;
 }
-img{
-    margin-right: 20px;
-}
+
 .chat__container{
     display: flex;
     height: 43em;
@@ -38,7 +36,77 @@ img{
             align-items: center;
             justify-content: center;
             font-size: 25px;
+            cursor: pointer;
+            &-i{
+                margin-right: 20px;
+                width: 3rem; 
+            }
         }
-        
+        &-n:hover{
+            background-color: #F47E68;
+        }
+    }
+}
+.chat__message{
+    width: 77.4%;
+    height: 100%;
+    &-friend{
+        display: flex;
+        border: 3px solid white;
+        width: 100%;
+        height: 15%;
+        &-i{
+            width: 5rem;
+            margin: 10px;
+        }
+    }
+    &-chat{
+        height: 84.3%;
+        width: 100%;
+        border: 3px solid white;
+        &-c{
+            height: 80%;
+            overflow-y: auto;
+            &-m1{
+                display: flex;
+                overflow-y: auto;
+                color: white;
+                padding: 50px;
+                &-p{
+                    border: 3px solid #8DAA94;
+                    border-radius: 10px ;
+                }
+            }
+            &-m2{
+                padding: 50px;
+                display: flex;
+                overflow-y: auto;
+                color: white;
+                justify-content: right;
+                &-p{
+                    border: 3px solid #D12942;
+                    border-radius: 10px ;
+                }
+            }
+        }
+        &-b{
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &-in{
+                width: 60%;
+                background-color: #281B23;
+                border: 5px solid white;
+                border-radius: 10px;
+                height: 40px;
+                color: white;
+                font-size: 20px;
+                margin-right: 20px;
+            }
+            &-i{
+                width: 3rem;
+            }
+        }
     }
 }
