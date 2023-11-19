@@ -5,6 +5,7 @@ import { Register } from "./pages/Register/Register";
 import { Categories } from "./pages/Categories/Categories";
 import { UserProfile } from "./pages/UserProfile/UserProfile";
 import { EditProfile } from "./pages/EditProfile/EditProfile";
+import { Recipe } from "./pages/Recipe/Recipe";
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ function App() {
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/category/:category" element={<Categories />} />
+        <Route path="/recipe/:id" element={<Recipe />} />
       </Routes>
     </BrowserRouter>
   );
