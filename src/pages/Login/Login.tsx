@@ -3,31 +3,41 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./_Login.scss";
 import { useNavigate } from "react-router-dom";
-import { useGetUsersQuery } from "../../app/apis/user.api";
-
-interface credentials {
-  email: string;
-  password: string;
-}
+import {
+  useGetUsersQuery,
+  useLoginMutation,
+} from "../../app/apis/compartiendoSabores.api";
+import { User, UserCredentials } from "../../interfaces";
 
 export const Login = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState<credentials>({
+  const [login, { isLoading }] = useLoginMutation();
+  const [form, setForm] = useState<UserCredentials>({
     email: "",
     password: "",
   });
 
-  const inputChange = (value: string, field: string) => {
+  const onInputChange = (value: string, field: string) => {
     setForm({
       ...form,
       [field]: value,
     });
   };
 
-  const print = ()=>{
-    console.log(form);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const response: any = await login(form).unwrap();
+      console.log(response);
+      localStorage.setItem(
+        "data",
+        JSON.stringify({ token: response.token, id: response.user._id })
+      );
+      navigate("/homepage");
+    } catch (error: any) {
+      alert(JSON.stringify(error.data));
     }
-    
+  };
 
   return (
     <>
@@ -39,7 +49,12 @@ export const Login = () => {
             Sabores!
           </h1>
         </div>
-        <form className="loginForm">
+        <form
+          className="loginForm"
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
           <div className="loginForm__email">
             <div className="loginForm__email-label">
               <label>Correo Electrónico:</label>
@@ -51,7 +66,7 @@ export const Login = () => {
               className="loginForm__email-input"
               value={form.email}
               onChange={({ target }) => {
-                inputChange(target.value, "email");
+                onInputChange(target.value, "email");
               }}
             />
           </div>
@@ -66,24 +81,27 @@ export const Login = () => {
               type="password"
               className="loginForm__password-input"
               onChange={({ target }) => {
-                inputChange(target.value, "password");
+                onInputChange(target.value, "password");
               }}
             />
           </div>
           <div className="loginForm__btn-login">
             <Button
+              disabled={isLoading}
+              type="submit"
               variant="contained"
               className="loginForm__btn-login-b"
-              onClick={() => {
-                print()
-                navigate("/homepage");
-              }}
+              // onClick={() => {
+              //   print();
+              //   navigate("/homepage");
+              // }}
             >
-              Iniciar Sesión
+              {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
             </Button>
           </div>
           <div className="loginForm__btn-register">
             <Button
+              disabled={isLoading}
               variant="contained"
               className="loginForm__btn-register-b"
               onClick={() => {

@@ -1,0 +1,21 @@
+#buttonAddRecipe {
+    position: fixed;
+    bottom: 30px;
+    right: 160px;
+    padding: 10px 20px;
+    border-radius: 500px;
+    background-color: #737373;
+    color: #fff;
+    border: none;
+    text-transform: none;
+    cursor: pointer;
+    font-size: 1rem;
+    strong{
+        span{
+            position: relative;
+            top: 5px;
+            font-size: 2rem;
+            line-height: 0%;
+        }
+    }
+}
