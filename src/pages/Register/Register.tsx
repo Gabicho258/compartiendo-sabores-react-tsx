@@ -5,27 +5,33 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./_Register.scss";
+import { verify } from "crypto";
 
-interface dataUser  {
-    name: String,
-    lastName: String,
-    email: String,
-    password: String,
-    verifyPassword: String,
-    rol: String
-};
+interface User {
+  _id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  phone_number: string;
+  description: string;
+  photo_url: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 
 export const Register = () =>{
-    const navigate = useNavigate();
-    const [form, setForm] = useState< dataUser >({
-        name: '',
-        lastName: '',
+    const [verifyPassword, setVerifyPassword] = useState<string>('');
+    const [rol, setRol] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
+    const [form, setForm] = useState<Partial<User>>({
+        first_name: '',
+        last_name: '',
         email: '',
         password: '',
-        verifyPassword: '',
-        rol: ''
     });
 
     const inputChange = (value: string, field: string) => {
@@ -34,19 +40,34 @@ export const Register = () =>{
           [field]: value,
         });
     }
-    console.log(form);
 
-    return (
-      <>
-        <div className="registerContainer">
-          <div className="registerTitle">
-            <img
+    const print = ()=>{
+      if (form.password !== verifyPassword) {
+        setError('Las contraseñas no coinciden');
+      } else {
+        setError(null);
+          console.log(form);
+          console.log(rol);
+      }
+      
+    }
+
+/*
+<img
               className="registerTitle__i"
               alt="image_profile"
               src="https://cdn-icons-png.flaticon.com/512/21/21159.png"
               onClick={() => {
                 navigate("/");
               }}></img>
+*/
+
+    return (
+      <>
+        <div className="registerContainer">
+          <div className="registerTitle">
+            
+              
             <h1 className="registerTitle__t">
                 Registrarse
             <br />
@@ -63,9 +84,9 @@ export const Register = () =>{
                 required
                 id="name"
                 className="registerForm__name-input"
-                value={form.name}
+                value={form.first_name}
                 onChange={({ target }) => {
-                  inputChange(target.value, "name");
+                  inputChange(target.value, "first_name");
                 }}
               />
             </div>
@@ -79,9 +100,9 @@ export const Register = () =>{
                 required
                 id="lastName"
                 className="registerForm__lastName-input"
-                value={form.lastName}
+                value={form.last_name}
                 onChange={({ target }) => {
-                  inputChange(target.value, "lastName");
+                  inputChange(target.value, "last_name");
                 }}
               />
             </div>
@@ -125,14 +146,14 @@ export const Register = () =>{
                   Confirmar contraseña:
                 </label>
               </div>
+              {error && <span style={{ color: 'red' }}>{error}<br/></span>}
               <TextField
                 required
-                value={form.verifyPassword}
                 id="verifyPassword"
                 type="password"
                 className="registerForm__verifyPassword-input"
                 onChange={({ target }) => {
-                  inputChange(target.value, "verifyPassword");
+                  setVerifyPassword(target.value);
                 }}
               />
             </div>
@@ -153,7 +174,7 @@ export const Register = () =>{
                     label="Personal"
                     className="registerForm__userType-formControl-radioGroup-p"
                     onClick={({}) => {
-                        inputChange("Personal", "rol");
+                        setRol("Personal");
                     }}
                     />
 
@@ -162,7 +183,7 @@ export const Register = () =>{
                     control={<Radio />}
                     label="Empresa"
                     onClick={({}) => {
-                        inputChange("Empresa", "rol");
+                        setRol("Empresa");
                     }}
                     />
                 </RadioGroup>
@@ -172,9 +193,15 @@ export const Register = () =>{
               <Button
                 variant="contained"
                 className="registerForm__btn-create-b"
+                onClick={({}) =>{
+                  print()
+                }}
               >
                 Crear Cuenta
               </Button>
+              <p>
+                ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión aquí</Link>
+              </p>
             </div>
           </form>
         </div>

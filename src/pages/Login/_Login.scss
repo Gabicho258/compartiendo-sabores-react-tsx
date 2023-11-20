@@ -1,7 +1,12 @@
+body{
+    background-color: #281B23;
+}
+
 .loginTitle {
     display: grid;
     place-items: center;
     font-family: 'Cookie';
+    color: white;
     font-size: 28px;
     &__t{
         max-width: 400px;
@@ -17,11 +22,13 @@
         &-label {
             text-align: left;
             margin-bottom: 20px;
+            color: white;
         }
         &-input {
             width: 30em;
             margin-bottom: 20px;
             border-radius: 10px;
+            background-color: white;
         }
     }
 
@@ -29,11 +36,13 @@
         &-label {
             text-align: left;
             margin-bottom: 20px;
+            color: white;
         }
         &-input {
             width: 30em;
             margin-bottom: 40px;
             border-radius: 10px;
+            background-color: white;
         }
     }
     &__btn-login{

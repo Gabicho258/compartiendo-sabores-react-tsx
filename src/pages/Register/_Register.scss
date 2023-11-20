@@ -1,3 +1,7 @@
+body{
+    background-color: #281B23;
+}
+
 .registerTitle {
     display: flex;
     position: relative;
@@ -20,6 +24,7 @@
         align-items: center;
         position: absolute;
         text-align: center;
+        color: white;
     }
 }
 
@@ -30,22 +35,26 @@
         &-label {
             text-align: left;
             margin-bottom: 20px;
+            color: white;
         }
         &-input {
             width: 30em;
             margin-bottom: 20px;
             border-radius: 10px;
+            background-color: white;
         }
     }
     &__lastName {
         &-label {
             text-align: left;
             margin-bottom: 20px;
+            color: white;
         }
         &-input {
             width: 30em;
             margin-bottom: 20px;
             border-radius: 10px;
+            background-color: white;
         }
     }
 
@@ -53,11 +62,13 @@
         &-label {
             text-align: left;
             margin-bottom: 20px;
+            color: white;
         }
         &-input {
             width: 30em;
             margin-bottom: 20px;
             border-radius: 10px;
+            background-color: white;
         }
     }
 
@@ -65,31 +76,37 @@
         &-label {
             text-align: left;
             margin-bottom: 20px;
+            color: white;
         }
         &-input {
             width: 30em;
             margin-bottom: 20px;
             border-radius: 10px;
+            background-color: white;
         }
     }
     &__verifyPassword {
         &-label {
             text-align: left;
             margin-bottom: 20px;
+            color: white;
         }
         &-input {
             width: 30em;
             margin-bottom: 20px;
             border-radius: 10px;
+            background-color: white;
         }
     }
     &__userType{
         width: 30em;
         margin-bottom: 20px;
+        color: white;
         &-formControl{
             display: grid;
             place-items: center;
             &-radioGroup{
+                color: white;
                 &-p{
                     margin-right: 80px;
                 }
@@ -99,6 +116,9 @@
 
     &__btn-create{
         margin-bottom: 40px;
+        text-align: center;
+        color: white;
+        cursor: pointer;
         &-b{
             color: black;
             background-color: #8DAA94;

@@ -5,6 +5,7 @@ import { Register } from "./pages/Register/Register";
 import { Categories } from "./pages/Categories/Categories";
 import { UserProfile } from "./pages/UserProfile/UserProfile";
 import { Chat } from "./pages/Chat/Chat";
+import { CreateRecipe } from "./pages/CreateRecipe/CreateRecipe";
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/createRecipe" element={<CreateRecipe />} />
         <Route path="/category/:category" element={<Categories />} />
       </Routes>
     </BrowserRouter>
