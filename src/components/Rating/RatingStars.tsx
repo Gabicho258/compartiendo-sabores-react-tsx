@@ -6,6 +6,7 @@ import StarBorder from "@mui/icons-material/StarBorder";
 interface RatingProps {
   readOnly: boolean;
   qualification: number;
+  onChangeRating?: (value: number) => void;
   darkTheme?: boolean;
 }
 
@@ -13,6 +14,7 @@ export const RatingStars = ({
   readOnly,
   qualification,
   darkTheme,
+  onChangeRating,
 }: RatingProps) => {
   const [value, setValue] = useState<number | null>(qualification);
   return (
@@ -37,6 +39,9 @@ export const RatingStars = ({
           value={value}
           onChange={(event, newValue) => {
             setValue(newValue);
+            if (onChangeRating && newValue) {
+              onChangeRating(newValue);
+            }
           }}
           emptyIcon={
             darkTheme ? (
