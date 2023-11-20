@@ -1,15 +1,42 @@
 import React from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import AddIcon from "@mui/icons-material/Add";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
 import { users } from "../../static_test/users";
+import { User } from "../../interfaces";
 import "./_EditProfile.scss";
 
 const user = users[0];
 
 export const EditProfile = () => {
+  const [verifyPassword, setVerifyPassword] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const [form, setForm] = useState<Partial<User>>({
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    description: "",
+    password: "",
+  });
+
+  const inputChange = (value: string, field: string) => {
+    setForm({
+      ...form,
+      [field]: value,
+    });
+  };
+
+  const print = () => {
+    if (form.password !== verifyPassword) {
+      setError("Las contraseñas no coinciden");
+    } else {
+      setError(null);
+      console.log(form);
+    }
+  };
   return (
     <>
       <div className="editProfile">
@@ -17,7 +44,13 @@ export const EditProfile = () => {
           <Button variant="contained" className="editProfile__buttons-cancel">
             Cancelar
           </Button>
-          <Button variant="contained" className="editProfile__buttons-save">
+          <Button
+            variant="contained"
+            className="editProfile__buttons-save"
+            onClick={({ target }) => {
+              print();
+            }}
+          >
             Guardar
           </Button>
         </div>
@@ -68,6 +101,23 @@ export const EditProfile = () => {
                     <input
                       type="text"
                       className="editProfile__main-editForm-grid-left-field-inputContainer-input"
+                      onChange={({ target }) => {
+                        inputChange(target.value, "first_name");
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="editProfile__main-editForm-grid-left-field">
+                  <p className="editProfile__main-editForm-grid-left-field-label">
+                    Apellido
+                  </p>
+                  <div className="editProfile__main-editForm-grid-left-field-inputContainer">
+                    <input
+                      type="text"
+                      className="editProfile__main-editForm-grid-left-field-inputContainer-input"
+                      onChange={({ target }) => {
+                        inputChange(target.value, "last_name");
+                      }}
                     />
                   </div>
                 </div>
@@ -80,6 +130,9 @@ export const EditProfile = () => {
                       type="text"
                       className="editProfile__main-editForm-grid-left-field-inputContainer-input"
                       placeholder="Opcional..."
+                      onChange={({ target }) => {
+                        inputChange(target.value, "phone_number");
+                      }}
                     />
                   </div>
                 </div>
@@ -91,9 +144,11 @@ export const EditProfile = () => {
                     <textarea
                       className="editProfile__main-editForm-grid-left-field-inputContainer-textarea"
                       rows={4}
-                    >
-                      {user.description}
-                    </textarea>
+                      defaultValue={user.description}
+                      onChange={({ target }) => {
+                        inputChange(target.value, "description");
+                      }}
+                    ></textarea>
                   </div>
                 </div>
               </div>
@@ -106,6 +161,9 @@ export const EditProfile = () => {
                     <input
                       type="text"
                       className="editProfile__main-editForm-grid-right-field-inputContainer-input"
+                      onChange={({ target }) => {
+                        inputChange(target.value, "password");
+                      }}
                     />
                   </div>
                 </div>
@@ -117,9 +175,19 @@ export const EditProfile = () => {
                     <input
                       type="text"
                       className="editProfile__main-editForm-grid-right-field-inputContainer-input"
+                      onChange={({ target }) => {
+                        setVerifyPassword(target.value);
+                      }}
                     />
                   </div>
                 </div>
+                {error ? (
+                  <div className="editProfile__main-editForm-grid-right-passwordErr">
+                    {error}
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>
