@@ -7,10 +7,11 @@ body{
     place-items: center;
     font-family: 'Cookie';
     color: white;
-    font-size: 28px;
+    margin-top: 4em;
     &__t{
         max-width: 400px;
         text-align: center;
+        font-size: 50px;
     }
 }
 

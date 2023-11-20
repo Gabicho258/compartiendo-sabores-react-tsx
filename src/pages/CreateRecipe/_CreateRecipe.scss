@@ -29,6 +29,7 @@ body{
     }
 
     &__half {
+        margin-top: 10px;
         display: flex;
         width: 80%;
         justify-content: space-between;
@@ -45,11 +46,13 @@ body{
                 overflow-x: auto; 
                 white-space: nowrap;
                 &-l{
-                    font-size: 18px;
+                    font-size: 20px;
                     font-weight: bold;
+                    margin-top: 10px;
                     &-b{
                         background-color: #D12942;
                         color: white;
+                        font-size: 15px;
                     }
                 }
             }
@@ -91,11 +94,13 @@ body{
                 overflow-x: auto; 
                 white-space: nowrap;
                 &-l{
-                    font-size: 18px;
+                    font-size: 20px;
                     font-weight: bold;
+                    margin-top: 10px;
                     &-b{
                         background-color: #D12942;
                         color: white;
+                        font-size: 15px;
                     }
                 }
             }
@@ -125,6 +130,7 @@ body{
         }
     }
     &__end{
+        margin-top: 10px;
         width: 50%;
         &-btn{
             display: flex;

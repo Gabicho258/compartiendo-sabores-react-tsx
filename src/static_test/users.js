@@ -91,13 +91,13 @@ export const users = [
     },
     {
         _id: "6556d849f499af5f3cc92a0b",
-        first_name: "TestFavorites",
+        first_name: "TestFavorites gaaaaaa gaaaa",
         last_name: "Apellido",
         email: "correo19@correo.com",
         password: "$2b$15$ZN.NqpSy/HIsNpipwPsAouz1bPVeQvSDyqh4DM/okq9jVxEdZcnWy",
         phone_number: "99999999992",
         description: "Es una descripción",
-        photo_url: "www.google.com",
+        photo_url: "https://media.gq.com.mx/photos/609c0fdeee4372271f0b9056/1:1/w_2000,h_2000,c_limit/salir%20guapo%20en%20fotos-605380757.jpg",
         favorites: [
             "123gergergreg",
             "qweqweqwe"
@@ -105,7 +105,8 @@ export const users = [
         createdAt: "2023-11-17T03:04:41.184Z",
         updatedAt: "2023-11-17T03:05:36.649Z",
         __v: 0
-    }
+    },
+
 
 ]
 

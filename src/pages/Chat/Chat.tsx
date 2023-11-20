@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import "./_Chat.scss";
 import { NavBar } from "../../components/NavBar/NavBar";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import { users } from "../../static_test/users";
 import { messages } from "../../static_test/message";
+import "./_Chat.scss";
 
 interface Friend{
   name:string;
   image:string;
 }
-interface Mensaje {
+interface Message {
   isFriend: boolean;
   text: string;
   createdAt: string;
@@ -21,31 +19,40 @@ interface Mensaje {
 
 
 export const Chat = () => {
+  const [form, setForm] = useState<Partial<Message>>({
+    text:'',
+  });
+  const [sortMessages, setSortMessages] = useState<Message[]>([]);
   const [friend, setFriend] = useState<Friend>({
     name:'',
     image:'',
   });
 
+  const inputForm = (t: string)=>{
+    setForm({
+      text:t,
+    })
+  }
+  const print = ()=>{
+    console.log(form);
+    setForm({
+      text:'',
+    })
+  }
   const openChat = (n: string, img: string)=> {
     setFriend({
       name:n,
       image:img,
     });
   }
-
-  const [mensajesOrdenados, setMensajesOrdenados] = useState<Mensaje[]>([]);
-
   useEffect(() => {
-    const mensajesOrdenados = [...messages].sort((a, b) => {
+    const sortMessages = [...messages].sort((a, b) => {
       const fechaA = new Date(a.createdAt).getTime();
       const fechaB = new Date(b.createdAt).getTime();
       return fechaA - fechaB;
     });
-
-    setMensajesOrdenados(mensajesOrdenados);
+    setSortMessages(sortMessages);
   }, []);
-
-  console.log(mensajesOrdenados)
 
   const newDate = (data: string) =>{
     const dateMongoDB = new Date(data);
@@ -55,7 +62,6 @@ export const Chat = () => {
     const hour = dateMongoDB.getHours();
     const minute = dateMongoDB.getMinutes();
     const second = dateMongoDB.getSeconds();
-    console.log(`${year}-${month}-${day} ${hour}:${minute}:${second}`);
     return {
       year,
       month,
@@ -66,8 +72,6 @@ export const Chat = () => {
     };
   }
 
-  
-
   return (
     <>
         <NavBar />
@@ -75,10 +79,10 @@ export const Chat = () => {
           <div className="chat__friends">
             <h2>CHATS</h2>
             <div className="chat__friends-names">
-              {users.map((user) => 
-              <div className="chat__friends-names-n" 
+              {users.map((user, index) => 
+              <div key={index} className="chat__friends-names-n" 
                 onClick={()=>{openChat(`${user.first_name} ${user.last_name}`,`${user.photo_url}` )}}
-                ><img className="chat__friends-names-n-i" src={user.photo_url}></img> {user.first_name} {user.last_name}
+                ><img className="chat__friends-names-n-i" src={user.photo_url}></img><p>{user.first_name} {user.last_name}</p>
                 </div>)}
             </div>
           </div>
@@ -88,18 +92,18 @@ export const Chat = () => {
             </div>
             <div className="chat__message-chat" >
                 <div className="chat__message-chat-c" >
-                  {mensajesOrdenados.map((mensaje, index) => (
+                  {sortMessages.map((message, index) => (
                     <div key={index}>
-                      {mensaje.isFriend ? (
+                      {message.isFriend ? (
                       <div className="chat__message-chat-c-m1" >
                         <div className="chat__message-chat-c-m1-p">
-                          <p>{mensaje.text} {newDate(mensaje.createdAt).hour}:{newDate(mensaje.createdAt).minute}</p>
+                          <p>{message.text}</p> <label>{newDate(message.createdAt).hour}:{newDate(message.createdAt).minute}</label>
                         </div>
                       </div>
                       ) : (
                       <div className="chat__message-chat-c-m2" >
                         <div className="chat__message-chat-c-m2-p">
-                          <p>{mensaje.text} {newDate(mensaje.createdAt).hour}:{newDate(mensaje.createdAt).minute}</p>
+                          <p>{message.text}</p><label>{newDate(message.createdAt).hour}:{newDate(message.createdAt).minute}</label>
                         </div>
                       </div>
                       )}
@@ -107,8 +111,20 @@ export const Chat = () => {
                   ))}
                 </div>
                 <div className="chat__message-chat-b">
-                  <input className="chat__message-chat-b-in" ></input> 
-                  <img className="chat__message-chat-b-i" src="https://cdn.pixabay.com/photo/2016/07/12/21/00/paper-planes-1513032_1280.png" ></img>
+                  <input 
+                    value={form.text}
+                    className="chat__message-chat-b-in" 
+                    onChange={({ target }) => {
+                      inputForm(target.value);
+                    }}
+                  ></input> 
+                  <img 
+                    className="chat__message-chat-b-i" 
+                    src="https://cdn.pixabay.com/photo/2016/07/12/21/00/paper-planes-1513032_1280.png" 
+                    onClick={({})=>{
+                      print();
+                    }}
+                  ></img>
                 </div>
             </div>
           </div>

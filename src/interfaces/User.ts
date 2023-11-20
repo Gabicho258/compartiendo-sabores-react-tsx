@@ -7,7 +7,13 @@ export interface User {
   phone_number: string;
   description: string;
   photo_url: string;
+  role: string;
   createdAt: string;
   updatedAt: string;
   __v: number;
+}
+
+export interface UserCredentials {
+  email: string;
+  password: string;
 }

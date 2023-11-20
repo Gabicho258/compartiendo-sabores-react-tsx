@@ -9,13 +9,15 @@ import Logout from "@mui/icons-material/Logout";
 import "./_NavBar.scss";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { users } from "../../static_test/users";
 
-const isUserAuthenticated = true;
-const user = users[0];
+import { useGetUserByIdQuery } from "../../app/apis/compartiendoSabores.api";
 
 export const NavBar = () => {
+  const isUserAuthenticated = localStorage.getItem("data");
+  const userCredentials =
+    isUserAuthenticated && JSON.parse(isUserAuthenticated);
   const navigate = useNavigate();
+  
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -24,6 +26,10 @@ export const NavBar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // console.log(isUserAuthenticated);
+  const { data } = useGetUserByIdQuery(userCredentials?.id);
+  
   return (
     <>
       <div className="navBarContainer">
@@ -36,12 +42,12 @@ export const NavBar = () => {
           <>
             <div className="navBarContainer__profile">
               <div className="navBarContainer__profile-name">
-                {`${user.first_name} ${user.last_name}`}
+                {`${data.first_name} ${data.last_name}`}
               </div>
               <Avatar
                 className="navBarContainer__profile-image"
-                alt={user.first_name}
-                src={user.photo_url}
+                alt={data.first_name}
+                src={data.photo_url}
                 onClick={handleClick}
               />
               <Menu
@@ -80,7 +86,7 @@ export const NavBar = () => {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 <MenuItem onClick={handleClose}>
-                  <Avatar src={user.photo_url} /> {user.first_name}
+                  <Avatar src={data.photo_url} /> {data.first_name}
                 </MenuItem>
 
                 <Divider />
