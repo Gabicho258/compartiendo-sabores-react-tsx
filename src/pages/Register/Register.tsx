@@ -1,12 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./_Register.scss";
+import { useCreateUserMutation } from "../../app/apis/compartiendoSabores.api";
 
 interface User {
   _id: string;
@@ -19,46 +20,44 @@ interface User {
   photo_url: string;
   createdAt: string;
   updatedAt: string;
+  role: string;
   __v: number;
 }
 
 export const Register = () => {
   const [verifyPassword, setVerifyPassword] = useState<string>("");
-  const [rol, setRol] = useState<string>("");
+  const [rol, setRol] = useState<string>("Personal");
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState<Partial<User>>({
     first_name: "",
     last_name: "",
     email: "",
     password: "",
+    role: rol,
   });
-
-  const inputChange = (value: string, field: string) => {
+  const [createUser, { isLoading }] = useCreateUserMutation();
+  const navigate = useNavigate();
+  const onInputChange = (value: string, field: string) => {
     setForm({
       ...form,
       [field]: value,
     });
   };
 
-  const print = () => {
+  const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (form.password !== verifyPassword) {
       setError("Las contraseñas no coinciden");
     } else {
       setError(null);
-      console.log(form);
-      console.log(rol);
+      try {
+        await createUser(form).unwrap();
+        navigate("/login");
+      } catch (error: any) {
+        alert(JSON.stringify(error.data));
+      }
     }
   };
-
-  /*
-<img
-              className="registerTitle__i"
-              alt="image_profile"
-              src="https://cdn-icons-png.flaticon.com/512/21/21159.png"
-              onClick={() => {
-                navigate("/");
-              }}></img>
-*/
 
   return (
     <>
@@ -69,18 +68,23 @@ export const Register = () => {
             <br />
           </h1>
         </div>
-        <form className="registerForm">
+        <form
+          className="registerForm"
+          onSubmit={(e) => {
+            handleRegister(e);
+          }}
+        >
           <div className="registerForm__name">
             <div className="registerForm__name-label">
               <label>Nombres:</label>
             </div>
             <TextField
-              required
+              required={true}
               id="name"
               className="registerForm__name-input"
               value={form.first_name}
               onChange={({ target }) => {
-                inputChange(target.value, "first_name");
+                onInputChange(target.value, "first_name");
               }}
             />
           </div>
@@ -89,12 +93,12 @@ export const Register = () => {
               <label>Apellidos:</label>
             </div>
             <TextField
-              required
+              required={true}
               id="lastName"
               className="registerForm__lastName-input"
               value={form.last_name}
               onChange={({ target }) => {
-                inputChange(target.value, "last_name");
+                onInputChange(target.value, "last_name");
               }}
             />
           </div>
@@ -103,13 +107,13 @@ export const Register = () => {
               <label>Correo Electrónico:</label>
             </div>
             <TextField
-              required
+              required={true}
               id="email"
               type="email"
               className="registerForm__email-input"
               value={form.email}
               onChange={({ target }) => {
-                inputChange(target.value, "email");
+                onInputChange(target.value, "email");
               }}
             />
           </div>
@@ -118,13 +122,13 @@ export const Register = () => {
               <label>Contraseña:</label>
             </div>
             <TextField
-              required
+              required={true}
               value={form.password}
               id="password"
               type="password"
               className="registerForm__password-input"
               onChange={({ target }) => {
-                inputChange(target.value, "password");
+                onInputChange(target.value, "password");
               }}
             />
           </div>
@@ -139,7 +143,7 @@ export const Register = () => {
               </span>
             )}
             <TextField
-              required
+              required={true}
               id="verifyPassword"
               type="password"
               className="registerForm__verifyPassword-input"
@@ -163,7 +167,7 @@ export const Register = () => {
                   control={<Radio />}
                   label="Personal"
                   className="registerForm__userType-formControl-radioGroup-p"
-                  onClick={({}) => {
+                  onClick={() => {
                     setRol("Personal");
                   }}
                 />
@@ -181,13 +185,13 @@ export const Register = () => {
           </div>
           <div className="registerForm__btn-create">
             <Button
+              type="submit"
               variant="contained"
               className="registerForm__btn-create-b"
-              onClick={() => {
-                print();
-              }}
+              disabled={isLoading}
+              //   onClick={handleRegister}
             >
-              Crear Cuenta
+              {isLoading ? "Creando cuenta..." : "Crear Cuenta"}
             </Button>
             <p>
               ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión aquí</Link>

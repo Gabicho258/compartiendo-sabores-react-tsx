@@ -2,11 +2,15 @@ import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import "./_NavBar.scss";
 import { useNavigate } from "react-router-dom";
-
-const isUserAuthenticated = false;
+import { useGetUserByIdQuery } from "../../app/apis/compartiendoSabores.api";
 
 export const NavBar = () => {
+  const isUserAuthenticated = localStorage.getItem("data");
+  const userCredentials =
+    isUserAuthenticated && JSON.parse(isUserAuthenticated);
   const navigate = useNavigate();
+  // console.log(isUserAuthenticated);
+  const { data } = useGetUserByIdQuery(userCredentials?.id);
   return (
     <>
       <div className="navBarContainer">
@@ -18,11 +22,13 @@ export const NavBar = () => {
         {isUserAuthenticated ? (
           <>
             <div className="navBarContainer__profile">
-              <div className="navBarContainer__profile-name">Juan Perez</div>
+              <div className="navBarContainer__profile-name">
+                {data?.first_name} {data?.last_name}
+              </div>
               <Avatar
                 className="navBarContainer__profile-image"
                 alt="Juan Perez"
-                src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                src={data?.photo_url}
               />
             </div>
           </>
