@@ -6,7 +6,6 @@ body{
     display: flex;
     position: relative;
     font-family: 'Cookie';
-    font-size: 28px;
     height: 100px;
     place-items: center;
     &__i{
@@ -25,6 +24,7 @@ body{
         position: absolute;
         text-align: center;
         color: white;
+        font-size: 50px;
     }
 }
 

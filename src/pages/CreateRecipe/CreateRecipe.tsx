@@ -1,49 +1,78 @@
 import { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import ControlLabel from "@mui/material/FormControlLabel";
-import Control from "@mui/material/FormControl";
 import "./_CreateRecipe.scss";
 import { fontSize } from "@mui/system";
 
+interface Recipe{
+        _id: string,
+        user_id: string,
+        title: string,
+        ingredients: string[],
+        procedure: string[],
+        images: string[],
+        category: string,
+        average_rating: number,
+        views: number,
+        __v: number
+}
+
 export const CreateRecipe = () => {
 
-    const [ingredients, setIngredients] = useState<string[]>([]);
+    const [ingre, setIngre] = useState<string[]>([]);
     const [newIngredient, setNewIngredient] = useState<string>('');
+    const [proce, setProce] = useState<string[]>([]);
+    const [newProcedure, setNewProcedure] = useState<string>('');
+    const [form, setForm] = useState<Partial<Recipe>>({
+        title: '',
+        ingredients: [''],
+        procedure: [''],
 
-
-    const addIngredient = (ingredient: string) => {
-        setIngredients([
-            ...ingredients, ingredient
+    });
+    
+    const addIngredient = (i: string) => {
+        setIngre([
+            ...ingre, i
         ])
+        setForm({
+            ...form,
+            ingredients: [...ingre, i],
+        })
         setNewIngredient('')
     }
     const removeIngredient = (ingredient: string) => {
-        const newArray = ingredients.filter(item => item !== ingredient);
-        setIngredients(newArray);
+        const newArray = ingre.filter(item => item !== ingredient);
+        setIngre(newArray);
+        setForm({
+            ...form,
+            ingredients: newArray
+        })
     };
-
-    const [procedures, setProcedures] = useState<string[]>([]);
-    const [newProcedure, setNewProcedure] = useState<string>('');
-
-
-    const addProcedure = (procedure: string) => {
-        setProcedures([
-            ...procedures, procedure
+    
+    const addProcedure = (p: string) => {
+        setProce([
+            ...proce, p
         ])
+        setForm({
+            ...form,
+            procedure:[...proce, p]
+        })
         setNewProcedure('')
     }
     const removeProcedure = (procedure: string) => {
-        const newArray = procedures.filter(item => item !== procedure);
-        setProcedures(newArray);
+        const newArray = proce.filter(item => item !== procedure);
+        setProce(newArray);
+        setForm({
+            ...form,
+            procedure: newArray
+        })
     };
 
-    const [title, setTitle] = useState('');
-
-    const addTitle = (title: string) => {
-        setTitle(title)
+    const addTitle = (t: string) => {
+        setForm({
+            ...form,
+            title: t
+        })
     }
 
     return (
@@ -60,7 +89,7 @@ export const CreateRecipe = () => {
                             required
                             id="name"
                             className="createRecipe__title-t-input"
-                            value={title}
+                            value={form.title}
                             onChange={({ target }) => {
                                 addTitle(target.value);
                             }}
@@ -72,12 +101,12 @@ export const CreateRecipe = () => {
                         <h2>Ingredientes:</h2>
                         <div className="createRecipe__half-ingredients-list">
                             <ul>
-                                {ingredients.map((ingredient, index) => (
+                                {ingre.map((i, index) => (
                                     <li key={index} className="createRecipe__half-ingredients-list-l">
-                                        {ingredient}<label>  </label>  
+                                        {i}<label>  </label>  
                                         <button 
                                             className="createRecipe__half-ingredients-list-l-b" 
-                                            onClick={() => removeIngredient(ingredient)}>
+                                            onClick={() => removeIngredient(i)}>
                                                 Eliminar
                                         </button>
                                     </li>
@@ -109,12 +138,12 @@ export const CreateRecipe = () => {
                         <h2>Procedimientos:</h2>
                         <div className="createRecipe__half-procedure-list">
                             <ul>
-                                {procedures.map((procedure, index) => (
+                                {proce.map((p, index) => (
                                     <li key={index} className="createRecipe__half-procedure-list-l">
-                                        {procedure}<label> </label>
+                                        {p}<label> </label>
                                         <button
                                             className="createRecipe__half-procedure-list-l-b"
-                                            onClick={() => removeProcedure(procedure)}
+                                            onClick={() => removeProcedure(p)}
                                             >Eliminar
                                         </button>
                                     </li>
@@ -166,6 +195,9 @@ export const CreateRecipe = () => {
                             <Button
                                 variant="contained"
                                 className="createRecipe__end-btn-post-b"
+                                onClick={({})=>{
+                                    console.log(form)
+                                }}
                             >
                                 Publicar
                             </Button>
