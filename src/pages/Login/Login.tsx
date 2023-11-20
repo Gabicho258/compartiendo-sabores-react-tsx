@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./_Login.scss";
 import { useNavigate } from "react-router-dom";
+import { useGetUsersQuery } from "../../app/apis/user.api";
 
 interface credentials {
   email: string;
@@ -22,10 +23,12 @@ export const Login = () => {
       [field]: value,
     });
   };
+
   const print = ()=>{
     console.log(form);
     }
     
+
   return (
     <>
       <div className="loginContainer">
