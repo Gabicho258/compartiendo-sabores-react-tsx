@@ -1,0 +1,164 @@
+h2 {
+    color: white;
+}
+body{
+
+    background-color: #281B23;
+}
+.createRecipe {
+    display: grid;
+    place-items: center;
+    &__title {
+        margin-top: 40px;
+        width: 50%;
+        display: grid;
+        place-items: center;
+
+        &-h {
+            text-align: center;
+        }
+
+        &-t {
+            &-input {
+                border: 3px solid black;
+                border-radius: 9px;
+                width: 30em;
+                background-color: white;
+            }
+        }
+    }
+
+    &__half {
+        display: flex;
+        width: 80%;
+        justify-content: space-between;
+        overflow: hidden;
+        &-ingredients {
+            width: 40%;
+            display: grid;
+            place-items: center; 
+            &-list{
+                border: 3px solid black;
+                border-radius: 9px; 
+                background-color: white;
+                width: 100%;
+                overflow-x: auto; 
+                white-space: nowrap;
+                &-l{
+                    font-size: 18px;
+                    font-weight: bold;
+                    &-b{
+                        background-color: #D12942;
+                        color: white;
+                    }
+                }
+            }
+            &-inputBtn{
+                display: flex;
+                align-items: center;
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 5px;
+                &-input{
+                    width: 70%;
+                    background-color: white;
+                    border: 3px solid black;
+                    border-radius: 9px; 
+                }
+                &-btn{
+                    margin-right: 13px;
+                    &-b{
+                        background-color: #8DAA94 ;
+                        color: black;
+                    }
+                    &-b:hover{
+                        background-color: #F47E68;
+                    }
+                }
+                
+            }
+        }
+            
+        &-procedure {
+            width: 50%; 
+            display: grid;
+            place-items: center;
+            &-list{
+                border: 3px solid black;
+                border-radius: 9px; 
+                background-color: white;
+                width: 100%;
+                overflow-x: auto; 
+                white-space: nowrap;
+                &-l{
+                    font-size: 18px;
+                    font-weight: bold;
+                    &-b{
+                        background-color: #D12942;
+                        color: white;
+                    }
+                }
+            }
+            &-inputBtn{
+                display: flex;
+                align-items: center;
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 5px;
+                &-input{
+                    width: 76%;
+                    background-color: white;
+                    border: 3px solid black;
+                    border-radius: 9px; 
+                }
+                &-btn{
+                    margin-right: 13px;
+                    &-b{
+                        background-color: #8DAA94 ;
+                        color: black;
+                    }
+                    &-b:hover{
+                        background-color: #F47E68;
+                    }
+                }
+            }
+        }
+    }
+    &__end{
+        width: 50%;
+        &-btn{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            &-foto{
+                &-b1{
+                    padding: 40px 50px;
+                    margin-right: 30px;
+                    color: black;
+                    background-color: #D9C9A5;
+                }
+                &-b1:hover{
+                    background-color: #F47E68;
+                }
+                &-b2{
+                    padding: 40px 50px;
+                    color: black;
+                    background-color: #D9C9A5;
+                }
+                &-b2:hover{
+                    background-color: #F47E68;
+                }
+            }
+            &-post{
+                &-b{
+                    background-color: #281B23;
+                    border: 3px solid #8DAA94;
+                    border-radius: 9px; 
+                }
+                &-b:hover{
+                    background-color: #8DAA94;
+                }
+            }
+        }
+    }
+}

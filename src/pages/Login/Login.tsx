@@ -23,7 +23,12 @@ export const Login = () => {
       [field]: value,
     });
   };
-  console.log(form);
+
+  const print = ()=>{
+    console.log(form);
+    }
+    
+
   return (
     <>
       <div className="loginContainer">
@@ -70,6 +75,7 @@ export const Login = () => {
               variant="contained"
               className="loginForm__btn-login-b"
               onClick={() => {
+                print()
                 navigate("/homepage");
               }}
             >
