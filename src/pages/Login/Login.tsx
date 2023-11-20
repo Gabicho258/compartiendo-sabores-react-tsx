@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./_Login.scss";
 import { useNavigate } from "react-router-dom";
+import { useGetUsersQuery } from "../../app/apis/user.api";
 
 interface credentials {
   email: string;
@@ -22,7 +23,11 @@ export const Login = () => {
       [field]: value,
     });
   };
-  console.log(form);
+
+  const print = ()=>{
+    console.log(form);
+    }
+    
 
   return (
     <>
@@ -70,6 +75,7 @@ export const Login = () => {
               variant="contained"
               className="loginForm__btn-login-b"
               onClick={() => {
+                print()
                 navigate("/homepage");
               }}
             >
