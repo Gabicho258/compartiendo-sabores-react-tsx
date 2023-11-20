@@ -67,13 +67,12 @@ export const CreateRecipe = () => {
     });
   };
   const handleCreateRecipe = async () => {
-    console.log(form);
-    // try {
-    //   await createRecipe({ ...form, user_id: userCredentials.id }).unwrap();
-    //   navigate("/profile");
-    // } catch (error: any) {
-    //   alert(JSON.stringify(error.data));
-    // }
+    try {
+      await createRecipe({ ...form, user_id: userCredentials.id }).unwrap();
+      navigate("/profile");
+    } catch (error: any) {
+      alert(JSON.stringify(error.data));
+    }
   };
   const handleCategoryChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value);
