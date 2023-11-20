@@ -202,8 +202,10 @@ export const CreateRecipe = () => {
             label="Categoría"
             onChange={handleCategoryChange}
           >
-            {categories.map((category) => (
-              <MenuItem value={category}>{category}</MenuItem>
+            {categories.map((category, index) => (
+              <MenuItem key={index} value={category}>
+                {category}
+              </MenuItem>
             ))}
           </Select>
           <h2>Fotos de tu receta:</h2>
