@@ -42,12 +42,12 @@ export const NavBar = () => {
           <>
             <div className="navBarContainer__profile">
               <div className="navBarContainer__profile-name">
-                {`${data.first_name} ${data.last_name}`}
+                {data?.first_name} {data?.last_name}
               </div>
               <Avatar
                 className="navBarContainer__profile-image"
-                alt={data.first_name}
-                src={data.photo_url}
+                alt={data?.first_name}
+                src={data?.photo_url}
                 onClick={handleClick}
               />
               <Menu
@@ -86,7 +86,7 @@ export const NavBar = () => {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 <MenuItem onClick={handleClose}>
-                  <Avatar src={data.photo_url} /> {data.first_name}
+                  <Avatar src={data?.photo_url} /> {data?.first_name}
                 </MenuItem>
 
                 <Divider />
