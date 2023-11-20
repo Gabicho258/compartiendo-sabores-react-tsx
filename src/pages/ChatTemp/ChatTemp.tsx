@@ -38,6 +38,7 @@ export const ChatTemp = () => {
   });
   const [users, setUsers] = useState<User[]>([]);
   const [myChats, setMyChats] = useState<Chat[]>([]);
+  const [friend, setFriend] = useState<User>();
   const requestUser = axios.create({
     baseURL: "http://localhost:5000/api/user",
   });
@@ -54,16 +55,21 @@ export const ChatTemp = () => {
     requestChat.get(`/${id}`).then(({ data }) => {
       setMyChats(data);
     });
-    console.log(data);
+    // console.log(data);
   };
   const createChat = async (id: string, _id: string) => {
     const { data } = await requestChat.post(`/create`, {
       owner_id: id,
       friend_id: _id,
     });
-    console.log(data);
+    // console.log(data);
   };
-
+  const handleOpenChat = (_id: string) => {
+    console.log(_id);
+    console.log(users);
+    const friendInfo = users.find((user) => user._id === _id);
+    setFriend(friendInfo);
+  };
   useEffect(() => {
     requestUser.get("/").then(({ data }) => {
       setUsers(data);
@@ -107,17 +113,41 @@ export const ChatTemp = () => {
         ))}
       </div>
       <hr />
-      <div>Your chats</div>
-      {/* declarar interface */}
-      {myChats.length !== 0 &&
-        myChats.map(({ _id, members }: Chat) => {
-          const friendID = members.find((memberID) => memberID !== id);
-          const friend = users.filter(
-            (user: { _id: string }) => user._id === friendID
-          );
-          console.log(friend);
-          return <button key={_id}>Chat con {friend[0].first_name}</button>;
-        })}
+      <div>
+        Your chats <br />
+        {/* declarar interface */}
+        {myChats.length !== 0 &&
+          myChats.map(({ _id, members }: Chat) => {
+            const friendID = members.find((memberID) => memberID !== id);
+            const [friend] = users.filter(
+              (user: { _id: string }) => user._id === friendID
+            );
+            // console.log(friend);
+            return (
+              <button
+                key={_id}
+                onClick={() => {
+                  handleOpenChat(friend._id);
+                }}
+              >
+                Chat con {friend.first_name}
+              </button>
+            );
+          })}
+      </div>
+      <div
+        style={{
+          border: "1px solid #000",
+          width: "70%",
+          height: "50vh",
+          // display: "flex",
+        }}
+      >
+        <p>Chat con {friend?.first_name}</p>
+        {}
+        <input type="text" placeholder="Send a message" />
+        <button>Send message</button>
+      </div>
     </>
   );
 };
