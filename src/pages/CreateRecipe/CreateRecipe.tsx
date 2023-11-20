@@ -67,15 +67,20 @@ export const CreateRecipe = () => {
     });
   };
   const handleCreateRecipe = async () => {
-    try {
-      await createRecipe({ ...form, user_id: userCredentials.id }).unwrap();
-      navigate("/profile");
-    } catch (error: any) {
-      alert(JSON.stringify(error.data));
-    }
+    console.log(form);
+    // try {
+    //   await createRecipe({ ...form, user_id: userCredentials.id }).unwrap();
+    //   navigate("/profile");
+    // } catch (error: any) {
+    //   alert(JSON.stringify(error.data));
+    // }
   };
   const handleCategoryChange = (event: SelectChangeEvent) => {
-    setCategory(event.target.value as string);
+    setCategory(event.target.value);
+    setForm({
+      ...form,
+      category: event.target.value,
+    });
   };
   // console.log(first)
   return (
@@ -194,7 +199,6 @@ export const CreateRecipe = () => {
             labelId="select-label"
             id="demo-simple-select"
             value={category}
-            // label="Age"
             style={{ width: "10rem", color: "#fff" }}
             label="Categoría"
             onChange={handleCategoryChange}
