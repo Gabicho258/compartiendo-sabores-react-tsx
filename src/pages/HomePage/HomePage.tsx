@@ -5,8 +5,10 @@ import { RecipeCard } from "../../components/RecipeCard/RecipeCard";
 import CategoryCarousel from "../../components/Carousel/Carousel";
 import { useSearch } from "../../hooks/useSearch";
 import "./_HomePage.scss";
+import { ButtonAddRecipe } from "../../components/ButtonAddRecipe/ButtonAddRecipe";
 
 export const HomePage = () => {
+  const isUserAuthenticated = localStorage.getItem("data");
   const { text, result, onChangeInput } = useSearch({ data: recetas });
   return (
     <>
@@ -36,6 +38,7 @@ export const HomePage = () => {
             </div>
           )}
         </div>
+        {isUserAuthenticated && <ButtonAddRecipe />}
       </div>
     </>
   );
