@@ -25,7 +25,7 @@ const userFavRecipes = [
   },
 ];
 
-const isCompanyAccount = true;
+const isCompanyAccount = false;
 const isOwnProfile = false;
 
 export const UserProfile = () => {

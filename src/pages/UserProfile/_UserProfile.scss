@@ -69,11 +69,18 @@
     &-sendMessage {
       margin: 0.3rem 2.5rem;
       &-btn {
+        text-transform: none;
+        font-size: 1rem;
         height: 2.5rem;
         display: flex;
         flex-direction: row;
+        align-items: center;
+        justify-content: center;
         gap: 0.3rem;
         background-color: #8daa94;
+        &-label {
+          margin: 0;
+        }
         &:hover {
           background-color: #fff;
           color: #8daa94;
@@ -120,6 +127,7 @@
       }
     }
     &-recipes {
+      margin: 1.5rem 0;
       &-img {
         border-radius: 7px;
         &:hover {
@@ -128,6 +136,7 @@
       }
     }
     &-favorites {
+      margin: 1.5rem 0;
       &-img {
         border-radius: 7px;
         &:hover {
