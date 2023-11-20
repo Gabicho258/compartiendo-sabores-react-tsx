@@ -29,6 +29,7 @@
     &-grid {
       display: grid;
       grid-template-columns: 1fr 4fr;
+      margin: 0 2.5rem;
       &-left {
         display: flex;
         flex-direction: column;
@@ -42,6 +43,12 @@
         &-name {
           margin: 0.3rem 0;
           font-size: 1.7rem;
+          &-companyLabel {
+            color: #b0b0b0;
+            font-size: 1rem;
+            margin: 0 0.4rem;
+            font-weight: 500;
+          }
         }
       }
       &-right {
@@ -56,6 +63,27 @@
           font-size: 4rem;
           margin: 0.3rem 0;
           color: #d6d6d6;
+        }
+      }
+    }
+    &-sendMessage {
+      margin: 0.3rem 2.5rem;
+      &-btn {
+        text-transform: none;
+        font-size: 1rem;
+        height: 2.5rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+        background-color: #8daa94;
+        &-label {
+          margin: 0;
+        }
+        &:hover {
+          background-color: #fff;
+          color: #8daa94;
         }
       }
     }
@@ -99,6 +127,7 @@
       }
     }
     &-recipes {
+      margin: 1.5rem 0;
       &-img {
         border-radius: 7px;
         &:hover {
@@ -107,6 +136,7 @@
       }
     }
     &-favorites {
+      margin: 1.5rem 0;
       &-img {
         border-radius: 7px;
         &:hover {

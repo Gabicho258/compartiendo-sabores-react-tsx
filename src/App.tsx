@@ -5,6 +5,10 @@ import { Register } from "./pages/Register/Register";
 import { Categories } from "./pages/Categories/Categories";
 import { UserProfile } from "./pages/UserProfile/UserProfile";
 
+import { EditProfile } from "./pages/EditProfile/EditProfile";
+import { Recipe } from "./pages/Recipe/Recipe";
+
+
 import { Chat } from "./pages/Chat/Chat";
 import { CreateRecipe } from "./pages/CreateRecipe/CreateRecipe";
 
@@ -21,12 +25,17 @@ function App() {
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/profile" element={<UserProfile />} />
 
+        <Route path="/edit-profile" element={<EditProfile />} />
+
+
         <Route path="/chat" element={<Chat />} />
         <Route path="/createRecipe" element={<CreateRecipe />} />
 
         <Route path="/chat-temp" element={<ChatTemp />} />
 
+
         <Route path="/category/:category" element={<Categories />} />
+        <Route path="/recipe/:id" element={<Recipe />} />
       </Routes>
     </BrowserRouter>
   );

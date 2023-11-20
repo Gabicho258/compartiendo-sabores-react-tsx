@@ -1,7 +1,7 @@
 .homePage {
   box-sizing: border-box;
   background-color: #281b23;
-  height: 90vh;
+  min-height: 94vh;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -28,6 +28,11 @@
       margin: 5rem 0;
       height: 15rem;
       background-color: #000;
+    }
+    &-searchResult {
+      width: 40rem;
+      background-color: #d9c9a5;
+      padding: 3rem 4rem;
     }
   }
 }

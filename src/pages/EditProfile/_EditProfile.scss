@@ -1,0 +1,161 @@
+.editProfile {
+  min-height: 100vh;
+  background-color: #281b23;
+  padding: 2rem 3rem;
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    &-cancel {
+      background-color: #d12942;
+      width: 8rem;
+      height: 2.5rem;
+      &:hover {
+        background-color: #7d1928;
+      }
+    }
+    &-save {
+      background-color: #46d243;
+      width: 8rem;
+      height: 2.5rem;
+      &:hover {
+        background-color: #278126;
+      }
+    }
+  }
+  &__main {
+    margin: 2.5rem 0;
+    &-userImage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &-image {
+        width: 10%;
+        height: auto;
+        border: 1px solid #fff;
+        margin: 1.5rem;
+      }
+      &-editImageBtn {
+        color: #fff;
+        border: 1px solid #a3a3a3;
+        &:hover {
+          background-color: #fff;
+          color: #281b23;
+        }
+      }
+    }
+    &-divider {
+      border-color: #a3a3a3;
+      margin: 2rem 0;
+    }
+    &-editForm {
+      color: #fff;
+      font-size: 1.2rem;
+      &-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        &-left {
+          margin: 0 1rem;
+          &-field {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            &-label {
+              margin: 0;
+              width: 20%;
+            }
+            &-input {
+              width: 80%;
+              &-disabled {
+                width: 80%;
+
+                & .MuiInputBase-input.Mui-disabled {
+                  -webkit-text-fill-color: #8e8e8e;
+                }
+              }
+            }
+            &-inputContainer {
+              width: 80%;
+              border: 1px solid #d9d9d9;
+              border-radius: 1rem;
+              &-input {
+                width: 90%;
+                height: 2rem;
+                border: none;
+                background: none;
+                outline: none;
+                padding: 0 1rem;
+                font-size: 1.2rem;
+                color: #fff;
+              }
+              &-textarea {
+                font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                  "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+                  "Helvetica Neue", sans-serif;
+                width: 90%;
+                resize: none;
+                border: none;
+                background: none;
+                outline: none;
+                padding: 0 1rem;
+                font-size: 1.2rem;
+                color: #fff;
+                &::-webkit-scrollbar {
+                  width: 10px;
+                  height: 10px;
+                }
+                &::-webkit-scrollbar-button:start:decrement,
+                ::-webkit-scrollbar-button:end:increment {
+                  height: 10px;
+                  background-color: transparent;
+                }
+                &::-webkit-scrollbar-track-piece {
+                  background-color: #eeeeee;
+                  -webkit-border-radius: 16px;
+                }
+                &::-webkit-scrollbar-thumb:vertical {
+                  height: 10px;
+                  background-color: #666;
+                  border: 1px solid #eee;
+                  -webkit-border-radius: 16px;
+                }
+              }
+            }
+          }
+        }
+        &-right {
+          margin: 0 1rem;
+          &-label {
+            margin: 0;
+          }
+          &-field {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+            justify-content: space-between;
+            &-input {
+              width: 80%;
+            }
+            &-inputContainer {
+              width: 80%;
+              border: 1px solid #d9d9d9;
+              border-radius: 1rem;
+              &-input {
+                width: 90%;
+                height: 2rem;
+                border: none;
+                background: none;
+                outline: none;
+                padding: 0 1rem;
+                font-size: 1.2rem;
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
