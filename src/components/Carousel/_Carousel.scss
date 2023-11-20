@@ -1,0 +1,9 @@
+.slides {
+  width: 100%;
+  height: 15rem;
+  &__images {
+    width: 100%;
+    height: 15rem;
+    object-fit: cover;
+  }
+}
