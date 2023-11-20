@@ -127,6 +127,14 @@
         }
         &-right {
           margin: 0 1rem;
+          &-passwordErr {
+            margin: 0 auto;
+            display: inline-block;
+            border-radius: 0.3rem;
+            padding: 0.4rem 0.8rem;
+            background-color: #d12942;
+            color: #fff;
+          }
           &-label {
             margin: 0;
           }
