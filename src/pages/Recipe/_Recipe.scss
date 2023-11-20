@@ -1,0 +1,121 @@
+.recipe {
+  box-sizing: border-box;
+  background-color: #281b23;
+  min-height: 100vh;
+  padding: 2rem;
+  &__backBtn {
+    position: relative;
+    width: 3rem;
+    top: 1rem;
+    left: 1rem;
+    height: 3rem;
+    color: #fff;
+    &-icon {
+      font-size: 3rem;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &__container {
+    border-radius: 1rem;
+    background-color: #d9c9a5;
+    padding: 1rem;
+    width: 65%;
+    margin: 0 auto;
+    &-favBtn {
+      float: right;
+      text-transform: capitalize;
+      background-color: #d12942;
+      &:hover {
+        background-color: #921e2f;
+      }
+    }
+    &-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &-title {
+        display: flex;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin: 0;
+      }
+      &-rating {
+        display: flex;
+        justify-content: center;
+      }
+    }
+    &-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      margin: 1rem 0;
+      &-left {
+        &-label {
+          display: inline-block;
+          padding: 0.3rem 0.7rem;
+          border-radius: 0.3rem;
+          margin-bottom: 0.4rem;
+          background-color: #281b23;
+          color: #fff;
+        }
+        &-list {
+          margin: 0;
+          padding-left: 1.5rem;
+        }
+      }
+      &-right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &-img {
+          width: 12rem;
+          height: 12rem;
+          border-radius: 1rem;
+          object-fit: cover;
+          margin: 0 0.5rem;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+      }
+    }
+    &-procedure {
+      &-label {
+        display: inline-block;
+        padding: 0.3rem 0.7rem;
+        border-radius: 0.3rem;
+        margin-bottom: 0.4rem;
+        background-color: #281b23;
+        color: #fff;
+      }
+      &-list {
+        margin: 0;
+        padding-left: 1.5rem;
+      }
+    }
+  }
+  &__comments {
+    width: 67%;
+    margin: 1rem auto;
+    &-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      &-title {
+        color: #fff;
+        font-size: 1.5rem;
+        border-bottom: 3px solid #fff;
+        margin: 0;
+      }
+      &-addCommentBtn {
+        background-color: #8daa94;
+        text-transform: none;
+        font-size: 1rem;
+        &:hover {
+          background-color: #6d8472;
+        }
+      }
+    }
+  }
+}
