@@ -97,6 +97,75 @@
   &__comments {
     width: 65%;
     margin: 1rem auto;
+    &-newComment {
+      width: 70%;
+      &-container {
+        margin: 1.5rem 0;
+        &-rating {
+          display: flex;
+          flex-direction: row;
+          &-label {
+            display: inline-block;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-right: 1rem;
+          }
+        }
+        &-comment {
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+            Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+            sans-serif;
+          width: 100%;
+          border: 1px solid #fff;
+          border-radius: 0.5rem;
+          resize: none;
+          background: none;
+          outline: none;
+          padding: 0 1rem;
+          font-size: 1.2rem;
+          color: #fff;
+          &::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+          }
+          &::-webkit-scrollbar-button:start:decrement,
+          ::-webkit-scrollbar-button:end:increment {
+            height: 10px;
+            background-color: transparent;
+          }
+          &::-webkit-scrollbar-track-piece {
+            background-color: #eeeeee;
+            -webkit-border-radius: 16px;
+          }
+          &::-webkit-scrollbar-thumb:vertical {
+            height: 10px;
+            background-color: #666;
+            border: 1px solid #eee;
+            -webkit-border-radius: 16px;
+          }
+        }
+        &-btnSection {
+          &-submit {
+            background-color: #8daa94;
+            color: #fff;
+            margin-right: 1rem;
+            &:disabled {
+              background-color: #8daa94;
+            }
+            &:hover {
+              background-color: #6d8472;
+            }
+          }
+          &-cancel {
+            background-color: #d12942;
+            &:hover {
+              background-color: #921e2f;
+            }
+          }
+        }
+      }
+    }
     &-header {
       display: flex;
       flex-direction: row;
