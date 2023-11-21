@@ -169,6 +169,10 @@ export const Register = () => {
                   className="registerForm__userType-formControl-radioGroup-p"
                   onClick={() => {
                     setRol("Personal");
+                    setForm({
+                      ...form,
+                      role: "Personal",
+                    });
                   }}
                 />
 
@@ -178,6 +182,10 @@ export const Register = () => {
                   label="Empresa"
                   onClick={() => {
                     setRol("Empresa");
+                    setForm({
+                      ...form,
+                      role: "Empresa",
+                    });
                   }}
                 />
               </RadioGroup>
