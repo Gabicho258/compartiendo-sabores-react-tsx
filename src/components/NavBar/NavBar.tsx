@@ -17,7 +17,7 @@ export const NavBar = () => {
   const userCredentials =
     isUserAuthenticated && JSON.parse(isUserAuthenticated);
   const navigate = useNavigate();
-  
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -26,10 +26,16 @@ export const NavBar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const handleClickEditProfile = () => {
+    navigate("/edit-profile");
+  };
+  const handleClickLogout = () => {
+    localStorage.clear();
+    navigate("/homepage");
+  };
   // console.log(isUserAuthenticated);
   const { data } = useGetUserByIdQuery(userCredentials?.id);
-  
+
   return (
     <>
       <div className="navBarContainer">
@@ -90,13 +96,23 @@ export const NavBar = () => {
                 </MenuItem>
 
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    handleClickEditProfile();
+                  }}
+                >
                   <ListItemIcon>
                     <Settings fontSize="small" />
                   </ListItemIcon>
                   Editar perfil
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    handleClickLogout();
+                  }}
+                >
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>

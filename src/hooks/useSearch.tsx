@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 interface useSearchParams {
-  data: Recipe[];
+  data: Recipe[] | undefined;
 }
 
 interface Recipe {
@@ -26,7 +26,7 @@ export const useSearch = ({ data }: useSearchParams) => {
 
   const result =
     text.toLocaleLowerCase().trim().length >= 2
-      ? data.filter((recipe) =>
+      ? data?.filter((recipe) =>
           recipe.title
             .toLocaleLowerCase()
             .trim()

@@ -1,55 +1,83 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import AddIcon from "@mui/icons-material/Add";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
-import { users } from "../../static_test/users";
+// import { users } from "../../static_test/users";
 import { User } from "../../interfaces";
 import "./_EditProfile.scss";
+import {
+  useGetUserByIdQuery,
+  useUpdateUserMutation,
+} from "../../app/apis/compartiendoSabores.api";
+import { useNavigate } from "react-router-dom";
 
-const user = users[0];
+// const user = users[0];
 
 export const EditProfile = () => {
+  const isUserAuthenticated = localStorage.getItem("data");
+  const userCredentials =
+    isUserAuthenticated && JSON.parse(isUserAuthenticated);
+  const { data, isSuccess } = useGetUserByIdQuery(userCredentials.id);
   const [verifyPassword, setVerifyPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const [updateUser] = useUpdateUserMutation();
   const [form, setForm] = useState<Partial<User>>({
-    first_name: "",
-    last_name: "",
-    phone_number: "",
-    description: "",
-    password: "",
+    first_name: data?.first_name,
+    last_name: data?.last_name,
+    phone_number: data?.phone_number,
+    description: data?.description,
+    // password: "",
   });
 
-  const inputChange = (value: string, field: string) => {
+  const onInputChange = (value: string, field: string) => {
     setForm({
       ...form,
       [field]: value,
     });
   };
 
-  const print = () => {
+  const handleUserUpdate = async () => {
     if (form.password !== verifyPassword) {
       setError("Las contraseñas no coinciden");
     } else {
       setError(null);
+      try {
+        await updateUser({ ...form, _id: userCredentials.id }).unwrap();
+
+        navigate("/homepage");
+      } catch (error: any) {
+        alert(JSON.stringify(error.data));
+      }
       console.log(form);
     }
   };
+  useEffect(() => {
+    setForm({
+      first_name: data?.first_name,
+      last_name: data?.last_name,
+      phone_number: data?.phone_number,
+      description: data?.description,
+    });
+  }, [isSuccess]);
   return (
     <>
       <div className="editProfile">
         <div className="editProfile__buttons">
-          <Button variant="contained" className="editProfile__buttons-cancel">
+          <Button
+            variant="contained"
+            className="editProfile__buttons-cancel"
+            onClick={() => navigate(-1)}
+          >
             Cancelar
           </Button>
           <Button
             variant="contained"
             className="editProfile__buttons-save"
-            onClick={({ target }) => {
-              print();
-            }}
+            onClick={handleUserUpdate}
           >
             Guardar
           </Button>
@@ -58,8 +86,8 @@ export const EditProfile = () => {
           <div className="editProfile__main-userImage">
             <Avatar
               className="editProfile__main-userImage-image"
-              alt="Juan Perez"
-              src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+              alt={data?.first_name}
+              src={data?.photo_url}
             />
             <Button
               variant="text"
@@ -83,7 +111,7 @@ export const EditProfile = () => {
                     className="editProfile__main-editForm-grid-left-field-input-disabled"
                     disabled
                     id="outlined-disabled"
-                    defaultValue={user.email}
+                    value={data?.email}
                     sx={{
                       "& .MuiInputBase-root.Mui-disabled": {
                         "& > fieldset": {
@@ -102,8 +130,9 @@ export const EditProfile = () => {
                       type="text"
                       className="editProfile__main-editForm-grid-left-field-inputContainer-input"
                       onChange={({ target }) => {
-                        inputChange(target.value, "first_name");
+                        onInputChange(target.value, "first_name");
                       }}
+                      value={form?.first_name}
                     />
                   </div>
                 </div>
@@ -115,8 +144,9 @@ export const EditProfile = () => {
                     <input
                       type="text"
                       className="editProfile__main-editForm-grid-left-field-inputContainer-input"
+                      value={form.last_name}
                       onChange={({ target }) => {
-                        inputChange(target.value, "last_name");
+                        onInputChange(target.value, "last_name");
                       }}
                     />
                   </div>
@@ -131,8 +161,9 @@ export const EditProfile = () => {
                       className="editProfile__main-editForm-grid-left-field-inputContainer-input"
                       placeholder="Opcional..."
                       onChange={({ target }) => {
-                        inputChange(target.value, "phone_number");
+                        onInputChange(target.value, "phone_number");
                       }}
+                      value={form.phone_number}
                     />
                   </div>
                 </div>
@@ -144,9 +175,9 @@ export const EditProfile = () => {
                     <textarea
                       className="editProfile__main-editForm-grid-left-field-inputContainer-textarea"
                       rows={4}
-                      defaultValue={user.description}
+                      value={form.description}
                       onChange={({ target }) => {
-                        inputChange(target.value, "description");
+                        onInputChange(target.value, "description");
                       }}
                     ></textarea>
                   </div>
@@ -159,10 +190,10 @@ export const EditProfile = () => {
                   </p>
                   <div className="editProfile__main-editForm-grid-right-field-inputContainer">
                     <input
-                      type="text"
+                      type="password"
                       className="editProfile__main-editForm-grid-right-field-inputContainer-input"
                       onChange={({ target }) => {
-                        inputChange(target.value, "password");
+                        onInputChange(target.value, "password");
                       }}
                     />
                   </div>
@@ -173,7 +204,7 @@ export const EditProfile = () => {
                   </p>
                   <div className="editProfile__main-editForm-grid-right-field-inputContainer">
                     <input
-                      type="text"
+                      type="password"
                       className="editProfile__main-editForm-grid-right-field-inputContainer-input"
                       onChange={({ target }) => {
                         setVerifyPassword(target.value);
