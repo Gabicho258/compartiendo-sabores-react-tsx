@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 import Avatar from "@mui/material/Avatar";
@@ -29,6 +30,7 @@ const userFavRecipes = [
   },
 ];
 
+
 export const UserProfile = () => {
   const [value, setValue] = useState(0);
   const isUserAuthenticated = localStorage.getItem("data");
@@ -53,10 +55,16 @@ export const UserProfile = () => {
             className="userProfile__backBtn-icon"
             onClick={() => navigate(-1)}
           />
+
         </div>
         {isOwnProfile ? (
           <>
-            <div className="userProfile__editBtn">
+            <div
+              className="userProfile__editBtn"
+              onClick={() => {
+                navigate("/edit-profile");
+              }}
+            >
               <EditIcon className="userProfile__editBtn-icon" />
             </div>
           </>
@@ -130,7 +138,9 @@ export const UserProfile = () => {
           <div className="userProfile__recipesTab-tabs">
             <Tabs
               value={value}
-              onChange={handleChange}
+              onChange={(event: React.SyntheticEvent, newValue: number) => {
+                setValue(newValue);
+              }}
               aria-label="basic tabs example"
             >
               <Tab
