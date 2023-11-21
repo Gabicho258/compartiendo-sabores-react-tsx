@@ -3,15 +3,14 @@ import "./_Categories.scss";
 import { RecipeCard } from "../../components/RecipeCard/RecipeCard";
 import { NavBar } from "../../components/NavBar/NavBar";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
-import { recetas } from "../../static_test/recipes";
 import { useSearch } from "../../hooks/useSearch";
 import { useParams } from "react-router";
+import { useGetRecipesQuery } from "../../app/apis/compartiendoSabores.api";
 
 export const Categories = () => {
-  const { text, result, onChangeInput } = useSearch({ data: recetas });
+  const { data } = useGetRecipesQuery();
+  const { text, result, onChangeInput } = useSearch({ data: data });
   const { category } = useParams();
-  console.log(category);
-  // console.log(result);
   return (
     <>
       <NavBar />
@@ -37,16 +36,21 @@ export const Categories = () => {
           }}
           className="category__container-paper"
         >
-          {result.map(({ average_rating, title, images, views }, index) => (
-            <RecipeCard
-              average_rating={average_rating}
-              title={title}
-              images={images}
-              views={views}
-              user_name="Temporal"
-              key={index}
-            />
-          ))}
+          {result?.map(
+            ({ average_rating, title, images, views, user_id, _id }, index) => {
+              return (
+                <RecipeCard
+                  _id={_id}
+                  average_rating={average_rating}
+                  title={title}
+                  images={images}
+                  views={views}
+                  user_id={user_id}
+                  key={index}
+                />
+              );
+            }
+          )}
         </Paper>
       </div>
     </>
