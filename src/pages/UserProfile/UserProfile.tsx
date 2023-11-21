@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 import Avatar from "@mui/material/Avatar";
@@ -26,23 +27,31 @@ const userFavRecipes = [
 ];
 
 const isCompanyAccount = false;
-const isOwnProfile = false;
+const isOwnProfile = true;
 
 export const UserProfile = () => {
   const [value, setValue] = useState(0);
+  const navigate = useNavigate();
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
   return (
     <>
       <div className="userProfile">
-        <div className="userProfile__backBtn">
+        <div
+          className="userProfile__backBtn"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
           <ArrowBackIcon className="userProfile__backBtn-icon" />
         </div>
         {isOwnProfile ? (
           <>
-            <div className="userProfile__editBtn">
+            <div
+              className="userProfile__editBtn"
+              onClick={() => {
+                navigate("/edit-profile");
+              }}
+            >
               <EditIcon className="userProfile__editBtn-icon" />
             </div>
           </>
@@ -119,7 +128,9 @@ export const UserProfile = () => {
           <div className="userProfile__recipesTab-tabs">
             <Tabs
               value={value}
-              onChange={handleChange}
+              onChange={(event: React.SyntheticEvent, newValue: number) => {
+                setValue(newValue);
+              }}
               aria-label="basic tabs example"
             >
               <Tab

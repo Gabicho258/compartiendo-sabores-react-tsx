@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Button from "@mui/material/Button";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -33,11 +34,18 @@ export const Recipe = () => {
     console.log(form);
   };
 
+  const navigate = useNavigate();
+
   return (
     <>
       <NavBar />
       <div className="recipe">
-        <div className="recipe__backBtn">
+        <div
+          className="recipe__backBtn"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
           <ArrowBackIcon className="recipe__backBtn-icon" />
         </div>
         <div className="recipe__container">
