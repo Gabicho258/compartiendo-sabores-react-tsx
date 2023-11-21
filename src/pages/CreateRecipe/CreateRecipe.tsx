@@ -192,22 +192,26 @@ export const CreateRecipe = () => {
             </div>
           </div>
         </div>
+        <div className="createRecipe__category">
+          <h2 id="select-label">Categoría</h2>
+            <Select
+              className="createRecipe__category-select"
+              labelId="select-label"
+              id="demo-simple-select"
+              value={category}
+              style={{ width: "10rem", color: "#fff" }}
+              label="Categoría"
+              onChange={handleCategoryChange}
+            >
+              {categories.map((category, index) => (
+                <MenuItem key={index} value={category}>
+                  {category}
+                </MenuItem>
+              ))}
+            </Select>
+        </div>
         <div className="createRecipe__end">
-          <InputLabel id="select-label">Categoría</InputLabel>
-          <Select
-            labelId="select-label"
-            id="demo-simple-select"
-            value={category}
-            style={{ width: "10rem", color: "#fff" }}
-            label="Categoría"
-            onChange={handleCategoryChange}
-          >
-            {categories.map((category, index) => (
-              <MenuItem key={index} value={category}>
-                {category}
-              </MenuItem>
-            ))}
-          </Select>
+          
           <h2>Fotos de tu receta:</h2>
           <div className="createRecipe__end-btn">
             <div className="createRecipe__end-btn-foto">
@@ -225,6 +229,14 @@ export const CreateRecipe = () => {
               </Button>
             </div>
             <div className="createRecipe__end-btn-post">
+              <Button
+                className="createRecipe__end-btn-post-c"
+                onClick={({}) =>{
+                  navigate(-1) 
+                }}
+              >
+                Cancelar
+              </Button>
               <Button
                 variant="contained"
                 className="createRecipe__end-btn-post-b"

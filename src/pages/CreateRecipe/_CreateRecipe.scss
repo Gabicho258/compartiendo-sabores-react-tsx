@@ -1,6 +1,4 @@
-h2 {
-    color: white;
-}
+
 body{
 
     background-color: #281B23;
@@ -17,6 +15,9 @@ body{
         &-h {
             text-align: center;
         }
+        h2{
+            color: white;
+        } 
 
         &-t {
             &-input {
@@ -34,6 +35,9 @@ body{
         width: 80%;
         justify-content: space-between;
         overflow: hidden;
+        h2{
+            color: white;
+        }
         &-ingredients {
             width: 40%;
             display: grid;
@@ -129,7 +133,20 @@ body{
             }
         }
     }
+    &__category{
+        h2{
+            color: white;
+        }
+        margin-top: 20px;
+        &-select {
+            border: 3px solid white; // Puedes ajustar el grosor y el color del borde según tus preferencias
+        }
+       
+    }
     &__end{
+        h2{
+            color: white;
+        }
         margin-top: 10px;
         width: 50%;
         &-btn{
@@ -156,10 +173,27 @@ body{
                 }
             }
             &-post{
+                &-c{
+                   margin-right: 20px;
+                   border: 3px solid #8DAA94;
+                   border-radius: 9px; 
+                   color: white;
+                   font-size: 20px;
+                }
+                &-c:hover{
+                    background-color: #8DAA94;
+                    color: white;
+                }
                 &-b{
-                    background-color: #281B23;
+                    border-radius: 9px;
+                    background-color: #281B23; 
                     border: 3px solid #8DAA94;
-                    border-radius: 9px; 
+                    font-size: 20px;
+                    &:disabled{
+                        background-color: grey; 
+                        border: 3px solid #8DAA94;
+                        color: black;
+                   }
                 }
                 &-b:hover{
                     background-color: #8DAA94;
