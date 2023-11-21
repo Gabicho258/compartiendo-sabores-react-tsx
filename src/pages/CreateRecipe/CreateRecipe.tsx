@@ -69,7 +69,7 @@ export const CreateRecipe = () => {
   const handleCreateRecipe = async () => {
     try {
       await createRecipe({ ...form, user_id: userCredentials.id }).unwrap();
-      navigate("/profile");
+      navigate(-1);
     } catch (error: any) {
       alert(JSON.stringify(error.data));
     }
@@ -194,24 +194,23 @@ export const CreateRecipe = () => {
         </div>
         <div className="createRecipe__category">
           <h2 id="select-label">Categoría</h2>
-            <Select
-              className="createRecipe__category-select"
-              labelId="select-label"
-              id="demo-simple-select"
-              value={category}
-              style={{ width: "10rem", color: "#fff" }}
-              label="Categoría"
-              onChange={handleCategoryChange}
-            >
-              {categories.map((category, index) => (
-                <MenuItem key={index} value={category}>
-                  {category}
-                </MenuItem>
-              ))}
-            </Select>
+          <Select
+            className="createRecipe__category-select"
+            labelId="select-label"
+            id="demo-simple-select"
+            value={category}
+            style={{ width: "10rem", color: "#fff" }}
+            label="Categoría"
+            onChange={handleCategoryChange}
+          >
+            {categories.map((category, index) => (
+              <MenuItem key={index} value={category}>
+                {category}
+              </MenuItem>
+            ))}
+          </Select>
         </div>
         <div className="createRecipe__end">
-          
           <h2>Fotos de tu receta:</h2>
           <div className="createRecipe__end-btn">
             <div className="createRecipe__end-btn-foto">
@@ -231,8 +230,8 @@ export const CreateRecipe = () => {
             <div className="createRecipe__end-btn-post">
               <Button
                 className="createRecipe__end-btn-post-c"
-                onClick={({}) =>{
-                  navigate(-1) 
+                onClick={({}) => {
+                  navigate(-1);
                 }}
               >
                 Cancelar

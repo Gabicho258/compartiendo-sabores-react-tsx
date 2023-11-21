@@ -6,11 +6,15 @@ import { useSearch } from "../../hooks/useSearch";
 import "./_HomePage.scss";
 import { ButtonAddRecipe } from "../../components/ButtonAddRecipe/ButtonAddRecipe";
 import { useGetRecipesQuery } from "../../app/apis/compartiendoSabores.api";
+import { useEffect } from "react";
 
 export const HomePage = () => {
   const isUserAuthenticated = localStorage.getItem("data");
-  const { data } = useGetRecipesQuery();
+  const { data, refetch } = useGetRecipesQuery();
   const { text, result, onChangeInput } = useSearch({ data: data });
+  useEffect(() => {
+    refetch();
+  }, []);
   return (
     <>
       <NavBar />
