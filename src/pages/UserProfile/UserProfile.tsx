@@ -29,15 +29,14 @@ const userFavRecipes = [
   },
 ];
 
-const isCompanyAccount = false;
-const isOwnProfile = true;
-
 export const UserProfile = () => {
   const [value, setValue] = useState(0);
   const isUserAuthenticated = localStorage.getItem("data");
   const userCredentials =
     isUserAuthenticated && JSON.parse(isUserAuthenticated);
   const { data: user } = useGetUserByIdQuery(userCredentials.id);
+  const isCompanyAccount = user?.role === "Empresa";
+  const isOwnProfile = user?.role === "Personal";
   const { data: recipes } = useGetRecipesQuery();
   const myRecipes = recipes?.filter(
     (recipe) => recipe.user_id === userCredentials.id
