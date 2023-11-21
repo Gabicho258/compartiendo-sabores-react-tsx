@@ -27,6 +27,22 @@ export const compartiendoSaboresAPI = createApi({
         method: "PUT",
         body,
       }),
+      async onQueryStarted({ _id, ...patch }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          compartiendoSaboresAPI.util.updateQueryData(
+            "getUserById",
+            _id || "",
+            (draft) => {
+              Object.assign(draft, patch);
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
     }),
     // Auth endpoint
     login: builder.mutation<User, UserCredentials>({
