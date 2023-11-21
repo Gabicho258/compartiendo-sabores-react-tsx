@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./_Login.scss";
 import { useNavigate } from "react-router-dom";
-import {
-  useGetUsersQuery,
-  useLoginMutation,
-} from "../../app/apis/compartiendoSabores.api";
-import { User, UserCredentials } from "../../interfaces";
+import { useLoginMutation } from "../../app/apis/compartiendoSabores.api";
+import { UserCredentials } from "../../interfaces";
 
 export const Login = () => {
   const navigate = useNavigate();

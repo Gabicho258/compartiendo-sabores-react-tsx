@@ -12,11 +12,20 @@ import "./_Recipe.scss";
 import { recetas } from "../../static_test/recipes";
 import { comments } from "../../static_test/comments";
 import { Comment as CommentInterface } from "../../interfaces";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useGetRecipeByIdQuery,
+  useGetUsersQuery,
+} from "../../app/apis/compartiendoSabores.api";
 
-const recipe = recetas[0];
+// const recipe = recetas[0];
 
 export const Recipe = () => {
   const [addingComment, setAddingComment] = useState(false);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { data: recipe } = useGetRecipeByIdQuery(id || "");
+  const { data: users } = useGetUsersQuery();
   const [form, setForm] = useState<Partial<CommentInterface>>({
     rating: 0,
     comment: "",
@@ -38,7 +47,10 @@ export const Recipe = () => {
       <NavBar />
       <div className="recipe">
         <div className="recipe__backBtn">
-          <ArrowBackIcon className="recipe__backBtn-icon" />
+          <ArrowBackIcon
+            className="recipe__backBtn-icon"
+            onClick={() => navigate(-1)}
+          />
         </div>
         <div className="recipe__container">
           <Button className="recipe__container-favBtn" variant="contained">
@@ -46,9 +58,12 @@ export const Recipe = () => {
             <FavoriteIcon className="recipe__container-favBtn-icon" />
           </Button>
           <div className="recipe__container-header">
-            <h1 className="recipe__container-header-title">{recipe.title}</h1>
+            <h1 className="recipe__container-header-title">{recipe?.title}</h1>
             <div className="recipe__container-header-rating">
-              <RatingStars readOnly qualification={recipe.average_rating} />
+              <RatingStars
+                readOnly
+                qualification={recipe?.average_rating || 0}
+              />
             </div>
           </div>
 
@@ -56,7 +71,15 @@ export const Recipe = () => {
             <div className="recipe__container-grid-left">
               <div className="recipe__container-grid-left-author">
                 <div className="recipe__container-grid-left-label">
-                  Por: {recipe.user_id}
+                  Por:{" "}
+                  {
+                    users?.find((user) => user._id === recipe?.user_id)
+                      ?.first_name
+                  }{" "}
+                  {
+                    users?.find((user) => user._id === recipe?.user_id)
+                      ?.last_name
+                  }
                 </div>
               </div>
               <div className="recipe__container-grid-left-ingredients">
@@ -64,8 +87,8 @@ export const Recipe = () => {
                   Ingredientes
                 </div>
                 <ul className="recipe__container-grid-left-list">
-                  {recipe.ingredients.map((ingredient) => {
-                    return <li>{ingredient}</li>;
+                  {recipe?.ingredients.map((ingredient, index) => {
+                    return <li key={index}>{ingredient}</li>;
                   })}
                 </ul>
               </div>
@@ -73,12 +96,12 @@ export const Recipe = () => {
             <div className="recipe__container-grid-right">
               <img
                 className="recipe__container-grid-right-img"
-                src={recipe.images[0]}
+                src={recipe?.images[0]}
                 alt="recipeImg-1"
               />
               <img
                 className="recipe__container-grid-right-img"
-                src={recipe.images[1]}
+                src={recipe?.images[1]}
                 alt="recipeImg-2"
               />
             </div>
@@ -88,8 +111,8 @@ export const Recipe = () => {
               Procedimiento
             </div>
             <ol className="recipe__container-procedure-list">
-              {recipe.procedure.map((step) => {
-                return <li>{step}</li>;
+              {recipe?.procedure.map((step, index) => {
+                return <li key={index}>{step}</li>;
               })}
             </ol>
           </div>
@@ -169,9 +192,10 @@ export const Recipe = () => {
             </FormControl>
           )}
           <div className="recipe__comments-comments-section">
-            {comments.map((comment) => {
+            {comments.map((comment, index) => {
               return (
                 <Comment
+                  key={index}
                   author={comment.author}
                   comment={comment.comment}
                   rating={comment.rating}
