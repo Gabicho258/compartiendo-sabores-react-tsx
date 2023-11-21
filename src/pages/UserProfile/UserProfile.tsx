@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 import Avatar from "@mui/material/Avatar";
@@ -30,7 +29,6 @@ const userFavRecipes = [
   },
 ];
 
-
 export const UserProfile = () => {
   const [value, setValue] = useState(0);
   const isUserAuthenticated = localStorage.getItem("data");
@@ -55,7 +53,6 @@ export const UserProfile = () => {
             className="userProfile__backBtn-icon"
             onClick={() => navigate(-1)}
           />
-
         </div>
         {isOwnProfile ? (
           <>
