@@ -41,19 +41,19 @@ export const EditProfile = () => {
   };
 
   const handleUserUpdate = async () => {
-    if (form.password !== verifyPassword) {
-      setError("Las contraseñas no coinciden");
-    } else {
-      setError(null);
-      try {
-        await updateUser({ ...form, _id: userCredentials.id }).unwrap();
+    // if (form.password !== verifyPassword) {
+    //   setError("Las contraseñas no coinciden");
+    // } else {
+    //   setError(null);
+    try {
+      await updateUser({ ...form, _id: userCredentials.id }).unwrap();
 
-        navigate("/homepage");
-      } catch (error: any) {
-        alert(JSON.stringify(error.data));
-      }
-      console.log(form);
+      navigate("/homepage");
+    } catch (error: any) {
+      alert(JSON.stringify(error.data));
     }
+    console.log(form);
+    // }
   };
   useEffect(() => {
     setForm({
@@ -184,7 +184,7 @@ export const EditProfile = () => {
                 </div>
               </div>
               <div className="editProfile__main-editForm-grid-right">
-                <div className="editProfile__main-editForm-grid-right-field">
+                {/* <div className="editProfile__main-editForm-grid-right-field">
                   <p className="editProfile__main-editForm-grid-right-label">
                     Nueva contraseña
                   </p>
@@ -218,7 +218,7 @@ export const EditProfile = () => {
                   </div>
                 ) : (
                   <></>
-                )}
+                )} */}
               </div>
             </div>
           </div>

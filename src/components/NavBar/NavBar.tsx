@@ -29,6 +29,9 @@ export const NavBar = () => {
   const handleClickEditProfile = () => {
     navigate("/edit-profile");
   };
+  const handleClickProfile = () => {
+    navigate("/profile");
+  };
   const handleClickLogout = () => {
     localStorage.clear();
     navigate("/homepage");
@@ -91,7 +94,12 @@ export const NavBar = () => {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    handleClickProfile();
+                  }}
+                >
                   <Avatar src={data?.photo_url} /> {data?.first_name}
                 </MenuItem>
 

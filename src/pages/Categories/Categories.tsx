@@ -9,8 +9,9 @@ import { useGetRecipesQuery } from "../../app/apis/compartiendoSabores.api";
 
 export const Categories = () => {
   const { data } = useGetRecipesQuery();
-  const { text, result, onChangeInput } = useSearch({ data: data });
   const { category } = useParams();
+  const recipes = data?.filter((recipe) => recipe.category === category);
+  const { text, result, onChangeInput } = useSearch({ data: recipes });
   return (
     <>
       <NavBar />

@@ -11,8 +11,12 @@ import ImageListItem from "@mui/material/ImageListItem";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import { CustomTabPanel } from "../../components/CustomTabPanel/CustomTabPanel";
-import { recetas } from "../../static_test/recipes";
 import "./_UserProfile.scss";
+import { useNavigate } from "react-router-dom";
+import {
+  useGetRecipesQuery,
+  useGetUserByIdQuery,
+} from "../../app/apis/compartiendoSabores.api";
 
 const userFavRecipes = [
   {
@@ -25,12 +29,19 @@ const userFavRecipes = [
   },
 ];
 
-const isCompanyAccount = false;
-const isOwnProfile = false;
-
 export const UserProfile = () => {
   const [value, setValue] = useState(0);
-
+  const isUserAuthenticated = localStorage.getItem("data");
+  const userCredentials =
+    isUserAuthenticated && JSON.parse(isUserAuthenticated);
+  const { data: user } = useGetUserByIdQuery(userCredentials.id);
+  const isCompanyAccount = user?.role === "Empresa";
+  const isOwnProfile = user?.role === "Personal";
+  const { data: recipes } = useGetRecipesQuery();
+  const myRecipes = recipes?.filter(
+    (recipe) => recipe.user_id === userCredentials.id
+  );
+  const navigate = useNavigate();
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -38,7 +49,10 @@ export const UserProfile = () => {
     <>
       <div className="userProfile">
         <div className="userProfile__backBtn">
-          <ArrowBackIcon className="userProfile__backBtn-icon" />
+          <ArrowBackIcon
+            className="userProfile__backBtn-icon"
+            onClick={() => navigate(-1)}
+          />
         </div>
         {isOwnProfile ? (
           <>
@@ -55,11 +69,11 @@ export const UserProfile = () => {
             <div className="userProfile__container-grid-left">
               <Avatar
                 className="userProfile__container-grid-left-image"
-                alt="Juan Perez"
-                src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                alt={user?.first_name}
+                src={user?.photo_url}
               />
               <h3 className="userProfile__container-grid-left-name">
-                Juan Perez
+                {user?.first_name} {user?.last_name}
                 {isCompanyAccount ? (
                   <>
                     <span className="userProfile__container-grid-left-name-companyLabel">
@@ -76,7 +90,7 @@ export const UserProfile = () => {
                 Recetas Compartidas
               </h2>
               <h2 className="userProfile__container-grid-right-counter">
-                {recetas.length}
+                {myRecipes?.length}
               </h2>
             </div>
           </div>
@@ -97,17 +111,14 @@ export const UserProfile = () => {
           )}
 
           <p className="userProfile__container-userDescription">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Id nibh
-            tortor id aliquet. Accumsan sit amet nulla facilisi morbi tempus.
-            Velit scelerisque in dictum non consectetur a erat.
+            {user?.description}
           </p>
           {isCompanyAccount ? (
             <>
               <div className="userProfile__container-contact">
                 <CallIcon className="userProfile__container-contact-icon" />
                 <p className="userProfile__container-contact-phone">
-                  999 999 999
+                  {user?.phone_number}
                 </p>
               </div>
             </>
@@ -139,15 +150,22 @@ export const UserProfile = () => {
           <CustomTabPanel value={value} index={0}>
             <div className="userProfile__recipesTab-recipes">
               <ImageList gap={15} cols={5}>
-                {recetas.map((item) => (
-                  <ImageListItem key={item.images[0]}>
-                    <img
-                      className="userProfile__recipesTab-recipes-img"
-                      src={item.images[0]}
-                      alt={item.title}
-                    />
-                  </ImageListItem>
-                ))}
+                {myRecipes ? (
+                  myRecipes?.map((item) => (
+                    <ImageListItem
+                      key={item.images[0]}
+                      onClick={() => navigate(`/recipe/${item._id}`)}
+                    >
+                      <img
+                        className="userProfile__recipesTab-recipes-img"
+                        src={item.images[0]}
+                        alt={item.title}
+                      />
+                    </ImageListItem>
+                  ))
+                ) : (
+                  <p>No se agregaron recetas</p>
+                )}
               </ImageList>
             </div>
           </CustomTabPanel>
