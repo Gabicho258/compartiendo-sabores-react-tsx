@@ -5,5 +5,14 @@
     width: 100%;
     height: 15rem;
     object-fit: cover;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &__caption {
+    margin: 0 auto;
+    &-text:hover {
+      cursor: pointer;
+    }
   }
 }
