@@ -13,6 +13,7 @@ import {
   useUpdateUserMutation,
 } from "../../app/apis/compartiendoSabores.api";
 import { useNavigate } from "react-router-dom";
+import { cloudinaryService } from "../../services/cloudinaryService";
 
 // const user = users[0];
 
@@ -30,6 +31,7 @@ export const EditProfile = () => {
     last_name: data?.last_name,
     phone_number: data?.phone_number,
     description: data?.description,
+    photo_url: data?.photo_url,
     // password: "",
   });
 
@@ -41,19 +43,35 @@ export const EditProfile = () => {
   };
 
   const handleUserUpdate = async () => {
-    // if (form.password !== verifyPassword) {
-    //   setError("Las contraseñas no coinciden");
-    // } else {
-    //   setError(null);
     try {
       await updateUser({ ...form, _id: userCredentials.id }).unwrap();
-
       navigate("/homepage");
     } catch (error: any) {
       alert(JSON.stringify(error.data));
     }
-    console.log(form);
-    // }
+  };
+  // Conexion with cloudinary service
+  const showWidgetPhotoUser = async () => {
+    let state = "";
+    let URL = "";
+    // hacemos un casteo para evitar errores
+    (window as any).cloudinary.openUploadWidget(
+      cloudinaryService("user_photos"),
+      (err: any, result: any) => {
+        if (!err && result && result.event === "success") {
+          state = "success";
+          const { secure_url /*, original_filename, format */ } = result.info;
+          URL = secure_url;
+          // setPhotoUserUrl(secure_url);
+          // setPhotoName(`${original_filename}.${format}`);
+        }
+        if (state === "success" && result.event === "close") {
+          // handlePhotoEdit(URL);
+          console.log(URL);
+          onInputChange(URL, "photo_url");
+        }
+      }
+    );
   };
   useEffect(() => {
     setForm({
@@ -61,6 +79,7 @@ export const EditProfile = () => {
       last_name: data?.last_name,
       phone_number: data?.phone_number,
       description: data?.description,
+      photo_url: data?.photo_url,
     });
   }, [isSuccess]);
   return (
@@ -87,14 +106,17 @@ export const EditProfile = () => {
             <Avatar
               className="editProfile__main-userImage-image"
               alt={data?.first_name}
-              src={data?.photo_url}
+              src={form?.photo_url}
             />
             <Button
               variant="text"
               className="editProfile__main-userImage-editImageBtn"
             >
               <AddIcon className="editProfile__main-userImage-editImageBtn-icon" />
-              <div className="editProfile__main-userImage-editImageBtn-label">
+              <div
+                className="editProfile__main-userImage-editImageBtn-label"
+                onClick={showWidgetPhotoUser}
+              >
                 Editar foto
               </div>
             </Button>

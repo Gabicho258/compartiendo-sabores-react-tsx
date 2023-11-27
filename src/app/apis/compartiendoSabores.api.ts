@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Recipe, User, UserCredentials } from "../../interfaces/index";
+import { Recipe, User, UserCredentials, Comment } from "../../interfaces/index";
 
 export const compartiendoSaboresAPI = createApi({
   baseQuery: fetchBaseQuery({
@@ -80,6 +80,33 @@ export const compartiendoSaboresAPI = createApi({
         method: "PUT",
         body: recipe,
       }),
+      async onQueryStarted({ _id, ...patch }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          compartiendoSaboresAPI.util.updateQueryData(
+            "getRecipeById",
+            _id || "",
+            (draft) => {
+              Object.assign(draft, patch);
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+    }),
+    // Comment endpoint
+    createComment: builder.mutation<Comment, Partial<Comment>>({
+      query: (comment) => ({
+        url: `comment/create`,
+        method: "POST",
+        body: comment,
+      }),
+    }),
+    getCommentsByRecipeId: builder.query<Comment[], string>({
+      query: (id) => `comment/${id}`,
     }),
   }),
 });
@@ -94,4 +121,6 @@ export const {
   useGetRecipeByIdQuery,
   useGetRecipesQuery,
   useUpdateRecipeMutation,
+  useCreateCommentMutation,
+  useGetCommentsByRecipeIdQuery,
 } = compartiendoSaboresAPI;

@@ -3,19 +3,23 @@ import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Button from "@mui/material/Button";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AddIcon from "@mui/icons-material/Add";
-import { Box, FormControl, Rating, TextField } from "@mui/material";
+import { Box, FormControl } from "@mui/material";
 import { NavBar } from "../../components/NavBar/NavBar";
 import { RatingStars } from "../../components/Rating/RatingStars";
 import { Comment } from "../../components/Comment/Comment";
 import "./_Recipe.scss";
-import { recetas } from "../../static_test/recipes";
-import { comments } from "../../static_test/comments";
 import { Comment as CommentInterface } from "../../interfaces";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  useCreateCommentMutation,
+  useGetCommentsByRecipeIdQuery,
   useGetRecipeByIdQuery,
+  useGetUserByIdQuery,
   useGetUsersQuery,
+  useUpdateRecipeMutation,
+  useUpdateUserMutation,
 } from "../../app/apis/compartiendoSabores.api";
 
 // const recipe = recetas[0];
@@ -23,9 +27,18 @@ import {
 export const Recipe = () => {
   const [addingComment, setAddingComment] = useState(false);
   const navigate = useNavigate();
+  const isUserAuthenticated = localStorage.getItem("data");
+  const userCredentials =
+    isUserAuthenticated && JSON.parse(isUserAuthenticated);
   const { id } = useParams();
   const { data: recipe } = useGetRecipeByIdQuery(id || "");
+  const { data: user } = useGetUserByIdQuery(userCredentials.id);
   const { data: users } = useGetUsersQuery();
+  const [updateUser, { isLoading: isLoadingUser }] = useUpdateUserMutation();
+  const [createComment, { isLoading }] = useCreateCommentMutation();
+  const [updateRecipe] = useUpdateRecipeMutation();
+  const { data: comments, refetch: refetchComment } =
+    useGetCommentsByRecipeIdQuery(id || "");
   const [form, setForm] = useState<Partial<CommentInterface>>({
     rating: 0,
     comment: "",
@@ -38,10 +51,54 @@ export const Recipe = () => {
     });
   };
 
-  const handleSubmit = () => {
-    console.log(form);
-  };
+  const handleSubmit = async () => {
+    const comment = { ...form, user_id: userCredentials.id, recipe_id: id };
+    try {
+      await createComment(comment).unwrap();
+      // actualizamos la calificación de la receta
+      if (comments?.length === 0) {
+        await updateRecipe({
+          _id: id,
+          average_rating: comment.rating,
+        }).unwrap();
+      } else {
+        await updateRecipe({
+          _id: id,
+          average_rating:
+            ((comment.rating || 0) + (recipe?.average_rating || 0)) / 2,
+        }).unwrap();
+      }
 
+      // refetchComment
+      setAddingComment(false);
+      refetchComment();
+    } catch (error: any) {
+      alert(JSON.stringify(error.data));
+    }
+  };
+  const handleFavorite = async () => {
+    const isFavorite = user?.favorites.includes(id || "");
+    try {
+      if (isFavorite) {
+        // si es favorito, lo quitamos
+        await updateUser({
+          _id: userCredentials.id,
+          favorites: user?.favorites.filter(
+            (favorite) => favorite !== recipe?._id
+          ),
+        }).unwrap();
+      } else {
+        // sino lo agregamos
+        await updateUser({
+          _id: userCredentials.id,
+          favorites: [...(user?.favorites || []), recipe?._id || ""],
+        }).unwrap();
+      }
+    } catch (error: any) {
+      alert(JSON.stringify(error.data));
+    }
+    // console.log(isFavorite);
+  };
   return (
     <>
       <NavBar />
@@ -53,9 +110,23 @@ export const Recipe = () => {
           />
         </div>
         <div className="recipe__container">
-          <Button className="recipe__container-favBtn" variant="contained">
-            Marcar como favorito
-            <FavoriteIcon className="recipe__container-favBtn-icon" />
+          <Button
+            className="recipe__container-favBtn"
+            variant="contained"
+            onClick={handleFavorite}
+            disabled={isLoadingUser}
+          >
+            {user?.favorites.includes(id || "") ? (
+              <>
+                Favorito{" "}
+                <FavoriteIcon className="recipe__container-favBtn-icon" />
+              </>
+            ) : (
+              <>
+                Marcar como favorito{" "}
+                <FavoriteBorderIcon className="recipe__container-favBtn-icon" />
+              </>
+            )}
           </Button>
           <div className="recipe__container-header">
             <h1 className="recipe__container-header-title">{recipe?.title}</h1>
@@ -126,6 +197,9 @@ export const Recipe = () => {
               onClick={() => {
                 setAddingComment(true);
               }}
+              disabled={comments?.some(
+                (comment) => comment.user_id === userCredentials.id
+              )}
             >
               <AddIcon className="recipe__comments-header-addCommentBtn-icon" />
               Añadir comentario
@@ -171,7 +245,7 @@ export const Recipe = () => {
                       variant="contained"
                       className="recipe__comments-newComment-container-btnSection-submit"
                       onClick={handleSubmit}
-                      disabled={form.comment?.length === 0}
+                      disabled={form.comment?.length === 0 || isLoading}
                     >
                       Guardar cambios
                     </Button>
@@ -179,6 +253,7 @@ export const Recipe = () => {
                       type="button"
                       variant="contained"
                       className="recipe__comments-newComment-container-btnSection-cancel"
+                      disabled={isLoading}
                       onClick={() => {
                         setAddingComment(false);
                         form.comment = "";
@@ -192,11 +267,13 @@ export const Recipe = () => {
             </FormControl>
           )}
           <div className="recipe__comments-comments-section">
-            {comments.map((comment, index) => {
+            {comments?.map((comment, index) => {
+              const [user] =
+                users?.filter((user) => user._id === comment.user_id) || [];
               return (
                 <Comment
                   key={index}
-                  author={comment.author}
+                  author={`${user?.first_name} ${user?.last_name}`}
                   comment={comment.comment}
                   rating={comment.rating}
                 />
