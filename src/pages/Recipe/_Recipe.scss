@@ -67,8 +67,28 @@
       }
       &-right {
         display: flex;
+        overflow-x: auto;
         align-items: center;
-        justify-content: center;
+        margin: 0 3rem;
+        &::-webkit-scrollbar {
+          width: 10px;
+          height: 10px;
+        }
+        &::-webkit-scrollbar-button:start:decrement,
+        ::-webkit-scrollbar-button:end:increment {
+          height: 10px;
+          background-color: transparent;
+        }
+        &::-webkit-scrollbar-track-piece {
+          background-color: #eeeeee;
+          -webkit-border-radius: 16px;
+        }
+        &::-webkit-scrollbar-thumb:horizontal {
+          height: 10px;
+          background-color: #666;
+          border: 1px solid #eee;
+          -webkit-border-radius: 16px;
+        }
         &-img {
           width: 12rem;
           height: 12rem;
