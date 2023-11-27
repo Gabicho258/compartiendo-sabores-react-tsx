@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import { CustomTabPanel } from "../../components/CustomTabPanel/CustomTabPanel";
 import "./_UserProfile.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetRecipesQuery,
   useGetUserByIdQuery,
@@ -34,12 +34,17 @@ export const UserProfile = () => {
   const isUserAuthenticated = localStorage.getItem("data");
   const userCredentials =
     isUserAuthenticated && JSON.parse(isUserAuthenticated);
-  const { data: user } = useGetUserByIdQuery(userCredentials.id);
-  const isCompanyAccount = user?.role === "Empresa";
-  const isOwnProfile = user?.role === "Personal";
+  const { id } = useParams();
+
+  const isOwnProfile = id ? id === userCredentials.id : true;
+  const { data: user } = useGetUserByIdQuery(
+    isOwnProfile ? userCredentials.id : id
+  );
   const { data: recipes } = useGetRecipesQuery();
-  const myRecipes = recipes?.filter(
-    (recipe) => recipe.user_id === userCredentials.id
+  const isCompanyAccount = user?.role === "Empresa";
+  const myRecipes = recipes?.filter((recipe) => recipe.user_id === user?._id);
+  const myFavoriteRecipes = recipes?.filter((recipe) =>
+    user?.favorites.includes(recipe._id)
   );
   const navigate = useNavigate();
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -160,7 +165,7 @@ export const UserProfile = () => {
                 {myRecipes ? (
                   myRecipes?.map((item) => (
                     <ImageListItem
-                      key={item.images[0]}
+                      key={item._id}
                       onClick={() => navigate(`/recipe/${item._id}`)}
                     >
                       <img
@@ -180,15 +185,28 @@ export const UserProfile = () => {
             <CustomTabPanel value={value} index={1}>
               <div className="userProfile__recipesTab-favorites">
                 <ImageList gap={15} cols={5}>
-                  {userFavRecipes.map((item) => (
-                    <ImageListItem key={item.img}>
+                  {myFavoriteRecipes?.map(({ images, _id, title }) => (
+                    <ImageListItem
+                      key={_id}
+                      onClick={() => {
+                        navigate(`/recipe/${_id}`);
+                      }}
+                    >
                       <img
-                        src={item.img}
-                        alt={item.title}
+                        src={images[0]}
+                        alt={title}
                         className="userProfile__recipesTab-favorites-img"
                       />
                     </ImageListItem>
-                  ))}
+                  )) || (
+                    <ImageListItem key={Math.random()}>
+                      <img
+                        src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
+                        alt="No images available"
+                        className="userProfile__recipesTab-favorites-img"
+                      />
+                    </ImageListItem>
+                  )}
                 </ImageList>
               </div>
             </CustomTabPanel>
