@@ -1,21 +1,30 @@
 import { Paper, Typography } from "@mui/material";
 import "./_Categories.scss";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { RecipeCard } from "../../components/RecipeCard/RecipeCard";
 import { NavBar } from "../../components/NavBar/NavBar";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { useSearch } from "../../hooks/useSearch";
 import { useParams } from "react-router";
 import { useGetRecipesQuery } from "../../app/apis/compartiendoSabores.api";
+import { useNavigate } from "react-router-dom";
 
 export const Categories = () => {
   const { data } = useGetRecipesQuery();
   const { category } = useParams();
   const recipes = data?.filter((recipe) => recipe.category === category);
+  const navigate = useNavigate();
   const { text, result, onChangeInput } = useSearch({ data: recipes });
   return (
     <>
       <NavBar />
       <div className="category__container">
+        <div className="category__container-backBtn">
+          <ArrowBackIcon
+            className="category__container-backBtn-icon"
+            onClick={() => navigate(-1)}
+          />
+        </div>
         <Typography
           variant="h4"
           component="h1"
