@@ -5,18 +5,32 @@
   align-items: center;
   min-height: 100vh;
   flex-direction: column;
-    &-title{
-        text-align: center;
-        color: #fff;
-        font-size: 3rem;
+  &-backBtn {
+    position: absolute;
+    width: 3rem;
+    top: 7rem;
+    left: 2rem;
+    height: 3rem;
+    color: #fff;
+    &-icon {
+      font-size: 3rem;
+      &:hover {
+        cursor: pointer;
+      }
     }
-    &-paper {
-        width: 40rem;
-        background-color: #D9C9A5;
-        padding: 3rem 4rem;
-    }
-    &-searchBar{
-        width: 55%;
-        margin: 3rem 0 2.5rem;
-    }
+  }
+  &-title {
+    text-align: center;
+    color: #fff;
+    font-size: 3rem;
+  }
+  &-paper {
+    width: 40rem;
+    background-color: #d9c9a5;
+    padding: 3rem 4rem;
+  }
+  &-searchBar {
+    width: 55%;
+    margin: 3rem 0 2.5rem;
+  }
 }

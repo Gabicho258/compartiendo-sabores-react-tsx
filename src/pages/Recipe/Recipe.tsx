@@ -165,16 +165,15 @@ export const Recipe = () => {
               </div>
             </div>
             <div className="recipe__container-grid-right">
-              <img
-                className="recipe__container-grid-right-img"
-                src={recipe?.images[0]}
-                alt="recipeImg-1"
-              />
-              <img
-                className="recipe__container-grid-right-img"
-                src={recipe?.images[1]}
-                alt="recipeImg-2"
-              />
+              {recipe?.images.map((image) => {
+                return (
+                  <img
+                    className="recipe__container-grid-right-img"
+                    src={image}
+                    alt="recipeImg"
+                  ></img>
+                );
+              })}
             </div>
           </div>
           <div className="recipe__container-procedure">
