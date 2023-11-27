@@ -46,6 +46,9 @@ export const NavBar = () => {
           className="navBarContainer__icon"
           alt="image_profile"
           src="https://cdn-icons-png.flaticon.com/512/526/526190.png"
+          onClick={({ target }) => {
+            navigate("/homepage");
+          }}
         ></img>
         {isUserAuthenticated ? (
           <>
