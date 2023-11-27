@@ -23,8 +23,7 @@ export const CreateRecipe = () => {
     ingredients: [],
     procedure: [],
     category,
-    images:[],
-
+    images: [],
   });
   //   const { data } = useGetUserByIdQuery(userCredentials?.id);
   const [createRecipe, { isLoading }] = useCreateRecipeMutation();
@@ -70,7 +69,6 @@ export const CreateRecipe = () => {
     });
   };
 
-
   const removeImages = (i: string) => {
     const newArray = image.filter((item) => item !== i);
     setImage(newArray);
@@ -100,7 +98,7 @@ export const CreateRecipe = () => {
       category: event.target.value,
     });
   };
-  console.log(form)
+  console.log(form);
   return (
     <>
       <div className="createRecipe">
@@ -121,8 +119,12 @@ export const CreateRecipe = () => {
           </div>
         </div>
         <div className="createRecipe__titles">
-          <div className="createRecipe__titles-i"><h2>Ingredientes:</h2></div>
-          <div className="createRecipe__titles-p"><h2>Procedimientos:</h2></div>
+          <div className="createRecipe__titles-i">
+            <h2>Ingredientes:</h2>
+          </div>
+          <div className="createRecipe__titles-p">
+            <h2>Procedimientos:</h2>
+          </div>
         </div>
         <div className="createRecipe__half">
           <div className="createRecipe__half-ingredients">
@@ -130,50 +132,46 @@ export const CreateRecipe = () => {
               <div className="createRecipe__half-ingredients-list">
                 <ul>
                   {ingre.map((i, index) => (
-                    <li
-                      key={index}
-                    >
+                    <li key={index}>
                       <div className="createRecipe__half-ingredients-list-l">
                         <div className="createRecipe__half-ingredients-list-l-i">
-                         {i}
+                          {i}
                         </div>
                         <button
                           className="createRecipe__half-ingredients-list-l-b"
                           onClick={() => removeIngredient(i)}
-                         >
+                        >
                           Eliminar
                         </button>
-                      </div> 
+                      </div>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
-            
           </div>
           <div className="createRecipe__half-procedure">
             {proce.length > 0 && (
               <div className="createRecipe__half-procedure-list">
                 <ol>
                   {proce.map((p, index) => (
-                    <li
-                      key={index}
-                    > 
+                    <li key={index}>
                       <div className="createRecipe__half-procedure-list-l">
-                        <div className="createRecipe__half-procedure-list-l-i">{p}</div>
+                        <div className="createRecipe__half-procedure-list-l-i">
+                          {p}
+                        </div>
                         <button
                           className="createRecipe__half-procedure-list-l-b"
                           onClick={() => removeProcedure(p)}
                         >
                           Eliminar
                         </button>
-                      </div> 
+                      </div>
                     </li>
                   ))}
                 </ol>
               </div>
             )}
-            
           </div>
         </div>
         <div className="createRecipe__inputBtn">
@@ -241,32 +239,30 @@ export const CreateRecipe = () => {
           <div className="createRecipe__end-btn">
             <div className="createRecipe__end-btn-foto">
               <div className="createRecipe__end-btn-foto-b1">
-               <ul>
+                <ul>
                   {image.map((i, index) => (
-                    <li
-                      key={index}
-                    >
+                    <li key={index}>
                       <div className="createRecipe__half-ingredients-list-l">
                         <div className="createRecipe__half-ingredients-list-l-i">
-                         {i}
+                          {i}
                         </div>
                         <button
                           className="createRecipe__half-ingredients-list-l-b"
                           onClick={() => removeImages(i)}
-                         >
+                        >
                           Eliminar
                         </button>
-                      </div> 
+                      </div>
                     </li>
                   ))}
-                </ul> 
+                </ul>
               </div>
               <Button
                 variant="contained"
                 className="createRecipe__end-btn-foto-b2"
-                onClick={({})=>{
-                  addImages('borrar esto.png');
-                }}  
+                onClick={() => {
+                  addImages("borrar esto.png");
+                }}
               >
                 Agregar Foto
               </Button>
@@ -274,7 +270,7 @@ export const CreateRecipe = () => {
             <div className="createRecipe__end-btn-post">
               <Button
                 className="createRecipe__end-btn-post-c"
-                onClick={({}) => {
+                onClick={() => {
                   navigate(-1);
                 }}
               >
