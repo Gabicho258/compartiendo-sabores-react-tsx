@@ -266,12 +266,13 @@ export const Recipe = () => {
             </FormControl>
           )}
           <div className="recipe__comments-comments-section">
-            {comments?.map((comment, index) => {
+            {[...(comments || [])]?.reverse().map((comment, index) => {
               const [user] =
                 users?.filter((user) => user._id === comment.user_id) || [];
               return (
                 <Comment
                   key={index}
+                  user_id={comment.user_id}
                   author={`${user?.first_name} ${user?.last_name}`}
                   comment={comment.comment}
                   rating={comment.rating}
