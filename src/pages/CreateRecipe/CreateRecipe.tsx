@@ -17,11 +17,14 @@ export const CreateRecipe = () => {
   const [proce, setProce] = useState<string[]>([]);
   const [newProcedure, setNewProcedure] = useState<string>("");
   const [category, setCategory] = useState<string>("");
+  const [image, setImage] = useState<string[]>([]);
   const [form, setForm] = useState<Partial<Recipe>>({
     title: "",
     ingredients: [],
     procedure: [],
     category,
+    images:[],
+
   });
   //   const { data } = useGetUserByIdQuery(userCredentials?.id);
   const [createRecipe, { isLoading }] = useCreateRecipeMutation();
@@ -59,7 +62,23 @@ export const CreateRecipe = () => {
       procedure: newArray,
     });
   };
+  const addImages = (i: string) => {
+    setImage([...image, i]);
+    setForm({
+      ...form,
+      images: [...image, i],
+    });
+  };
 
+
+  const removeImages = (i: string) => {
+    const newArray = image.filter((item) => item !== i);
+    setImage(newArray);
+    setForm({
+      ...form,
+      images: newArray,
+    });
+  };
   const addTitle = (t: string) => {
     setForm({
       ...form,
@@ -81,7 +100,7 @@ export const CreateRecipe = () => {
       category: event.target.value,
     });
   };
-  // console.log(first)
+  console.log(form)
   return (
     <>
       <div className="createRecipe">
@@ -101,94 +120,101 @@ export const CreateRecipe = () => {
             />
           </div>
         </div>
+        <div className="createRecipe__titles">
+          <div className="createRecipe__titles-i"><h2>Ingredientes:</h2></div>
+          <div className="createRecipe__titles-p"><h2>Procedimientos:</h2></div>
+        </div>
         <div className="createRecipe__half">
           <div className="createRecipe__half-ingredients">
-            <h2>Ingredientes:</h2>
             {ingre.length > 0 && (
               <div className="createRecipe__half-ingredients-list">
                 <ul>
                   {ingre.map((i, index) => (
                     <li
                       key={index}
-                      className="createRecipe__half-ingredients-list-l"
                     >
-                      {i}
-                      <label> </label>
-                      <button
-                        className="createRecipe__half-ingredients-list-l-b"
-                        onClick={() => removeIngredient(i)}
-                      >
-                        Eliminar
-                      </button>
+                      <div className="createRecipe__half-ingredients-list-l">
+                        <div className="createRecipe__half-ingredients-list-l-i">
+                         {i}
+                        </div>
+                        <button
+                          className="createRecipe__half-ingredients-list-l-b"
+                          onClick={() => removeIngredient(i)}
+                         >
+                          Eliminar
+                        </button>
+                      </div> 
                     </li>
                   ))}
                 </ul>
               </div>
             )}
-            <div className="createRecipe__half-ingredients-inputBtn">
-              <TextField
-                value={newIngredient}
-                className="createRecipe__half-ingredients-inputBtn-input"
-                onChange={({ target }) => {
-                  setNewIngredient(target.value);
-                }}
-              />
-              <div className="createRecipe__half-ingredients-inputBtn-btn">
-                <Button
-                  variant="contained"
-                  className="createRecipe__half-ingredients-inputBtn-btn-b"
-                  onClick={() => {
-                    addIngredient(newIngredient);
-                  }}
-                >
-                  Agregar
-                </Button>
-              </div>
-            </div>
+            
           </div>
           <div className="createRecipe__half-procedure">
-            <h2>Procedimientos:</h2>
             {proce.length > 0 && (
               <div className="createRecipe__half-procedure-list">
                 <ol>
                   {proce.map((p, index) => (
                     <li
                       key={index}
-                      className="createRecipe__half-procedure-list-l"
-                    >
-                      {p}
-                      <label> </label>
-                      <button
-                        className="createRecipe__half-procedure-list-l-b"
-                        onClick={() => removeProcedure(p)}
-                      >
-                        Eliminar
-                      </button>
+                    > 
+                      <div className="createRecipe__half-procedure-list-l">
+                        <div className="createRecipe__half-procedure-list-l-i">{p}</div>
+                        <button
+                          className="createRecipe__half-procedure-list-l-b"
+                          onClick={() => removeProcedure(p)}
+                        >
+                          Eliminar
+                        </button>
+                      </div> 
                     </li>
                   ))}
                 </ol>
               </div>
             )}
-
-            <div className="createRecipe__half-procedure-inputBtn">
-              <TextField
-                value={newProcedure}
-                className="createRecipe__half-procedure-inputBtn-input"
-                onChange={({ target }) => {
-                  setNewProcedure(target.value);
+            
+          </div>
+        </div>
+        <div className="createRecipe__inputBtn">
+          <div className="createRecipe__inputBtn-ingredients">
+            <TextField
+              value={newIngredient}
+              className="createRecipe__inputBtn-ingredients-input"
+              onChange={({ target }) => {
+                setNewIngredient(target.value);
+              }}
+            />
+            <div className="createRecipe__inputBtn-ingredients-btn">
+              <Button
+                variant="contained"
+                className="createRecipe__inputBtn-ingredients-btn-b"
+                onClick={() => {
+                  addIngredient(newIngredient);
                 }}
-              />
-              <div className="createRecipe__half-procedure-inputBtn-btn">
-                <Button
-                  variant="contained"
-                  className="createRecipe__half-procedure-inputBtn-btn-b"
-                  onClick={() => {
-                    addProcedure(newProcedure);
-                  }}
-                >
-                  Agregar
-                </Button>
-              </div>
+              >
+                Agregar
+              </Button>
+            </div>
+          </div>
+          <div className="createRecipe__inputBtn-procedure">
+            <TextField
+              value={newProcedure}
+              className="createRecipe__inputBtn-procedure-input"
+              onChange={({ target }) => {
+                setNewProcedure(target.value);
+              }}
+            />
+            <div className="createRecipe__inputBtn-procedure-btn">
+              <Button
+                variant="contained"
+                className="createRecipe__inputBtn-procedure-btn-b"
+                onClick={() => {
+                  addProcedure(newProcedure);
+                }}
+              >
+                Agregar
+              </Button>
             </div>
           </div>
         </div>
@@ -214,15 +240,33 @@ export const CreateRecipe = () => {
           <h2>Fotos de tu receta:</h2>
           <div className="createRecipe__end-btn">
             <div className="createRecipe__end-btn-foto">
-              <Button
-                variant="contained"
-                className="createRecipe__end-btn-foto-b1"
-              >
-                Agregar Foto
-              </Button>
+              <div className="createRecipe__end-btn-foto-b1">
+               <ul>
+                  {image.map((i, index) => (
+                    <li
+                      key={index}
+                    >
+                      <div className="createRecipe__half-ingredients-list-l">
+                        <div className="createRecipe__half-ingredients-list-l-i">
+                         {i}
+                        </div>
+                        <button
+                          className="createRecipe__half-ingredients-list-l-b"
+                          onClick={() => removeImages(i)}
+                         >
+                          Eliminar
+                        </button>
+                      </div> 
+                    </li>
+                  ))}
+                </ul> 
+              </div>
               <Button
                 variant="contained"
                 className="createRecipe__end-btn-foto-b2"
+                onClick={({})=>{
+                  addImages('borrar esto.png');
+                }}  
               >
                 Agregar Foto
               </Button>
