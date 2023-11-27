@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Settings from "@mui/icons-material/Settings";
+import ChatIcon from "@mui/icons-material/Chat";
 import Logout from "@mui/icons-material/Logout";
 import "./_NavBar.scss";
 import { useNavigate } from "react-router-dom";
@@ -104,6 +105,16 @@ export const NavBar = () => {
                   }}
                 >
                   <Avatar src={data?.photo_url} /> {data?.first_name}
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/chat");
+                  }}
+                >
+                  <ListItemIcon>
+                    <ChatIcon fontSize="small" />
+                  </ListItemIcon>
+                  Chats
                 </MenuItem>
 
                 <Divider />
