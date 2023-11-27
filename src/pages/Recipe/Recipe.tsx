@@ -3,6 +3,7 @@ import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Button from "@mui/material/Button";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, FormControl } from "@mui/material";
 import { NavBar } from "../../components/NavBar/NavBar";
@@ -15,8 +16,10 @@ import {
   useCreateCommentMutation,
   useGetCommentsByRecipeIdQuery,
   useGetRecipeByIdQuery,
+  useGetUserByIdQuery,
   useGetUsersQuery,
   useUpdateRecipeMutation,
+  useUpdateUserMutation,
 } from "../../app/apis/compartiendoSabores.api";
 
 // const recipe = recetas[0];
@@ -29,7 +32,9 @@ export const Recipe = () => {
     isUserAuthenticated && JSON.parse(isUserAuthenticated);
   const { id } = useParams();
   const { data: recipe } = useGetRecipeByIdQuery(id || "");
+  const { data: user } = useGetUserByIdQuery(userCredentials.id);
   const { data: users } = useGetUsersQuery();
+  const [updateUser, { isLoading: isLoadingUser }] = useUpdateUserMutation();
   const [createComment, { isLoading }] = useCreateCommentMutation();
   const [updateRecipe] = useUpdateRecipeMutation();
   const { data: comments, refetch: refetchComment } =
@@ -71,7 +76,29 @@ export const Recipe = () => {
       alert(JSON.stringify(error.data));
     }
   };
-  // console.log(recipe);
+  const handleFavorite = async () => {
+    const isFavorite = user?.favorites.includes(id || "");
+    try {
+      if (isFavorite) {
+        // si es favorito, lo quitamos
+        await updateUser({
+          _id: userCredentials.id,
+          favorites: user?.favorites.filter(
+            (favorite) => favorite !== recipe?._id
+          ),
+        }).unwrap();
+      } else {
+        // sino lo agregamos
+        await updateUser({
+          _id: userCredentials.id,
+          favorites: [...(user?.favorites || []), recipe?._id || ""],
+        }).unwrap();
+      }
+    } catch (error: any) {
+      alert(JSON.stringify(error.data));
+    }
+    // console.log(isFavorite);
+  };
   return (
     <>
       <NavBar />
@@ -83,9 +110,23 @@ export const Recipe = () => {
           />
         </div>
         <div className="recipe__container">
-          <Button className="recipe__container-favBtn" variant="contained">
-            Marcar como favorito
-            <FavoriteIcon className="recipe__container-favBtn-icon" />
+          <Button
+            className="recipe__container-favBtn"
+            variant="contained"
+            onClick={handleFavorite}
+            disabled={isLoadingUser}
+          >
+            {user?.favorites.includes(id || "") ? (
+              <>
+                Favorito{" "}
+                <FavoriteIcon className="recipe__container-favBtn-icon" />
+              </>
+            ) : (
+              <>
+                Marcar como favorito{" "}
+                <FavoriteBorderIcon className="recipe__container-favBtn-icon" />
+              </>
+            )}
           </Button>
           <div className="recipe__container-header">
             <h1 className="recipe__container-header-title">{recipe?.title}</h1>
