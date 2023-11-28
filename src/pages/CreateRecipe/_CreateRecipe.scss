@@ -43,7 +43,7 @@ body {
         }
 
         &-i {
-            width: 40%;
+            width: 35%;
         }
 
         &-p {
@@ -59,7 +59,7 @@ body {
         overflow: hidden;
 
         &-ingredients {
-            width: 40%;
+            width: 35%;
             display: grid;
             place-items: center;
 
@@ -71,18 +71,22 @@ body {
                 overflow-x: auto;
                 white-space: nowrap;
                 max-height: 15em;
+
                 &-l {
                     justify-content: space-between;
                     display: flex;
                     margin-top: 10px;
                     width: 100%;
                     align-items: center;
+
                     &-i {
                         font-size: 20px;
                         font-weight: bold;
                         width: 80%;
-                        overflow:auto ;
+                        overflow: auto;
+                        text-align: center;
                     }
+
                     &-b {
                         background-color: #D12942;
                         color: white;
@@ -110,17 +114,31 @@ body {
                 overflow-x: auto;
                 white-space: nowrap;
                 max-height: 15em;
+
                 &-l {
                     justify-content: space-between;
                     display: flex;
                     margin-top: 10px;
                     width: 100%;
                     align-items: center;
+
                     &-i {
-                        font-size: 20px;
+
                         width: 80%;
-                        overflow:auto ;
+
+                        //overflow:auto ;
+                        textarea {
+                            width: 98%;
+                            font-size: 20px;
+                            font-weight: bold;
+                            text-align: center;
+                            height: 40px;
+                            border: 1px solid black;
+                            border-radius: 9px;
+                        }
+
                     }
+
                     &-b {
                         background-color: #D12942;
                         color: white;
@@ -142,7 +160,7 @@ body {
         &-ingredients {
             display: flex;
             align-items: center;
-            width: 40%;
+            width: 35%;
             justify-content: space-between;
             margin-top: 5px;
 
@@ -180,6 +198,8 @@ body {
                 background-color: white;
                 border: 3px solid black;
                 border-radius: 9px;
+                font-size: 17px;
+                height: 4em;
             }
 
             &-btn {
@@ -205,7 +225,8 @@ body {
         margin-top: 20px;
 
         &-select {
-            border: 3px solid white; // Puedes ajustar el grosor y el color del borde según tus preferencias
+            border: 3px solid white;
+
         }
 
     }
@@ -226,12 +247,15 @@ body {
             &-foto {
                 display: flex;
                 align-items: center;
+
                 &-b1 {
                     border: 3px solid white;
-                    width: 15em;
+                    width: 25em;
                     color: white;
                     background-color: #281B23;
                     margin-right: 10px;
+                    max-height: 10em;
+                    overflow-y: auto;
                 }
 
                 &-b2 {
