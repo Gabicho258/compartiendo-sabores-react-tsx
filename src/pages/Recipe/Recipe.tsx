@@ -141,7 +141,12 @@ export const Recipe = () => {
           <div className="recipe__container-grid">
             <div className="recipe__container-grid-left">
               <div className="recipe__container-grid-left-author">
-                <div className="recipe__container-grid-left-label">
+                <div
+                  className="recipe__container-grid-left-label-author"
+                  onClick={() => {
+                    navigate(`/profile/${recipe?.user_id}`);
+                  }}
+                >
                   Por:{" "}
                   {
                     users?.find((user) => user._id === recipe?.user_id)

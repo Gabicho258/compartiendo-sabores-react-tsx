@@ -59,6 +59,18 @@
           margin-bottom: 0.4rem;
           background-color: #281b23;
           color: #fff;
+          &-author {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            border-radius: 0.3rem;
+            margin-bottom: 0.4rem;
+            background-color: #281b23;
+            color: #fff;
+            &:hover {
+              text-decoration: underline;
+              cursor: pointer;
+            }
+          }
         }
         &-list {
           margin: 0;
