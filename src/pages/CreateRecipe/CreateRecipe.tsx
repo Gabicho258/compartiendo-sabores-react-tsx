@@ -7,7 +7,11 @@ import { useCreateRecipeMutation } from "../../app/apis/compartiendoSabores.api"
 import { useNavigate } from "react-router-dom";
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { categories } from "../../utils/categories";
+
+import TextArea from '@mui/material/TextField';
+
 import { cloudinaryService } from "../../services/cloudinaryService";
+
 
 export const CreateRecipe = () => {
   const isUserAuthenticated = localStorage.getItem("data");
@@ -189,7 +193,7 @@ export const CreateRecipe = () => {
                     <li key={index}>
                       <div className="createRecipe__half-procedure-list-l">
                         <div className="createRecipe__half-procedure-list-l-i">
-                          {p}
+                          <textarea readOnly>{p}</textarea>
                         </div>
                         <button
                           className="createRecipe__half-procedure-list-l-b"
@@ -227,7 +231,7 @@ export const CreateRecipe = () => {
             </div>
           </div>
           <div className="createRecipe__inputBtn-procedure">
-            <TextField
+            <textarea
               value={newProcedure}
               className="createRecipe__inputBtn-procedure-input"
               onChange={({ target }) => {
@@ -269,6 +273,7 @@ export const CreateRecipe = () => {
           <h2>Fotos de tu receta:</h2>
           <div className="createRecipe__end-btn">
             <div className="createRecipe__end-btn-foto">
+            {image.length > 0 && (
               <div className="createRecipe__end-btn-foto-b1">
                 <ul>
                   {image.map((image, index) => (
@@ -287,7 +292,7 @@ export const CreateRecipe = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div>)}
               <Button
                 variant="contained"
                 className="createRecipe__end-btn-foto-b2"
