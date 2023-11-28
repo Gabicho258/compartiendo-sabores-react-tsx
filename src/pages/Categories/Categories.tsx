@@ -8,8 +8,10 @@ import { useSearch } from "../../hooks/useSearch";
 import { useParams } from "react-router";
 import { useGetRecipesQuery } from "../../app/apis/compartiendoSabores.api";
 import { useNavigate } from "react-router-dom";
+import { ButtonAddRecipe } from "../../components/ButtonAddRecipe/ButtonAddRecipe";
 
 export const Categories = () => {
+  const isUserAuthenticated = localStorage.getItem("data");
   const { data } = useGetRecipesQuery();
   const { category } = useParams();
   const recipes = data?.filter((recipe) => recipe.category === category);
@@ -62,6 +64,7 @@ export const Categories = () => {
             }
           )}
         </Paper>
+        {isUserAuthenticated && <ButtonAddRecipe />}
       </div>
     </>
   );
