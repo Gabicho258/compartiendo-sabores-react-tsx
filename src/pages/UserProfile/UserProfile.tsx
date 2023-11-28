@@ -18,17 +18,6 @@ import {
   useGetUserByIdQuery,
 } from "../../app/apis/compartiendoSabores.api";
 
-const userFavRecipes = [
-  {
-    img: "https://www.clara.es/medio/2021/12/16/que-comer-hoy-ideas_21beeb02_1200x630.jpg",
-    title: "Espirales",
-  },
-  {
-    img: "https://www.cocinacaserayfacil.net/wp-content/uploads/2020/03/Platos-de-comida-que-pides-a-domicilio-y-puedes-hacer-en-casa.jpg",
-    title: "Pizza",
-  },
-];
-
 export const UserProfile = () => {
   const [value, setValue] = useState(0);
   const isUserAuthenticated = localStorage.getItem("data");

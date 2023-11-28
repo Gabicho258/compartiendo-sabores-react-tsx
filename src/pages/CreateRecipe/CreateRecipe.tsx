@@ -5,9 +5,13 @@ import "./_CreateRecipe.scss";
 import { Recipe } from "../../interfaces";
 import { useCreateRecipeMutation } from "../../app/apis/compartiendoSabores.api";
 import { useNavigate } from "react-router-dom";
-import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { categories } from "../../utils/categories";
+
 import TextArea from '@mui/material/TextField';
+
+import { cloudinaryService } from "../../services/cloudinaryService";
+
 
 export const CreateRecipe = () => {
   const isUserAuthenticated = localStorage.getItem("data");
@@ -18,7 +22,7 @@ export const CreateRecipe = () => {
   const [proce, setProce] = useState<string[]>([]);
   const [newProcedure, setNewProcedure] = useState<string>("");
   const [category, setCategory] = useState<string>("");
-  const [image, setImage] = useState<string[]>([]);
+  const [image, setImage] = useState<any[]>([]);
   const [form, setForm] = useState<Partial<Recipe>>({
     title: "",
     ingredients: [],
@@ -62,20 +66,23 @@ export const CreateRecipe = () => {
       procedure: newArray,
     });
   };
-  const addImages = (i: string) => {
-    setImage([...image, i]);
+  const addImages = (photo_url: string, photo_name: string) => {
+    // setImage([...image, photo_url]);
+    setImage([...image, { photo_url, photo_name }]);
     setForm({
       ...form,
-      images: [...image, i],
+      images: [...image.map((photoObj) => photoObj.photo_url), photo_url],
     });
   };
 
-  const removeImages = (i: string) => {
-    const newArray = image.filter((item) => item !== i);
+  const removeImages = (photo_name: string) => {
+    const newArray = image.filter(
+      (photoObj) => photoObj.photo_name !== photo_name
+    );
     setImage(newArray);
     setForm({
       ...form,
-      images: newArray,
+      images: newArray.map((photoObj) => photoObj.photo_url),
     });
   };
   const addTitle = (t: string) => {
@@ -86,6 +93,7 @@ export const CreateRecipe = () => {
   };
   const handleCreateRecipe = async () => {
     try {
+      // console.log(form);
       await createRecipe({ ...form, user_id: userCredentials.id }).unwrap();
       navigate(-1);
     } catch (error: any) {
@@ -99,7 +107,33 @@ export const CreateRecipe = () => {
       category: event.target.value,
     });
   };
-  console.log(form);
+  // Conexion with cloudinary service
+  const showWidgetPhotoRecipe = async () => {
+    let state = "";
+    let URL = "";
+    let photoName = "";
+    // hacemos un casteo para evitar errores
+    (window as any).cloudinary.openUploadWidget(
+      cloudinaryService("recipe_photos"),
+      (err: any, result: any) => {
+        if (!err && result && result.event === "success") {
+          state = "success";
+          const { secure_url, original_filename, format } = result.info;
+          URL = secure_url;
+          photoName = `${original_filename}.${format}`;
+          // setPhotoUserUrl(secure_url);
+          // setPhotoName(`${original_filename}.${format}`);
+        }
+        if (state === "success" && result.event === "close") {
+          // handlePhotoEdit(URL);
+          console.log(URL);
+          addImages(URL, photoName);
+          // onInputChange(URL, "photo_url");
+        }
+      }
+    );
+  };
+  // console.log(form);
   return (
     <>
       <div className="createRecipe">
@@ -242,15 +276,15 @@ export const CreateRecipe = () => {
             {image.length > 0 && (
               <div className="createRecipe__end-btn-foto-b1">
                 <ul>
-                  {image.map((i, index) => (
+                  {image.map((image, index) => (
                     <li key={index}>
                       <div className="createRecipe__half-ingredients-list-l">
                         <div className="createRecipe__half-ingredients-list-l-i">
-                          {i}
+                          {image.photo_name}
                         </div>
                         <button
                           className="createRecipe__half-ingredients-list-l-b"
-                          onClick={() => removeImages(i)}
+                          onClick={() => removeImages(image.photo_name)}
                         >
                           Eliminar
                         </button>
@@ -262,9 +296,7 @@ export const CreateRecipe = () => {
               <Button
                 variant="contained"
                 className="createRecipe__end-btn-foto-b2"
-                onClick={() => {
-                  addImages("borrar esto.png");
-                }}
+                onClick={showWidgetPhotoRecipe}
               >
                 Agregar Foto
               </Button>
