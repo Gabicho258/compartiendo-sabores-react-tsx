@@ -14,6 +14,7 @@ import { CustomTabPanel } from "../../components/CustomTabPanel/CustomTabPanel";
 import "./_UserProfile.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  useCreateChatMutation,
   useGetRecipesQuery,
   useGetUserByIdQuery,
 } from "../../app/apis/compartiendoSabores.api";
@@ -30,12 +31,24 @@ export const UserProfile = () => {
     isOwnProfile ? userCredentials.id : id
   );
   const { data: recipes } = useGetRecipesQuery();
+  const [createChat, { isLoading }] = useCreateChatMutation();
   const isCompanyAccount = user?.role === "Empresa";
   const myRecipes = recipes?.filter((recipe) => recipe.user_id === user?._id);
   const myFavoriteRecipes = recipes?.filter((recipe) =>
     user?.favorites.includes(recipe._id)
   );
   const navigate = useNavigate();
+  const handleOpenChat = async () => {
+    try {
+      await createChat({
+        owner_id: userCredentials.id,
+        friend_id: id || "",
+      }).unwrap();
+      navigate("/chat");
+    } catch (error: any) {
+      alert(JSON.stringify(error.data));
+    }
+  };
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -98,6 +111,8 @@ export const UserProfile = () => {
               <Button
                 variant="contained"
                 className="userProfile__container-sendMessage-btn"
+                onClick={handleOpenChat}
+                disabled={isLoading}
               >
                 <p className="userProfile__container-sendMessage-btn-label">
                   Enviar mensaje
