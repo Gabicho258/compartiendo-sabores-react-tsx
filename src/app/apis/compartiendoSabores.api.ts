@@ -139,7 +139,7 @@ export const compartiendoSaboresAPI = createApi({
         body: message,
       }),
     }),
-    getMessagesByChatId: builder.query<Chat[], string>({
+    getMessagesByChatId: builder.query<Message[], string>({
       query: (chat_id) => `message/${chat_id}`,
     }),
   }),
