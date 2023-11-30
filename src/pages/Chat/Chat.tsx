@@ -2,33 +2,27 @@ import { useEffect, useState } from "react";
 import { NavBar } from "../../components/NavBar/NavBar";
 //import { useNavigate } from "react-router-dom";
 // import { users } from "../../static_test/users";
-import { messages } from "../../static_test/message";
 import "./_Chat.scss";
 import {
   useCreateMessageMutation,
   useGetChatsByUserIdQuery,
+  useGetMessagesByChatIdQuery,
   useGetUsersQuery,
 } from "../../app/apis/compartiendoSabores.api";
-import { User, Chat as iChat } from "../../interfaces";
-
-interface Friend {
-  name: string;
-  image: string;
-}
-interface Message {
-  isFriend: boolean;
-  text: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
+import { Message, User, Chat as iChat } from "../../interfaces";
 
 export const Chat = () => {
   const isUserAuthenticated = localStorage.getItem("data");
   const userCredentials =
     isUserAuthenticated && JSON.parse(isUserAuthenticated);
+  const [sortMessages, setSortMessages] = useState<Message[]>([]);
+  const [friendSelected, setFriendSelected] = useState<User>();
+  const [chatSelected, setChatSelected] = useState<iChat>();
   const { data: myChats = [] } = useGetChatsByUserIdQuery(userCredentials.id);
   const { data: users = [] } = useGetUsersQuery();
+  const { data: myMessages = [], refetch } = useGetMessagesByChatIdQuery(
+    chatSelected?._id || ""
+  );
   const [createMessage] = useCreateMessageMutation();
   const sortData = <T extends Message | iChat>(data: T[]): T[] => {
     const sortedData = [...data].sort((a, b) => {
@@ -42,14 +36,12 @@ export const Chat = () => {
 
     return sortedData;
   };
+  const myChatsSorted = sortData(myChats);
+  const myMessagesSorted = sortData(myMessages);
   ////////////
   const [form, setForm] = useState<Partial<Message>>({
     text: "",
   });
-
-  const [sortMessages, setSortMessages] = useState<Message[]>([]);
-  const [friendSelected, setFriendSelected] = useState<User>();
-  const [chatSelected, setChatSelected] = useState<iChat>();
 
   const inputForm = (t: string) => {
     setForm({
@@ -73,18 +65,19 @@ export const Chat = () => {
       text: "",
     });
   };
-  const handleOpenChat = (friend: User, chat: iChat) => {
+  const handleOpenChat = async (friend: User, chat: iChat) => {
     setFriendSelected(friend);
     setChatSelected(chat);
+    await refetch();
   };
 
   useEffect(() => {
-    const sortMessages = [...messages].sort((a, b) => {
-      const fechaA = new Date(a.createdAt).getTime();
-      const fechaB = new Date(b.createdAt).getTime();
-      return fechaA - fechaB;
-    });
-    setSortMessages(sortMessages);
+    // const sortMessages = [...messages].sort((a, b) => {
+    //   const fechaA = new Date(a.createdAt).getTime();
+    //   const fechaB = new Date(b.createdAt).getTime();
+    //   return fechaA - fechaB;
+    // });
+    // setSortMessages(sortMessages);
   }, []);
 
   const newDate = (data: string) => {
@@ -112,7 +105,7 @@ export const Chat = () => {
         <div className="chat__friends">
           <h2>CHATS</h2>
           <div className="chat__friends-names">
-            {sortData(myChats).map((chat, index) => {
+            {myChatsSorted.map((chat, index) => {
               const [friendUser] = users?.filter(
                 (user) =>
                   user._id ===
@@ -147,99 +140,77 @@ export const Chat = () => {
             <img
               alt="qweqwe"
               className="chat__message-friend-i"
-              src={friendSelected?.photo_url}
+              src={
+                friendSelected?.photo_url || "https://svgsilh.com/svg/98739.svg"
+              }
             ></img>
             <h2>
-              {friendSelected?.first_name} {friendSelected?.last_name}
+              {friendSelected ? (
+                <>
+                  {friendSelected?.first_name} {friendSelected?.last_name}
+                </>
+              ) : (
+                "Seleccione un chat para empezar"
+              )}
             </h2>
           </div>
           <div className="chat__message-chat">
-            <div className="chat__message-chat-c">
-              {sortMessages.map((message, index) => (
-                <div key={index}>
-                  {message.isFriend ? (
-                    <div className="chat__message-chat-c-m1">
-                      <div className="chat__message-chat-c-m1-p">
-                        <p>{message.text}</p>{" "}
-                        <label>
-                          {newDate(message.createdAt).hour}:
-                          {newDate(message.createdAt).minute}
-                        </label>
+            {friendSelected ? (
+              <>
+                <div className="chat__message-chat-c">
+                  {myMessagesSorted.map((message, index) => {
+                    const isFriend = message.sender_id !== userCredentials.id;
+                    return (
+                      <div key={index}>
+                        {isFriend ? (
+                          <div className="chat__message-chat-c-m1">
+                            <div className="chat__message-chat-c-m1-p">
+                              <p>{message.text}</p>{" "}
+                              <label>
+                                {newDate(message.createdAt).hour}:
+                                {newDate(message.createdAt).minute}
+                              </label>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="chat__message-chat-c-m2">
+                            <div className="chat__message-chat-c-m2-p">
+                              <p>{message.text}</p>
+                              <label>
+                                {newDate(message.createdAt).hour}:
+                                {newDate(message.createdAt).minute}
+                              </label>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  ) : (
-                    <div className="chat__message-chat-c-m2">
-                      <div className="chat__message-chat-c-m2-p">
-                        <p>{message.text}</p>
-                        <label>
-                          {newDate(message.createdAt).hour}:
-                          {newDate(message.createdAt).minute}
-                        </label>
-                      </div>
-                    </div>
-                  )}
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
-            <div className="chat__message-chat-b">
-              <input
-                value={form.text}
-                className="chat__message-chat-b-in"
-                onChange={({ target }) => {
-                  inputForm(target.value);
-                }}
-              />
-              <img
-                alt="Send button"
-                className="chat__message-chat-b-i"
-                src="https://cdn.pixabay.com/photo/2016/07/12/21/00/paper-planes-1513032_1280.png"
-                onClick={() => {
-                  handleSendMessage();
-                }}
-              />
-            </div>
+                <div className="chat__message-chat-b">
+                  <input
+                    value={form.text}
+                    className="chat__message-chat-b-in"
+                    onChange={({ target }) => {
+                      inputForm(target.value);
+                    }}
+                  />
+                  <img
+                    alt="Send button"
+                    className="chat__message-chat-b-i"
+                    src="https://cdn.pixabay.com/photo/2016/07/12/21/00/paper-planes-1513032_1280.png"
+                    onClick={() => {
+                      handleSendMessage();
+                    }}
+                  />
+                </div>
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
     </>
   );
 };
-
-/*
-//chat
-{
-  _id:"6553e5e36c6abba35544443a",
-  createdAt:"2023-11-14T21:25:55.244+00:00",
-  updatedAt:"2023-11-14T21:25:55.244+00:00",
-  __v: 0
-}
-// message
-{
-    "chat_id": "6553e5e36c6abba35544443a",
-    "sender_id": "6556d849f499af5f3cc92a0b",
-    "text": "Hola amigo",
-    "_id": "6557bf6f9e964f5f2d28e794",
-    "createdAt": "2023-11-17T19:30:55.609Z",
-    "updatedAt": "2023-11-17T19:30:55.609Z",
-    "__v": 0
-}
-{
-    "chat_id": "6553e5e36c6abba35544443a",
-    "sender_id": "6556d849f499af5f3cc92a0b",
-    "text": "Hola amigo2",
-    "_id": "6557bfbb9e964f5f2d28e796",
-    "createdAt": "2023-11-17T19:32:11.821Z",
-    "updatedAt": "2023-11-17T19:32:11.821Z",
-    "__v": 0
-}
-{
-    "chat_id": "6553e5e36c6abba35544443a",
-    "sender_id": "6556d849f499af5f3cc92a0b",
-    "text": "¿Como estás?",
-
-    "_id": "6557bfd39e964f5f2d28e798",
-    "createdAt": "2023-11-17T19:32:35.826Z",
-    "updatedAt": "2023-11-17T19:32:35.826Z",
-    "__v": 0
-}
-*/
