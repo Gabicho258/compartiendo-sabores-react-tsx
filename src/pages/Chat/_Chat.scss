@@ -1,151 +1,150 @@
 body {
-    background-color: #281B23;
+  background-color: #281b23;
 }
 
 .chat__container {
-    display: flex;
-    height: 43em;
+  display: flex;
+  height: 43em;
 }
 
 .chat__friends {
-    display: flex;
-    flex-direction: column;
-    width: 22%;
-    border: 3px solid white;
-    height: 100%;
-    h2{
-        text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 22%;
+  border: 3px solid white;
+  height: 100%;
+  h2 {
+    text-align: center;
+  }
+  &-names {
+    overflow-y: auto;
+    width: 100%;
+    display: grid;
+    place-items: center;
+
+    &-n {
+      display: flex;
+      margin: 6px;
+      border: 2px solid white;
+      border-radius: 10px;
+      width: 90%;
+      text-align: center;
+      color: white;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      cursor: pointer;
+      p {
+        margin-top: 10px;
+      }
+      &-i {
+        margin-right: 20px;
+        width: 3rem;
+        margin-left: 10px;
+      }
     }
-    &-names {
-        overflow-y: auto;
-        width: 100%;
-        display: grid;
-        place-items: center;
 
-        &-n {
-            display: flex;
-            margin: 6px;
-            border: 2px solid white;
-            border-radius: 10px;
-            width: 90%;
-            text-align: center;
-            color: white;
-            align-items: center;
-            justify-content: center;
-            font-size: 25px;
-            cursor: pointer;
-            p{
-                margin-top: 10px;
-            }
-            &-i {
-                margin-right: 20px;
-                width: 3rem;
-                margin-left: 10px;
-            }
-
-        }
-
-        &-n:hover {
-            background-color: #F47E68;
-        }
+    &-n:hover {
+      background-color: #f47e68;
     }
+  }
 }
 
 .chat__message {
-    width: 77.4%;
-    height: 100%;
+  width: 77.4%;
+  height: 100%;
 
-    &-friend {
+  &-friend {
+    display: flex;
+    border: 3px solid white;
+    width: 100%;
+    height: 15%;
+
+    h2 {
+      color: white;
+      font-family: "Franklin Gothic Medium";
+      font-size: 33px;
+      padding-top: 2%;
+    }
+
+    &-i {
+      width: 5rem;
+      margin: 10px;
+    }
+  }
+
+  &-chat {
+    height: 85%;
+    width: 100%;
+    border: 3px solid white;
+
+    &-c {
+      height: 80%;
+      overflow-y: auto;
+
+      &-m1 {
         display: flex;
-        border: 3px solid white;
-        width: 100%;
-        height: 15%;
+        overflow-y: auto;
+        color: white;
+        padding: 10px;
+        margin-left: 2%;
 
-        h2 {
-            color: white;
-            font-family: 'Franklin Gothic Medium';
-            font-size: 33px;
-            padding-top: 2%;
-        }
+        &-p {
+          border: 3px solid #8daa94;
+          border-radius: 10px;
+          word-wrap: break-word;
+          max-width: 45%;
 
-        &-i {
-            width: 5rem;
+          p {
             margin: 10px;
+            font-size: 20px;
+          }
         }
+      }
+
+      &-m2 {
+        padding: 10px;
+        display: flex;
+        overflow-y: auto;
+        color: white;
+        justify-content: right;
+        margin-right: 2%;
+        &-p {
+          border: 3px solid #d12942;
+          border-radius: 10px;
+          word-wrap: break-word;
+          max-width: 45%;
+
+          p {
+            margin: 10px;
+            font-size: 20px;
+          }
+        }
+      }
     }
 
-    &-chat {
-        height: 85%;
-        width: 100%;
-        border: 3px solid white;
+    &-b {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-top: 3px solid white;
+      padding-top: 40px;
 
-        &-c {
-            height: 80%;
-            overflow-y: auto;
+      &-in {
+        width: 60%;
+        background-color: white;
+        border: 5px solid black;
+        border-radius: 10px;
+        height: 40px;
+        color: black;
+        font-size: 20px;
+        margin-right: 20px;
+      }
 
-            &-m1 {
-                display: flex;
-                overflow-y: auto;
-                color: white;
-                padding: 10px;
-                margin-left: 2%;
-
-                &-p {
-                    border: 3px solid #8DAA94;
-                    border-radius: 10px;
-                    word-wrap: break-word;
-                    max-width: 45%;
-
-                    p {
-                        margin: 10px;
-                        font-size: 20px;
-                    }
-                }
-            }
-
-            &-m2 {
-                padding: 10px;
-                display: flex;
-                overflow-y: auto;
-                color: white;
-                justify-content: right;
-                margin-right: 2%;
-                &-p {
-                    border: 3px solid #D12942;
-                    border-radius: 10px;
-                    word-wrap: break-word;
-                    max-width: 45%;
-
-                    p {
-                        margin: 10px;
-                        font-size: 20px;
-                    }
-                }
-            }
-        }
-
-        &-b {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-top: 3px solid white;
-            padding-top: 40px;
-
-            &-in {
-                width: 60%;
-                background-color: white;
-                border: 5px solid black;
-                border-radius: 10px;
-                height: 40px;
-                color: black;
-                font-size: 20px;
-                margin-right: 20px;
-            }
-
-            &-i {
-                width: 3rem;
-                cursor: pointer;
-            }
-        }
+      &-i {
+        width: 3rem;
+        cursor: pointer;
+      }
     }
+  }
 }

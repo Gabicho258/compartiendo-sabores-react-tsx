@@ -4,6 +4,7 @@ import { NavBar } from "../../components/NavBar/NavBar";
 //import { useNavigate } from "react-router-dom";
 // import { users } from "../../static_test/users";
 import "./_Chat.scss";
+import "animate.css";
 import {
   useCreateMessageMutation,
   useGetChatsByUserIdQuery,
@@ -197,7 +198,7 @@ export const Chat = () => {
                       <div key={index}>
                         {isFriend ? (
                           <div className="chat__message-chat-c-m1">
-                            <div className="chat__message-chat-c-m1-p">
+                            <div className="chat__message-chat-c-m1-p animate__animated animate__fadeIn">
                               <p>{message.text}</p>{" "}
                               <label>
                                 {newDate(message.createdAt).hour}:
@@ -207,7 +208,7 @@ export const Chat = () => {
                           </div>
                         ) : (
                           <div className="chat__message-chat-c-m2">
-                            <div className="chat__message-chat-c-m2-p">
+                            <div className="chat__message-chat-c-m2-p animate__animated animate__fadeIn">
                               <p>{message.text}</p>
                               <label>
                                 {newDate(message.createdAt).hour}:
