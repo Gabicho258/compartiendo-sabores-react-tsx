@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { NavBar } from "../../components/NavBar/NavBar";
 //import { useNavigate } from "react-router-dom";
@@ -27,6 +27,12 @@ export const Chat = () => {
     chatSelected?._id || ""
   );
   const [createMessage] = useCreateMessageMutation();
+  const conversationRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    if (conversationRef.current) {
+      conversationRef.current.scrollTop = conversationRef.current.scrollHeight;
+    }
+  };
   const sortData = <T extends Message | iChat>(data: T[]): T[] => {
     const sortedData = [...data].sort((a, b) => {
       const fechaA = new Date(a.updatedAt).getTime();
@@ -116,6 +122,7 @@ export const Chat = () => {
     // });
     socket.on("sendMessage", async (data: any) => {
       await refetch();
+      scrollToBottom();
     });
 
     return () => {
@@ -123,6 +130,7 @@ export const Chat = () => {
       socket.off("chat_message");
     };
   }, []);
+  console.log(conversationRef);
   return (
     <>
       <NavBar />
@@ -182,7 +190,7 @@ export const Chat = () => {
           <div className="chat__message-chat">
             {friendSelected ? (
               <>
-                <div className="chat__message-chat-c">
+                <div className="chat__message-chat-c" ref={conversationRef}>
                   {myMessagesSorted.map((message, index) => {
                     const isFriend = message.sender_id !== userCredentials.id;
                     return (
