@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 import { NavBar } from "../../components/NavBar/NavBar";
 //import { useNavigate } from "react-router-dom";
 // import { users } from "../../static_test/users";
@@ -10,6 +11,8 @@ import {
   useGetUsersQuery,
 } from "../../app/apis/compartiendoSabores.api";
 import { Message, User, Chat as iChat } from "../../interfaces";
+
+const socket = io("http://localhost:5000");
 
 export const Chat = () => {
   const isUserAuthenticated = localStorage.getItem("data");
@@ -54,13 +57,17 @@ export const Chat = () => {
       chat_id: chatSelected?._id,
       sender_id: userCredentials.id,
     };
+
     try {
       const response = await createMessage(message).unwrap();
-      console.log(response);
-      console.log(message);
+      socket.emit("sendMessagesPrivate", {
+        message: response,
+        selectUser: friendSelected?._id,
+      });
     } catch (error: any) {
       alert(JSON.stringify(error.data));
     }
+
     setForm({
       text: "",
     });
@@ -97,7 +104,25 @@ export const Chat = () => {
       second,
     };
   };
+  // Lógica websockets
+  const [isConnected, setIsConnected] = useState(false); // puede ser usado para interfaz
+  useEffect(() => {
+    socket.on("connect", () => setIsConnected(true));
+    socket.emit("register", userCredentials.id);
+    socket.on("userExists", () => console.log("User already exists"));
+    socket.on("login", () => console.log("Logueado correctamente"));
+    // socket.on("chat_message", (data) => {
+    //   setMensajes((mensajes) => [...mensajes, data]);
+    // });
+    socket.on("sendMessage", async (data: any) => {
+      await refetch();
+    });
 
+    return () => {
+      socket.off("connect");
+      socket.off("chat_message");
+    };
+  }, []);
   return (
     <>
       <NavBar />
