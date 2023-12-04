@@ -1,5 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Recipe, User, UserCredentials, Comment } from "../../interfaces/index";
+import {
+  Recipe,
+  User,
+  UserCredentials,
+  Comment,
+  Chat,
+  Message,
+} from "../../interfaces/index";
 
 export const compartiendoSaboresAPI = createApi({
   baseQuery: fetchBaseQuery({
@@ -108,6 +115,33 @@ export const compartiendoSaboresAPI = createApi({
     getCommentsByRecipeId: builder.query<Comment[], string>({
       query: (id) => `comment/${id}`,
     }),
+    // Chat endpoint
+    createChat: builder.mutation<Chat, { owner_id: string; friend_id: string }>(
+      {
+        query: (chat) => ({
+          url: "chat/create",
+          method: "POST",
+          body: chat,
+        }),
+      }
+    ),
+    getChatsByUserId: builder.query<Chat[], string>({
+      query: (user_id) => `chat/${user_id}`,
+    }),
+    getOneChat: builder.query<Chat[], { owner_id: string; friend_id: string }>({
+      query: (ids) => `chat/${ids.owner_id}/${ids.friend_id}`,
+    }),
+    // Message endpoint
+    createMessage: builder.mutation<Message, Partial<Message>>({
+      query: (message) => ({
+        url: "message/create",
+        method: "POST",
+        body: message,
+      }),
+    }),
+    getMessagesByChatId: builder.query<Message[], string>({
+      query: (chat_id) => `message/${chat_id}`,
+    }),
   }),
 });
 export const {
@@ -123,4 +157,9 @@ export const {
   useUpdateRecipeMutation,
   useCreateCommentMutation,
   useGetCommentsByRecipeIdQuery,
+  useCreateChatMutation,
+  useCreateMessageMutation,
+  useGetChatsByUserIdQuery,
+  useGetMessagesByChatIdQuery,
+  useGetOneChatQuery,
 } = compartiendoSaboresAPI;
