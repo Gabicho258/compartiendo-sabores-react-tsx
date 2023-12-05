@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { NavBar } from "../../components/NavBar/NavBar";
 //import { useNavigate } from "react-router-dom";
 // import { users } from "../../static_test/users";
 import "./_Chat.scss";
+import "animate.css";
 import {
   useCreateMessageMutation,
   useGetChatsByUserIdQuery,
@@ -11,6 +12,9 @@ import {
   useGetUsersQuery,
 } from "../../app/apis/compartiendoSabores.api";
 import { Message, User, Chat as iChat } from "../../interfaces";
+import { useNavigate } from "react-router-dom";
+import SendIcon from "@mui/icons-material/Send";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const socket = io("http://localhost:5000");
 
@@ -27,6 +31,12 @@ export const Chat = () => {
     chatSelected?._id || ""
   );
   const [createMessage] = useCreateMessageMutation();
+  const conversationRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    if (conversationRef.current) {
+      conversationRef.current.scrollTop = conversationRef.current.scrollHeight;
+    }
+  };
   const sortData = <T extends Message | iChat>(data: T[]): T[] => {
     const sortedData = [...data].sort((a, b) => {
       const fechaA = new Date(a.updatedAt).getTime();
@@ -41,6 +51,7 @@ export const Chat = () => {
   };
   const myChatsSorted = sortData(myChats);
   const myMessagesSorted = sortData(myMessages);
+  const navigate = useNavigate();
   ////////////
   const [form, setForm] = useState<Partial<Message>>({
     text: "",
@@ -116,6 +127,7 @@ export const Chat = () => {
     // });
     socket.on("sendMessage", async (data: any) => {
       await refetch();
+      scrollToBottom();
     });
 
     return () => {
@@ -123,12 +135,19 @@ export const Chat = () => {
       socket.off("chat_message");
     };
   }, []);
+  console.log(conversationRef);
   return (
     <>
       <NavBar />
       <div className="chat__container">
+        <div className="chat__container-backBtn">
+          <ArrowBackIcon
+            className="chat__container-backBtn-icon"
+            onClick={() => navigate(-1)}
+          />
+        </div>
         <div className="chat__friends">
-          <h2>CHATS</h2>
+          <h2 className="chat__friends-chatsLabel">CHATS</h2>
           <div className="chat__friends-names">
             {myChatsSorted.map((chat, index) => {
               const [friendUser] = users?.filter(
@@ -182,16 +201,16 @@ export const Chat = () => {
           <div className="chat__message-chat">
             {friendSelected ? (
               <>
-                <div className="chat__message-chat-c">
+                <div className="chat__message-chat-c" ref={conversationRef}>
                   {myMessagesSorted.map((message, index) => {
                     const isFriend = message.sender_id !== userCredentials.id;
                     return (
                       <div key={index}>
                         {isFriend ? (
                           <div className="chat__message-chat-c-m1">
-                            <div className="chat__message-chat-c-m1-p">
-                              <p>{message.text}</p>{" "}
-                              <label>
+                            <div className="chat__message-chat-c-m1-p animate__animated animate__fadeIn">
+                              <p>{message.text}</p>
+                              <label className="chat__message-chat-c-m1-hour">
                                 {newDate(message.createdAt).hour}:
                                 {newDate(message.createdAt).minute}
                               </label>
@@ -199,9 +218,9 @@ export const Chat = () => {
                           </div>
                         ) : (
                           <div className="chat__message-chat-c-m2">
-                            <div className="chat__message-chat-c-m2-p">
+                            <div className="chat__message-chat-c-m2-p animate__animated animate__fadeIn">
                               <p>{message.text}</p>
-                              <label>
+                              <label className="chat__message-chat-c-m2-hour">
                                 {newDate(message.createdAt).hour}:
                                 {newDate(message.createdAt).minute}
                               </label>
@@ -213,17 +232,19 @@ export const Chat = () => {
                   })}
                 </div>
                 <div className="chat__message-chat-b">
-                  <input
-                    value={form.text}
-                    className="chat__message-chat-b-in"
-                    onChange={({ target }) => {
-                      inputForm(target.value);
-                    }}
-                  />
-                  <img
-                    alt="Send button"
+                  <div className="chat__message-chat-b-container">
+                    <input
+                      value={form.text}
+                      className="chat__message-chat-b-container-in"
+                      onChange={({ target }) => {
+                        inputForm(target.value);
+                      }}
+                      placeholder="Escribe un mensaje..."
+                    />
+                  </div>
+
+                  <SendIcon
                     className="chat__message-chat-b-i"
-                    src="https://cdn.pixabay.com/photo/2016/07/12/21/00/paper-planes-1513032_1280.png"
                     onClick={() => {
                       handleSendMessage();
                     }}
